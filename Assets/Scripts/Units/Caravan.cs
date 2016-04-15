@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Caravan : RtsUnit
 {
+
+    public MeshRenderer unitColorMesh;
+
     public Caravan()
     {
         SelectionChanged += CaravanSelectionChanged;
@@ -10,6 +13,6 @@ public class Caravan : RtsUnit
 
     private void CaravanSelectionChanged()
     {
-        GetComponent<MeshRenderer>().material.color = Selected ? Color.green : Color.white;
+        unitColorMesh.material.color = Selected ? Color.green : Color.white;
     }
 }
