@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - RtsEntity
+  - Ground
   layers:
   - Default
   - TransparentFX
