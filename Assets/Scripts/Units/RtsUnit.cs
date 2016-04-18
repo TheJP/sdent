@@ -20,7 +20,7 @@ public abstract class RtsUnit : RtsEntity
 
     void Update()
     {
-        if (target.HasValue)
+        if (hasAuthority && target.HasValue)
         {
             var direction = target.Value - transform.position;
             //The y is kept the same. (So that units don't go flying)
@@ -31,7 +31,6 @@ public abstract class RtsUnit : RtsEntity
                 target = null;
             }
             else { transform.position += Time.deltaTime * Speed * direction.normalized; }
-            Debug.Log(Vector3.Angle(direction, Vector3.right));
             transform.rotation = Quaternion.FromToRotation(Vector3.right, direction);
         }
     }
