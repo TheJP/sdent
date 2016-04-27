@@ -3,8 +3,12 @@ using System.Collections;
 
 public class Caravan : RtsUnit
 {
-
     public MeshRenderer unitColorMesh;
+
+    public override float Speed
+    {
+        get { return 3f * base.Speed; }
+    }
 
     public Caravan()
     {

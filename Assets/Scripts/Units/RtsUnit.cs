@@ -11,15 +11,15 @@ public abstract class RtsUnit : RtsEntity
         get { return 1f; }
     }
 
-
     public override void DoRightClickAction(Vector3 position)
     {
         //Only the local (authorized) player is allowed to move units.
         if (hasAuthority) { target = position; }
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (hasAuthority && target.HasValue)
         {
             var direction = target.Value - transform.position;
