@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 12395708}
   m_LocalRotation: {x: 0.4886156, y: -0.18375127, z: 0.10608886, w: 0.8463069}
-  m_LocalPosition: {x: 1.5, y: 5, z: -2.5}
+  m_LocalPosition: {x: 4.58, y: 17.9, z: -9.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -184,8 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72fa861dcea9663409c1bcbe9f13e429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeedKeyboard: 5
-  cameraSpeedMouse: 10
+  cameraSpeedKeyboard: 15
+  cameraSpeedMouse: 30
   rotation: 335.5
   borderSize: {x: 10, y: 10}
 --- !u!114 &12395715
@@ -586,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1522557408
 MonoBehaviour:
   m_ObjectHideFlags: 0
