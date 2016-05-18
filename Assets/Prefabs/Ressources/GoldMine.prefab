@@ -108,7 +108,7 @@ GameObject:
   - 4: {fileID: 490960}
   - 108: {fileID: 10813474}
   m_Layer: 0
-  m_Name: Spotlight (1)
+  m_Name: Spotlight2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +141,7 @@ GameObject:
   - 4: {fileID: 473812}
   - 108: {fileID: 10880414}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Spotlight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ GameObject:
   - 114: {fileID: 11434216}
   - 114: {fileID: 11425800}
   m_Layer: 0
-  m_Name: Canvas (1)
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,7 +306,7 @@ GameObject:
   - 114: {fileID: 11408936}
   - 114: {fileID: 11438738}
   m_Layer: 0
-  m_Name: Healthbar
+  m_Name: Resourcebar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1007,6 +1007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b25f892d7b8014c9e40258c5f88b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  barSlider: {fileID: 11408936}
+  barFillImage: {fileID: 11412510}
 --- !u!114 &11425800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1149,7 +1152,7 @@ RectTransform:
   m_RootOrder: 9
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.4}
   m_SizeDelta: {x: 310, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22446080
