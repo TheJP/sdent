@@ -10,6 +10,12 @@ public class Caravan : RtsUnit
         get { return 3f * base.Speed; }
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        if (hasAuthority) { FindObjectOfType<CameraControl>().SetInitialPosition(this); }
+    }
+
     public Caravan()
     {
         SelectionChanged += CaravanSelectionChanged;

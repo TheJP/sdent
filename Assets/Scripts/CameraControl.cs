@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class CameraControl : MonoBehaviour
 {
@@ -8,11 +9,28 @@ public class CameraControl : MonoBehaviour
     public float rotation;
     public MouseTracker mouseTracker;
 
+    private bool hasInitialPosition = false;
+
     /// <summary>
     /// Defines how wide / high the border is in pixels
     /// When the mouse is in this border, the camera is moved.
     /// </summary>
     public Vector2 borderSize;
+
+    /// <summary>
+    /// Set the camera position at the start of the game to focus the initial unit.
+    /// </summary>
+    public void SetInitialPosition(RtsUnit unit)
+    {
+        if (hasInitialPosition) { return; }
+        if (unit != null)
+        {
+            hasInitialPosition = true;
+            var toCamera = transform.rotation * Vector3.back;
+            var factor = (transform.position.y - unit.transform.position.y) / toCamera.y;
+            transform.position = unit.transform.position + factor * toCamera;
+        }
+    }
 
     void Update()
     {
