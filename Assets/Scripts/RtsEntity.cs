@@ -8,13 +8,13 @@ public abstract class RtsEntity : NetworkBehaviour
     private bool selected = false; //This is intentionally not a synced variable
 
     [SyncVar]
-    public float health;
+    public float state;
 
-    public Slider healthBarSlider;
-    public Image healthBarFillImage;
+    public Slider barSlider;
+    public Image barFillImage;
 
-    private readonly Color liveColor = Color.green;
-    private readonly Color deadColor = Color.red;
+    private readonly Color fullColor = Color.green;
+    private readonly Color emptyColor = Color.red;
 
     /// <summary>
     /// Determines, if the local player has selected this entity.
@@ -33,9 +33,9 @@ public abstract class RtsEntity : NetworkBehaviour
     }
 
     /// <summary>
-    /// The maximum health of this entity.
+    /// The maximum health / Resource Level of this entity.
     /// </summary>
-    public virtual float MaxHealth
+    public virtual float MaxState
     {
         get { return 100f; }
     }
@@ -52,13 +52,13 @@ public abstract class RtsEntity : NetworkBehaviour
 
     protected virtual void Start()
     {
-        health = MaxHealth; //Set initial health on server and clients (lag compensation)
+        state = MaxState; //Set initial state on server and clients (lag compensation)
     }
 
     protected virtual void Update()
     {
-        var relativeHealth = health / MaxHealth;
-        healthBarSlider.value = relativeHealth;
-        healthBarFillImage.color = Color.Lerp(deadColor, liveColor, relativeHealth);
+        var relativeState = state / MaxState;
+        barSlider.value = relativeState;
+        barFillImage.color = Color.Lerp(emptyColor, fullColor, relativeState);
     }
 }
