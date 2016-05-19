@@ -129,6 +129,7 @@ MonoBehaviour:
   m_OnlineScene: Game
   m_SpawnPrefabs:
   - {fileID: 180308, guid: 3dc96654a3e4c614d9fb5a934b123d64, type: 2}
+  - {fileID: 106646, guid: 38364b5327a2d8a4a9f668437b25f91e, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
