@@ -46,9 +46,10 @@ GameObject:
   - 114: {fileID: 11424774}
   - 114: {fileID: 11401534}
   - 114: {fileID: 11448878}
+  - 208: {fileID: 20805682}
   m_Layer: 0
   m_Name: GoldMine
-  m_TagString: Untagged
+  m_TagString: RtsEntity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1106,6 +1107,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!208 &20805682
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106646}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 11.5, y: 6, z: 10}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 6, z: 3}
+  m_TimeToStationary: 0.5
 --- !u!222 &22271400
 CanvasRenderer:
   m_ObjectHideFlags: 1

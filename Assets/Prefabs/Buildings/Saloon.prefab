@@ -96,9 +96,10 @@ GameObject:
   - 65: {fileID: 6564340}
   - 114: {fileID: 11418468}
   - 114: {fileID: 11453380}
+  - 208: {fileID: 20870730}
   m_Layer: 0
   m_Name: Saloon
-  m_TagString: Untagged
+  m_TagString: RtsEntity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -303,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b157122c5f95e974baaeadde1affc634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  state: 0
   barSlider: {fileID: 11479122}
   barFillImage: {fileID: 11488498}
 --- !u!114 &11470072
@@ -436,6 +437,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!208 &20870730
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180308}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 21.492765, y: 11.820065, z: 14.785105}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.1718674, y: 11.78933, z: 0.144721}
+  m_TimeToStationary: 0.5
 --- !u!222 &22210618
 CanvasRenderer:
   m_ObjectHideFlags: 1
