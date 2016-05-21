@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Linq;
+using System.Collections.Generic;
 
 public abstract class RtsEntity : NetworkBehaviour
 {
@@ -38,6 +40,12 @@ public abstract class RtsEntity : NetworkBehaviour
     public virtual float MaxState
     {
         get { return 100f; }
+    }
+
+    /// <summary>Abilities, which can be executed for this <see cref="RtsEntity"/>.</summary>
+    public virtual IEnumerable<IAbility> Abilities
+    {
+        get { return Enumerable.Empty<IAbility>(); }
     }
 
     /// <summary>

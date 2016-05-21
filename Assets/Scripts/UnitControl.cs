@@ -16,15 +16,10 @@ public class UnitControl : MonoBehaviour
             var ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
             var hits = Physics.RaycastAll(ray);
-            if (leftClick)
-            {
-                LeftClick(ray, hits);
-            }
-            else if (rightClick)
-            {
-                RightClick(hits);
-            }
+            if (leftClick) { LeftClick(ray, hits); }
+            else if (rightClick) { RightClick(hits); }
         }
+        //TODO: Add proper call to this method with the gui update
     }
 
     private void RightClick(RaycastHit[] hits)
