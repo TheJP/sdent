@@ -54,6 +54,22 @@ public abstract class RtsEntity : NetworkBehaviour
     public event System.Action SelectionChanged;
 
     /// <summary>
+    /// Triggers, when the rts entity dies.
+    /// </summary>
+    public event System.Action<RtsEntity> EntityDied;
+
+    [Command]
+    protected void CmdDie()
+    {
+        NetworkServer.Destroy(gameObject);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (EntityDied != null) { EntityDied(this); }
+    }
+
+    /// <summary>
     /// Called, when the local player right clicks with this entity selected.
     /// </summary>
     public virtual void DoRightClickAction(Vector3 position) { }
