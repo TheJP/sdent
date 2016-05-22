@@ -14,6 +14,7 @@ public abstract class RtsEntity : NetworkBehaviour
 
     public Slider barSlider;
     public Image barFillImage;
+    public Texture portraitImage;
 
     private readonly Color fullColor = Color.green;
     private readonly Color emptyColor = Color.red;

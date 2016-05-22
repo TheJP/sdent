@@ -6,9 +6,10 @@ using UnityEngine.Networking;
 public class EntityControl : NetworkBehaviour
 {
     public Camera rtsCamera;
+
     private readonly List<RtsEntity> selectedEntities = new List<RtsEntity>();
     /// <summary>To avoid enumerator exceptions, try to iterate over the cloned list when possible.</summary>
-    private IEnumerable<RtsEntity> ClonedSelectedEntities
+    public IEnumerable<RtsEntity> ClonedSelectedEntities
     {
         get { return selectedEntities.ToList(); }
     }
