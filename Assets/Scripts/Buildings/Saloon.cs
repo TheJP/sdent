@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Saloon : RtsBuilding
+public class Saloon : RtsTrainingBuilding
 {
 }

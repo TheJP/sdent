@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class RtsBuilding : RtsEntity
+public abstract class RtsBuilding : RtsEntity
 {
 }
