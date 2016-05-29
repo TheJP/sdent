@@ -25,9 +25,9 @@ public class Inventory
         }
     }
 
-    public virtual bool AddResource(ResourceTypes resource, int amount)
+    public virtual bool AddResources(ResourceTypes resource, int amount)
     {
-        if(amount < 0) { return RemoveResource(resource, -amount); }
+        if(amount < 0) { return RemoveResources(resource, -amount); }
         if (spaceTaken + amount > spaceAvailable) { return false; }
         spaceTaken += amount;
         if (inventory.ContainsKey(resource)) { inventory[resource] += amount; }
@@ -35,9 +35,9 @@ public class Inventory
         return true;
     }
 
-    public virtual bool RemoveResource(ResourceTypes resource, int amount)
+    public virtual bool RemoveResources(ResourceTypes resource, int amount)
     {
-        if (amount < 0) { return AddResource(resource, -amount); }
+        if (amount < 0) { return AddResources(resource, -amount); }
         if (!inventory.ContainsKey(resource) || inventory[resource] < amount) { return false; }
         spaceTaken -= amount;
         inventory[resource] -= amount;
