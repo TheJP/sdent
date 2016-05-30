@@ -7,7 +7,6 @@ public class CameraControl : MonoBehaviour
     public float cameraSpeedKeyboard;
     public float cameraSpeedMouse;
     public float rotation;
-    public MouseTracker mouseTracker;
 
     private bool hasInitialPosition = false;
 
@@ -38,7 +37,7 @@ public class CameraControl : MonoBehaviour
         var direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         var hasKeyboardInput = direction.sqrMagnitude > 0;
         //Camera movement (mouse)
-        if (!hasKeyboardInput && mouseTracker.MouseInWindow)
+        if (!hasKeyboardInput)
         {
             direction = new Vector3(
                 Input.mousePosition.x <= borderSize.x ? -1 : (Input.mousePosition.x >= Screen.width - borderSize.x ? 1 : 0), 0,

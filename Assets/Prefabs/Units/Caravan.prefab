@@ -4605,7 +4605,7 @@ MonoBehaviour:
   barSlider: {fileID: 11429560}
   barFillImage: {fileID: 11400740}
   portraitImage: {fileID: 2800000, guid: 5485e2f56028a3c4cb54f5caa167377e, type: 3}
-  unitColorMesh: {fileID: 2351622}
+  entityColorMesh: {fileID: 2351622}
   saloonPrefab: {fileID: 180308, guid: 3dc96654a3e4c614d9fb5a934b123d64, type: 2}
 --- !u!114 &11450156
 MonoBehaviour:

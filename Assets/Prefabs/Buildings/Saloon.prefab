@@ -35,6 +35,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &138994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 405058}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &151968
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,6 +151,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &405058
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138994}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 471776}
+  m_RootOrder: 3
 --- !u!4 &416560
 Transform:
   m_ObjectHideFlags: 1
@@ -173,6 +200,7 @@ Transform:
   - {fileID: 416560}
   - {fileID: 421972}
   - {fileID: 22441188}
+  - {fileID: 405058}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2338950
@@ -308,6 +336,8 @@ MonoBehaviour:
   barSlider: {fileID: 11479122}
   barFillImage: {fileID: 11488498}
   portraitImage: {fileID: 2800000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}
+  entityColorMesh: {fileID: 2338950}
+  spawnPoint: {fileID: 405058}
 --- !u!114 &11470072
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class Caravan : RtsUnit
 {
-    public MeshRenderer unitColorMesh;
     public GameObject saloonPrefab;
 
     private readonly List<IAbility> abilities = new List<IAbility>();
@@ -17,7 +16,6 @@ public class Caravan : RtsUnit
 
     public Caravan()
     {
-        SelectionChanged += CaravanSelectionChanged;
         abilities.Add(new BuildSaloon(this));
     }
 
@@ -25,11 +23,6 @@ public class Caravan : RtsUnit
     {
         base.Start();
         if (hasAuthority) { FindObjectOfType<CameraControl>().SetInitialPosition(this); }
-    }
-
-    private void CaravanSelectionChanged()
-    {
-        unitColorMesh.material.color = Selected ? Color.green : Color.white;
     }
 
     [Command]

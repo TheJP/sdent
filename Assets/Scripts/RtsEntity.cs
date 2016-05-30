@@ -15,6 +15,7 @@ public abstract class RtsEntity : NetworkBehaviour
     public Slider barSlider;
     public Image barFillImage;
     public Texture portraitImage;
+    public MeshRenderer entityColorMesh;
 
     private readonly Color fullColor = Color.green;
     private readonly Color emptyColor = Color.red;
@@ -58,6 +59,16 @@ public abstract class RtsEntity : NetworkBehaviour
     /// Triggers, when the rts entity dies.
     /// </summary>
     public event System.Action<RtsEntity> EntityDied;
+
+    public RtsEntity()
+    {
+        SelectionChanged += EntitySelectionChanged;
+    }
+
+    private void EntitySelectionChanged()
+    {
+        entityColorMesh.material.color = Selected ? Color.green : Color.white;
+    }
 
     [Command]
     protected void CmdDie()
