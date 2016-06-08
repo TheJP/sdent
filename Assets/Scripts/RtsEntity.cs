@@ -50,6 +50,14 @@ public abstract class RtsEntity : NetworkBehaviour
         get { return Enumerable.Empty<IAbility>(); }
     }
 
+    protected virtual NetworkConnection Client { get; set; }
+
+    [Server]
+    public NetworkConnection GetClient() { return Client; }
+
+    [Server]
+    public void SetClient(NetworkConnection value) { Client = value; }
+
     /// <summary>
     /// Triggers, when the selection of this rts entity changes.
     /// </summary>

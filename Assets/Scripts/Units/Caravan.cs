@@ -8,6 +8,12 @@ public class Caravan : RtsUnit
 {
     public GameObject saloonPrefab;
 
+    protected override NetworkConnection Client
+    {
+        get { return connectionToClient; }
+        set { throw new InvalidOperationException(); }
+    }
+
     private readonly List<IAbility> abilities = new List<IAbility>();
     public override IEnumerable<IAbility> Abilities
     {
@@ -30,7 +36,7 @@ public class Caravan : RtsUnit
     {
         if (isActiveAndEnabled)
         {
-            FindObjectOfType<EntityControl>().BuildBuilding(saloonPrefab, transform.position, connectionToClient);
+            FindObjectOfType<EntityControl>().SpawnEntity(saloonPrefab, transform.position, connectionToClient);
             CmdDie();
         }
     }

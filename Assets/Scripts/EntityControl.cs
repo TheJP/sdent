@@ -86,12 +86,16 @@ public class EntityControl : NetworkBehaviour
 
     private void EntityDied(RtsEntity entity) { selectedEntities.Remove(entity); }
 
-    public void BuildBuilding(GameObject buildingPrefab, Vector3 position, NetworkConnection player)
+    /// <summary>Server method, which spawns units and buildings with client authority. Should never be used with resources (e.g. GoldMine).</summary>
+    /// <param name="entityPrefab"></param>
+    /// <param name="position"></param>
+    /// <param name="player"></param>
+    [Server]
+    public void SpawnEntity(GameObject entityPrefab, Vector3 position, NetworkConnection player)
     {
-        //Only execute this method on the server
-        if (!hasAuthority) { return; }
-        var building = (GameObject)Instantiate(buildingPrefab, position, buildingPrefab.transform.rotation);
-        building.transform.parent = transform;
-        NetworkServer.SpawnWithClientAuthority(building, player);
+        var entity = (GameObject)Instantiate(entityPrefab, position, entityPrefab.transform.rotation);
+        entity.transform.parent = transform;
+        entity.GetComponent<RtsEntity>().SetClient(player);
+        NetworkServer.SpawnWithClientAuthority(entity, player);
     }
 }
