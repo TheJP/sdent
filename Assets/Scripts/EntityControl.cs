@@ -7,12 +7,11 @@ public class EntityControl : NetworkBehaviour
 {
     public Camera rtsCamera;
 
-    private readonly List<RtsEntity> selectedEntities = new List<RtsEntity>();
-    /// <summary>To avoid enumerator exceptions, try to iterate over the cloned list when possible.</summary>
-    public IEnumerable<RtsEntity> ClonedSelectedEntities
-    {
-        get { return selectedEntities.ToList(); }
-    }
+    /// <summary>Determines, which entity type of the selected entities is active.</summary>
+    private System.Type activeType;
+
+    private readonly EntityContainer selectedEntities = new EntityContainer();
+    private readonly EntityContainer entities = new EntityContainer();
 
     void Update()
     {
@@ -27,11 +26,10 @@ public class EntityControl : NetworkBehaviour
             if (leftClick) { LeftClick(ray, hits); }
             else if (rightClick) { RightClick(hits); }
         }
-        //TODO: Only execute abilities on active entities (subset of selected entities)
         //TODO: Check per ability for correct keys
         if (Input.GetKeyDown("b"))
         {
-            foreach(var ability in ClonedSelectedEntities.SelectMany(entity => entity.Abilities))
+            foreach(var ability in selectedEntities.Get(activeType).ToList().SelectMany(entity => entity.Abilities))
             {
                 if (ability.CanExecute) { ability.Execute(); }
             }
@@ -48,7 +46,7 @@ public class EntityControl : NetworkBehaviour
         //Execute right click action on selected units
         if (target.HasValue)
         {
-            foreach (var selectedEntity in ClonedSelectedEntities)
+            foreach (var selectedEntity in selectedEntities.ToList())
             {
                 selectedEntity.DoRightClickAction(target.Value);
             }
@@ -64,7 +62,7 @@ public class EntityControl : NetworkBehaviour
             .Select(hit => hit.transform.gameObject.GetComponent<RtsEntity>())
             .FirstOrDefault();
         //Select clicked unit
-        foreach (var selectedEntity in ClonedSelectedEntities)
+        foreach (var selectedEntity in selectedEntities.ToList())
         {
             if (selectedEntity != entity)
             {
@@ -81,10 +79,19 @@ public class EntityControl : NetworkBehaviour
                 entity.EntityDied += EntityDied;
             }
             selectedEntities.Add(entity);
+            activeType = entity.GetType();
         }
     }
 
-    private void EntityDied(RtsEntity entity) { selectedEntities.Remove(entity); }
+    private void EntityDied(RtsEntity entity)
+    {
+        selectedEntities.Remove(entity);
+        entities.Remove(entity);
+        if (activeType != null && !selectedEntities.ContainsType(activeType))
+        {
+            activeType = selectedEntities.Select(activeEntity => activeEntity.GetType()).FirstOrDefault();
+        }
+    }
 
     /// <summary>Server method, which spawns units and buildings with client authority. Should never be used with resources (e.g. GoldMine).</summary>
     /// <param name="entityPrefab"></param>
@@ -95,7 +102,9 @@ public class EntityControl : NetworkBehaviour
     {
         var entity = (GameObject)Instantiate(entityPrefab, position, entityPrefab.transform.rotation);
         entity.transform.parent = transform;
-        entity.GetComponent<RtsEntity>().SetClient(player);
+        var rtsEntity = entity.GetComponent<RtsEntity>();
+        rtsEntity.SetClient(player);
+        entities.Add(rtsEntity);
         NetworkServer.SpawnWithClientAuthority(entity, player);
     }
 }
