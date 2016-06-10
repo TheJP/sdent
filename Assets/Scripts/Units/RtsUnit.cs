@@ -4,6 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class RtsUnit : RtsEntity
 {
+    private readonly IAbility moveAbility;
+    public override IAbility RightClickAbility
+    {
+        get { return moveAbility; }
+    }
+
     private readonly List<IAbility> abilities;
     public override IEnumerable<IAbility> Abilities
     {
@@ -17,9 +23,10 @@ public abstract class RtsUnit : RtsEntity
 
     public RtsUnit()
     {
+        moveAbility = new MoveAbility(this);
         abilities = new List<IAbility>()
         {
-            new MoveAbility(this),
+            moveAbility,
             new StopAbility(this),
             new ResumeAbility(this)
         };
