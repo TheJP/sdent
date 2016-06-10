@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
 	// Update is called once per frame
 	void OnGUI ()
 	{
-	    var rtsEntities = EntityController.ClonedSelectedEntities;
+	    var rtsEntities = EntityController.SelectedEntities;
 
 	    CreateUnitPortraits(rtsEntities);
 	    CreateAbilities(rtsEntities);

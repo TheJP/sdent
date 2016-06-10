@@ -13,6 +13,9 @@ public class EntityControl : NetworkBehaviour
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
 
+    public IEnumerable<RtsEntity> Entities { get { return entities.ToList(); } }
+    public IEnumerable<RtsEntity> SelectedEntities { get { return selectedEntities.ToList(); } }
+
     void Update()
     {
         var leftClick = Input.GetMouseButtonDown(0);
