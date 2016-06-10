@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: 141058, guid: 06b9cc47076e11c48b23051dde8e2b32, type: 2}
   - {fileID: 196684, guid: fca1101434e706345b5bbb4cb01de3d1, type: 2}
   - {fileID: 156168, guid: 8cf89643d7fdb90419c5693e69264084, type: 2}
+  - {fileID: 101152, guid: 8bc9bd951ab2c5343948f17c757a15bf, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

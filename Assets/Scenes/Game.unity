@@ -1495,7 +1495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfc1a8c98cd8af43aa5b9ab4c265f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rtsCamera: {fileID: 12395712}
 --- !u!4 &1244970957
 Transform:
   m_ObjectHideFlags: 0
