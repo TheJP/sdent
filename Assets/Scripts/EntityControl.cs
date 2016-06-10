@@ -5,8 +5,6 @@ using UnityEngine.Networking;
 
 public class EntityControl : NetworkBehaviour
 {
-    public Camera rtsCamera;
-
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     private System.Type activeType;
 
@@ -23,7 +21,7 @@ public class EntityControl : NetworkBehaviour
         if (leftClick)
         {
             //Cast a ray to determine, what was clicked
-            var ray = rtsCamera.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
             var hits = Physics.RaycastAll(ray);
             LeftClick(ray, hits);
