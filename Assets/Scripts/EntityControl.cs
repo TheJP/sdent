@@ -20,39 +20,35 @@ public class EntityControl : NetworkBehaviour
     {
         var leftClick = Input.GetMouseButtonDown(0);
         var rightClick = Input.GetMouseButtonDown(1);
-        if (leftClick || rightClick)
+        if (leftClick)
         {
             //Cast a ray to determine, what was clicked
             var ray = rtsCamera.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
             var hits = Physics.RaycastAll(ray);
-            if (leftClick) { LeftClick(ray, hits); }
-            else if (rightClick) { RightClick(hits); }
+            LeftClick(ray, hits);
         }
-        //TODO: Check per ability for correct keys
-        if (Input.GetKeyDown("b"))
+        else if(rightClick)
         {
-            foreach(var ability in selectedEntities.Get(activeType).ToList().SelectMany(entity => entity.Abilities))
+            RightClick();
+        }
+        //Execute abilities of active entities if possible
+        foreach(var ability in selectedEntities.Get(activeType).ToList().SelectMany(entity => entity.Abilities))
+        {
+            if (ability.CanExecute && Input.GetKeyDown(ability.Key))
             {
-                if (ability.CanExecute) { ability.Execute(); }
+                ability.Execute();
             }
         }
     }
 
-    private void RightClick(RaycastHit[] hits)
+    private void RightClick()
     {
-        //Find point on the ground, which was selected
-        var target = hits
-            .Where(hit => hit.transform.tag == "Ground")
-            .Select(hit => (Vector3?)hit.point)
-            .FirstOrDefault();
-        //Execute right click action on selected units
-        if (target.HasValue)
+        //Execute right click ability on all selected units
+        foreach (var selectedEntity in selectedEntities.ToList())
         {
-            foreach (var selectedEntity in selectedEntities.ToList())
-            {
-                selectedEntity.DoRightClickAction(target.Value);
-            }
+            var ability = selectedEntity.RightClickAbility;
+            if (ability != null && ability.CanExecute) { ability.Execute(); }
         }
     }
 

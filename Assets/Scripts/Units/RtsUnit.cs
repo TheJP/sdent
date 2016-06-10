@@ -1,12 +1,27 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class RtsUnit : RtsEntity
 {
-    public override void DoRightClickAction(Vector3 position)
+    private readonly List<IAbility> abilities;
+    public override IEnumerable<IAbility> Abilities
     {
-        //Only the local (authorized) player is allowed to move units.
-        if (hasAuthority) { GetComponent<NavMeshAgent>().SetDestination(position); }
+        get { return abilities.AsReadOnly(); }
+    }
+
+    protected void AddAbility(IAbility ability)
+    {
+        abilities.Add(ability);
+    }
+
+    public RtsUnit()
+    {
+        abilities = new List<IAbility>()
+        {
+            new MoveAbility(this),
+            new StopAbility(this),
+            new ResumeAbility(this)
+        };
     }
 }

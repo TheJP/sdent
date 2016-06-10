@@ -59,7 +59,7 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
     /// <returns></returns>
     public IEnumerable<RtsEntity> Get(Type entityType)
     {
-        if (entities.ContainsKey(entityType)) { return entities[entityType].AsReadOnly(); }
+        if (entityType != null && entities.ContainsKey(entityType)) { return entities[entityType].AsReadOnly(); }
         else { return Enumerable.Empty<RtsEntity>(); }
     }
 

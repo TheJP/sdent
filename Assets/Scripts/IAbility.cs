@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 /// <summary>
 /// Ability of buildings and units like build, attack, produce, ...
@@ -13,6 +14,8 @@ public interface IAbility
 
     /// <summary>Lore (Description) of the ability, which can be siaplyed in the gui.</summary>
     string Lore { get; }
+
+    KeyCode Key { get; }
 
     /// <summary>Flag, which determines, if this ability can currently be executed.</summary>
     bool CanExecute { get; }
@@ -37,6 +40,12 @@ public abstract class AbilityBase : IAbility
         get { return lore; }
     }
 
+    private readonly KeyCode key;
+    public KeyCode Key
+    {
+        get { return key; }
+    }
+
     private readonly bool canExecute;
     public virtual bool CanExecute
     {
@@ -45,10 +54,11 @@ public abstract class AbilityBase : IAbility
 
     public abstract void Execute();
 
-    public AbilityBase(string name, string lore, bool canExecute = true)
+    public AbilityBase(string name, string lore, KeyCode key, bool canExecute = true)
     {
         this.name = name;
         this.lore = lore;
+        this.key = key;
         this.canExecute = canExecute;
     }
 }

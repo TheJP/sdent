@@ -14,15 +14,9 @@ public class Caravan : RtsUnit
         set { throw new InvalidOperationException(); }
     }
 
-    private readonly List<IAbility> abilities = new List<IAbility>();
-    public override IEnumerable<IAbility> Abilities
-    {
-        get { return abilities; }
-    }
-
     public Caravan()
     {
-        abilities.Add(new BuildSaloon(this));
+        AddAbility(new BuildSaloon(this));
     }
 
     protected override void Start()
@@ -45,7 +39,7 @@ public class Caravan : RtsUnit
     private class BuildSaloon : AbilityBase
     {
         private Caravan caravan;
-        public BuildSaloon(Caravan caravan) : base("Build Saloon", "Builds a saloon at the current location of the caravan. This will be the start of a new city.")
+        public BuildSaloon(Caravan caravan) : base("Build Saloon", "Builds a saloon at the current location of the caravan. This will be the start of a new city.", KeyCode.Q)
         {
             this.caravan = caravan;
         }

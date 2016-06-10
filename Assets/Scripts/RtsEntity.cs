@@ -75,7 +75,7 @@ public abstract class RtsEntity : NetworkBehaviour
 
     private void EntitySelectionChanged()
     {
-        entityColorMesh.material.color = Selected ? Color.green : Color.white;
+        if (isActiveAndEnabled) { entityColorMesh.material.color = Selected ? Color.green : Color.white; }
     }
 
     [Command]
@@ -92,7 +92,10 @@ public abstract class RtsEntity : NetworkBehaviour
     /// <summary>
     /// Called, when the local player right clicks with this entity selected.
     /// </summary>
-    public virtual void DoRightClickAction(Vector3 position) { }
+    public virtual IAbility RightClickAbility
+    {
+        get { return null; }
+    }
 
     protected virtual void Start()
     {

@@ -34,7 +34,7 @@ public class Saloon : RtsTrainingBuilding
     private class TrainWorker : AbilityBase
     {
         private Saloon saloon;
-        public TrainWorker(Saloon saloon) : base("Worker", "Train a worker, which can build structures and harvest resources.")
+        public TrainWorker(Saloon saloon) : base("Worker", "Train a worker, which can build structures and harvest resources.", KeyCode.W)
         {
             this.saloon = saloon;
         }
