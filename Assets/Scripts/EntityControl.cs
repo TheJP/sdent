@@ -67,20 +67,12 @@ public class EntityControl : NetworkBehaviour
         //Select clicked unit
         foreach (var selectedEntity in selectedEntities.ToList())
         {
-            if (selectedEntity != entity)
-            {
-                selectedEntity.Selected = false;
-                selectedEntity.EntityDied -= EntityDied;
-            }
+            if (selectedEntity != entity) { selectedEntity.Selected = false; }
         }
         selectedEntities.Clear();
         if (entity != null)
         {
-            if (!entity.Selected)
-            {
-                entity.Selected = true;
-                entity.EntityDied += EntityDied;
-            }
+            if (!entity.Selected) { entity.Selected = true; }
             selectedEntities.Add(entity);
             activeType = entity.GetType();
         }
@@ -96,6 +88,14 @@ public class EntityControl : NetworkBehaviour
         }
     }
 
+    /// <summary>Add entity to the entity control. Can be called on the server and on the client.</summary>
+    /// <param name="entity"></param>
+    private void AddEntity(RtsEntity entity)
+    {
+        entities.Add(entity);
+        entity.EntityDied += EntityDied;
+    }
+
     /// <summary>Server method, which spawns units and buildings with client authority. Should never be used with resources (e.g. GoldMine).</summary>
     /// <param name="entityPrefab"></param>
     /// <param name="position"></param>
@@ -107,7 +107,14 @@ public class EntityControl : NetworkBehaviour
         entity.transform.parent = transform;
         var rtsEntity = entity.GetComponent<RtsEntity>();
         rtsEntity.SetClient(player);
-        entities.Add(rtsEntity);
+        AddEntity(rtsEntity);
         NetworkServer.SpawnWithClientAuthority(entity, player);
+        RpcEntitySpawned(entity);
+    }
+
+    [ClientRpc]
+    private void RpcEntitySpawned(GameObject entity)
+    {
+        AddEntity(entity.GetComponent<RtsEntity>());
     }
 }

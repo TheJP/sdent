@@ -27,7 +27,7 @@ public class GuiCommand
     public Row PreferredRow { get; set; }
     public Column PreferredColumn { get; set; }
 
-    public String ToolTip { get; set; }
+    public string ToolTip { get; set; }
     public bool Enabled { get; set; }
 
     public GuiCommand(IAbility ability, Row preferredRow = Row.Any, Column preferredColumn = Column.Any)
