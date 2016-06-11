@@ -132,7 +132,15 @@ public class EntityControl : NetworkBehaviour
         var constructionSite = Spawn(constructionSitePrefab, position, player);
         var site = constructionSite.GetComponent<ConstructionSite>();
         worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
-        site.state = 1f;
         site.RpcSetFinalBuilding(finalBuildingPrefab);
+    }
+
+    /// <summary>Called </summary>
+    /// <param name="playerObject"></param>
+    [Command]
+    public void CmdStartPlayer(GameObject playerObject)
+    {
+        AddEntity(playerObject.GetComponent<RtsEntity>());
+        RpcEntitySpawned(playerObject);
     }
 }

@@ -12,4 +12,10 @@ public class ConstructionSite : RtsBuilding
         //Everyone is allowed to know, which building this construction site will be when done
         this.finalBuildingPrefab = finalBuildingPrefab;
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        state = 1f;
+    }
 }

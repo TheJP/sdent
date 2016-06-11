@@ -6,10 +6,15 @@ using UnityEngine.Networking;
 
 public class Worker : RtsUnit
 {
+    public const double WorkDistance = 12;
+
+    private enum States { Idle, Traveling, Building }
+
     public GameObject storageHousePrefab;
 
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
     private RtsEntity assignedWork = null;
+    private States workerState = States.Idle;
 
     public Worker()
     {
@@ -22,10 +27,55 @@ public class Worker : RtsUnit
         if (hasAuthority) { assignedWork = entity.GetComponent<RtsEntity>(); }
     }
 
+    private void DoAssignedWork(NavMeshAgent agent)
+    {
+        if ((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+        {
+            if (assignedWork is ConstructionSite) { workerState = States.Building; }
+            else { workerState = States.Idle; }
+        }
+        else if(workerState != States.Traveling)
+        {
+            if (agent.SetDestination(assignedWork.transform.position))
+            {
+                agent.Resume();
+                workerState = States.Traveling;
+            }
+        }
+    }
+
+    [Command]
+    private void CmdBuild(GameObject assignedWork)
+    {
+        var constructionSite = assignedWork.GetComponent<ConstructionSite>();
+        constructionSite.state += 1f;
+    }
+
     protected override void Update()
     {
         base.Update();
-        //TODO: Worker state machine
+        var agent = GetComponent<NavMeshAgent>();
+        if (hasAuthority)
+        {
+            switch (workerState)
+            {
+                case States.Idle:
+                    if (assignedWork != null) { DoAssignedWork(agent); }
+                    break;
+                case States.Traveling:
+                    if (!agent.pathPending && (agent.destination - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+                    {
+                        //Completed path: transition to work / idle
+                        if (assignedWork == null) { workerState = States.Idle; }
+                        else { DoAssignedWork(agent); }
+                    }
+                    break;
+                case States.Building:
+                    if (assignedWork == null) { workerState = States.Idle; }
+                    else { CmdBuild(assignedWork.gameObject); }
+                    break;
+            }
+        }
     }
 
     [Command]

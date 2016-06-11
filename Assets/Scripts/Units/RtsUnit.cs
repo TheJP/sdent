@@ -21,6 +21,11 @@ public abstract class RtsUnit : RtsEntity
         abilities.Add(ability);
     }
 
+    protected bool RemoveAbility(IAbility ability)
+    {
+        return abilities.Remove(ability);
+    }
+
     public RtsUnit()
     {
         moveAbility = new MoveAbility(this);
