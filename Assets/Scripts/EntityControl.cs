@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class EntityControl : NetworkBehaviour
 {
+    public GameObject constructionSitePrefab;
+
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     private System.Type activeType;
 
@@ -82,6 +84,19 @@ public class EntityControl : NetworkBehaviour
         }
     }
 
+    [Server]
+    private GameObject Spawn(GameObject prefab, Vector3 position, NetworkConnection player)
+    {
+        var entity = (GameObject)Instantiate(prefab, position, prefab.transform.rotation);
+        entity.transform.parent = transform;
+        var rtsEntity = entity.GetComponent<RtsEntity>();
+        rtsEntity.SetClient(player);
+        AddEntity(rtsEntity);
+        NetworkServer.SpawnWithClientAuthority(entity, player);
+        RpcEntitySpawned(entity);
+        return entity;
+    }
+
     /// <summary>Add entity to the entity control. Can be called on the server and on the client.</summary>
     /// <param name="entity"></param>
     private void AddEntity(RtsEntity entity)
@@ -97,18 +112,24 @@ public class EntityControl : NetworkBehaviour
     [Server]
     public void SpawnEntity(GameObject entityPrefab, Vector3 position, NetworkConnection player)
     {
-        var entity = (GameObject)Instantiate(entityPrefab, position, entityPrefab.transform.rotation);
-        entity.transform.parent = transform;
-        var rtsEntity = entity.GetComponent<RtsEntity>();
-        rtsEntity.SetClient(player);
-        AddEntity(rtsEntity);
-        NetworkServer.SpawnWithClientAuthority(entity, player);
-        RpcEntitySpawned(entity);
+        Spawn(entityPrefab, position, player);
     }
 
     [ClientRpc]
     private void RpcEntitySpawned(GameObject entity)
     {
         AddEntity(entity.GetComponent<RtsEntity>());
+    }
+
+    /// <summary>Server method, which spawns a construction site and assigns the given worker to it.</summary>
+    /// <param name="finalBuildingPrefab"></param>
+    /// <param name="position"></param>
+    /// <param name="player"></param>
+    /// <param name="worker">Worker, which will get the job to work on the construction site.</param>
+    [Server]
+    public void BuildConstructionSite(GameObject finalBuildingPrefab, Vector3 position, NetworkConnection player, GameObject worker)
+    {
+        var constructionSite = Spawn(constructionSitePrefab, position, player);
+        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
     }
 }

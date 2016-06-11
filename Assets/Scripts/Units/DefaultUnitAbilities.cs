@@ -15,6 +15,7 @@ public class MoveAbility : AbilityBase
 
     public override void Execute()
     {
+        if (!entity.hasAuthority) { return; }
         //Cast a ray to determine where to move
         var hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
         var ground = hits.Where(hit => hit.transform.tag == "Ground").Select(hit => (Vector3?)hit.point).FirstOrDefault();
@@ -39,7 +40,7 @@ public class StopAbility : AbilityBase
 
     public override void Execute()
     {
-        entity.GetComponent<NavMeshAgent>().Stop();
+        if (entity.hasAuthority) { entity.GetComponent<NavMeshAgent>().Stop(); }
     }
 }
 
@@ -54,6 +55,6 @@ public class ResumeAbility : AbilityBase
 
     public override void Execute()
     {
-        entity.GetComponent<NavMeshAgent>().Resume();
+        if (entity.hasAuthority) { entity.GetComponent<NavMeshAgent>().Resume(); }
     }
 }
