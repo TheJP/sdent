@@ -294,7 +294,7 @@ GameObject:
   - 114: {fileID: 11432384}
   - 208: {fileID: 20834418}
   m_Layer: 0
-  m_Name: ClayMine 1
+  m_Name: ClayMine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
