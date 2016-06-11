@@ -122,7 +122,7 @@ public class EntityControl : NetworkBehaviour
     }
 
     /// <summary>Server method, which spawns a construction site and assigns the given worker to it.</summary>
-    /// <param name="finalBuildingPrefab"></param>
+    /// <param name="finalBuildingPrefab">Prefab of the building, which will spawn, after the construction site is finished.</param>
     /// <param name="position"></param>
     /// <param name="player"></param>
     /// <param name="worker">Worker, which will get the job to work on the construction site.</param>
@@ -130,6 +130,9 @@ public class EntityControl : NetworkBehaviour
     public void BuildConstructionSite(GameObject finalBuildingPrefab, Vector3 position, NetworkConnection player, GameObject worker)
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player);
+        var site = constructionSite.GetComponent<ConstructionSite>();
         worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
+        site.state = 1f;
+        site.RpcSetFinalBuilding(finalBuildingPrefab);
     }
 }

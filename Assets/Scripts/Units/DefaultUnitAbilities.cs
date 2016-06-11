@@ -17,8 +17,7 @@ public class MoveAbility : AbilityBase
     {
         if (!entity.hasAuthority) { return; }
         //Cast a ray to determine where to move
-        var hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
-        var ground = hits.Where(hit => hit.transform.tag == "Ground").Select(hit => (Vector3?)hit.point).FirstOrDefault();
+        var ground = Utility.RayMouseToGround();
         if (ground.HasValue)
         {
             //Move to location, where the ground was hit
