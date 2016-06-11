@@ -1011,6 +1011,8 @@ MonoBehaviour:
   state: 0
   barSlider: {fileID: 11408936}
   barFillImage: {fileID: 11412510}
+  portraitImage: {fileID: 2800000, guid: 217ad9e57cca95a45917595677c6d8dd, type: 3}
+  entityColorMesh: {fileID: 2335792}
 --- !u!114 &11425800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1078,7 +1080,7 @@ MonoBehaviour:
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_SnapThreshold: 5
-  m_InterpolateRotation: 1
+  m_InterpolateRotation: 0
   m_InterpolateMovement: 1
 --- !u!114 &11452420
 MonoBehaviour:

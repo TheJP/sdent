@@ -235,10 +235,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 441224}
   - 65: {fileID: 6566710}
-  - 114: {fileID: 11415154}
   - 114: {fileID: 11490726}
   - 114: {fileID: 11402590}
   - 208: {fileID: 20832542}
+  - 114: {fileID: 11443008}
   m_Layer: 0
   m_Name: CoalMine
   m_TagString: RtsEntity
@@ -908,7 +908,7 @@ MonoBehaviour:
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_SnapThreshold: 5
-  m_InterpolateRotation: 1
+  m_InterpolateRotation: 0
   m_InterpolateMovement: 1
 --- !u!114 &11413664
 MonoBehaviour:
@@ -958,22 +958,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &11415154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 157222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43b25f892d7b8014c9e40258c5f88b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  barSlider: {fileID: 11413664}
-  barFillImage: {fileID: 11476400}
-  portraitImage: {fileID: 0}
-  entityColorMesh: {fileID: 0}
 --- !u!114 &11417488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1022,6 +1006,22 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &11443008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 157222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 284e08a79f29ad1408a461eda8952704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  barSlider: {fileID: 11413664}
+  barFillImage: {fileID: 11476400}
+  portraitImage: {fileID: 2800000, guid: 4085de2724f9cb641bfff615e9e0df5c, type: 3}
+  entityColorMesh: {fileID: 2315514}
 --- !u!114 &11469266
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,7 +5,7 @@ using System;
 
 public enum ResourceTypes
 {
-    Gold, Iron, Wood
+    Gold, Iron, Wood, Coal, Clay
 }
 
 public abstract class RtsResource : RtsEntity
