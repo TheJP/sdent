@@ -1548,6 +1548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bfc1a8c98cd8af43aa5b9ab4c265f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  constructionSitePrefab: {fileID: 156168, guid: 8cf89643d7fdb90419c5693e69264084,
+    type: 2}
 --- !u!4 &1244970957
 Transform:
   m_ObjectHideFlags: 0
