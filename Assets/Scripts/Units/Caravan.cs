@@ -22,11 +22,7 @@ public class Caravan : RtsUnit
     protected override void Start()
     {
         base.Start();
-        if (hasAuthority)
-        {
-            FindObjectOfType<CameraControl>().SetInitialPosition(this);
-            FindObjectOfType<EntityControl>().CmdStartPlayer(gameObject);
-        }
+        if (hasAuthority) { FindObjectOfType<CameraControl>().SetInitialPosition(this); }
     }
 
     [Command]
