@@ -91,15 +91,13 @@ public class EntityControl : NetworkBehaviour
         entity.transform.parent = transform;
         var rtsEntity = entity.GetComponent<RtsEntity>();
         rtsEntity.SetClient(player);
-        AddEntity(rtsEntity);
         NetworkServer.SpawnWithClientAuthority(entity, player);
-        RpcEntitySpawned(entity);
         return entity;
     }
 
     /// <summary>Add entity to the entity control. Can be called on the server and on the client.</summary>
     /// <param name="entity"></param>
-    private void AddEntity(RtsEntity entity)
+    public void AddEntity(RtsEntity entity)
     {
         entities.Add(entity);
         entity.EntityDied += EntityDied;
@@ -115,12 +113,6 @@ public class EntityControl : NetworkBehaviour
         Spawn(entityPrefab, position, player);
     }
 
-    [ClientRpc]
-    private void RpcEntitySpawned(GameObject entity)
-    {
-        AddEntity(entity.GetComponent<RtsEntity>());
-    }
-
     /// <summary>Server method, which spawns a construction site and assigns the given worker to it.</summary>
     /// <param name="finalBuildingPrefab">Prefab of the building, which will spawn, after the construction site is finished.</param>
     /// <param name="position"></param>
@@ -131,8 +123,7 @@ public class EntityControl : NetworkBehaviour
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player);
         var site = constructionSite.GetComponent<ConstructionSite>();
-        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
-        site.state = 1f;
+        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);Debug.Log(finalBuildingPrefab);
         site.RpcSetFinalBuilding(finalBuildingPrefab);
     }
 }

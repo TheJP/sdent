@@ -27,6 +27,7 @@ public class Saloon : RtsTrainingBuilding
         {
             //TODO: Add training cost (e.g. 20 food)
             //TODO: Add training queue and time delay for spawning (to be done in RtsTrainingBuilding)
+            //TODO: Add colision detection with other entities
             FindObjectOfType<EntityControl>().SpawnEntity(workerPrefab, spawnPoint.transform.position, Client);
         }
     }
