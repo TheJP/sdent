@@ -5,18 +5,22 @@ using System;
 using System.Linq;
 using UnityEngine.Networking;
 
-public class Worker : RtsUnit
+public class Worker : RtsUnit, IHasInventory
 {
+    public const int InventorySize = 20;
     public const float WorkDistance = 12;
     public const float WorkerBuildingSpeed = 1f;
+    public const float GatheringTime = 0.1f;
 
-    private enum States { Idle, Traveling, Building }
+    private enum States { Idle, Traveling, Building, Gathering }
 
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
     private RtsEntity assignedWork = null;
     private States workerState = States.Idle;
+    private float lastGatheredTime = 0f;
     private readonly IAbility moveAbility;
     private readonly AbilityWithTarget work;
+    private readonly Inventory inventory = new Inventory(InventorySize);
 
     public override IAbility RightClickAbility
     {
@@ -26,6 +30,11 @@ public class Worker : RtsUnit
     public override AbilityWithTarget RightClickWithTargetAbility
     {
         get { return work; }
+    }
+
+    public Inventory Inventory
+    {
+        get { return inventory; }
     }
 
     public Worker()
@@ -42,6 +51,16 @@ public class Worker : RtsUnit
         AddAbility(work);
     }
 
+    private RtsBuilding FindNearestStorage()
+    {
+        var entities = FindObjectOfType<EntityControl>().Entities;
+        return Enumerable.Union(
+            entities.Get<Saloon>().Select(saloon => saloon as RtsBuilding),
+            entities.Get<StorageHouse>().Select(house => house as RtsBuilding))
+        .Where(house => house.hasAuthority)
+        .OrderBy(house => (house.transform.position - transform.position).sqrMagnitude)
+        .FirstOrDefault();
+    }
     /// <summary>Stop the current work and switch to being Idle.</summary>
     private void StopWork()
     {
@@ -72,12 +91,48 @@ public class Worker : RtsUnit
     [Client]
     private void DoAssignedWork(NavMeshAgent agent)
     {
-        if ((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+        if (assignedWork is RtsResource && Inventory.Count() >= InventorySize)
         {
+            var nearesStorage = FindNearestStorage();
+            if(nearesStorage == null) { return; }
+            if((nearesStorage.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+            {
+                //Load off resource
+                var target = (nearesStorage as IHasInventory).Inventory;
+                foreach (var resource in Inventory.ToList())
+                {
+                    if (target.AddResources(resource.Key, resource.Value)) { Inventory.RemoveResources(resource.Key, resource.Value); }
+                }
+                //Travel back to resource
+                if (Inventory.Count() < InventorySize && agent.SetDestination(assignedWork.transform.position))
+                {
+                    agent.Resume();
+                    workerState = States.Traveling;
+                }
+            }
+            else
+            {
+                //Travel to storage house
+                if (agent.SetDestination(nearesStorage.transform.position))
+                {
+                    agent.Resume();
+                    workerState = States.Traveling;
+                }
+            }
+        }
+        else if ((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+        {
+            //Arrived at travel target
             if (assignedWork is ConstructionSite)
             {
+                //Build building
                 (assignedWork as ConstructionSite).WorkerStartBuilding(this);
                 workerState = States.Building;
+            }
+            else if(assignedWork is RtsResource)
+            {
+                //Gather resource
+                workerState = States.Gathering;
             }
             else { workerState = States.Idle; }
         }
@@ -113,6 +168,25 @@ public class Worker : RtsUnit
                     break;
                 case States.Building:
                     if (assignedWork == null) { workerState = States.Idle; }
+                    break;
+                case States.Gathering:
+                    if (assignedWork == null) { workerState = States.Idle; }
+                    else if(Inventory.Count() >= InventorySize)
+                    {
+                        //Go home
+                        var nearestStorage = FindNearestStorage();
+                        if (nearestStorage != null && agent.SetDestination(nearestStorage.transform.position))
+                        {
+                            agent.Resume();
+                            workerState = States.Traveling;
+                        }
+                    }
+                    else if(lastGatheredTime + GatheringTime < Time.time)
+                    {
+                        lastGatheredTime = Time.time;
+                        Inventory.AddResources((assignedWork as RtsResource).ResourceType, 1);
+                        //TODO: Romve remote resource
+                    }
                     break;
             }
         }
@@ -161,7 +235,7 @@ public class Worker : RtsUnit
             worker.StopWork();
             resumeAbility.ResumeAble = false;
             worker.GetComponent<NavMeshAgent>().SetDestination(worker.transform.position);
-            if (target is ConstructionSite) { worker.assignedWork = target; }
+            if (target is ConstructionSite || target is RtsResource) { worker.assignedWork = target; }
         }
     }
 

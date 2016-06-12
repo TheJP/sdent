@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.Networking;
 
-public class Saloon : RtsTrainingBuilding
+public class Saloon : RtsTrainingBuilding, IHasInventory
 {
+    public const int InventorySize = 5000;
+
     public GameObject workerPrefab;
     public Transform spawnPoint;
 
+    private readonly Inventory inventory = new Inventory(InventorySize);
     private readonly List<IAbility> abilities = new List<IAbility>();
     public override IEnumerable<IAbility> Abilities
     {
@@ -18,6 +21,11 @@ public class Saloon : RtsTrainingBuilding
     public override Buildings Type
     {
         get { return Buildings.Saloon; }
+    }
+
+    public Inventory Inventory
+    {
+        get { return inventory; }
     }
 
     public Saloon()

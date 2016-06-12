@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class StorageHouse : RtsBuilding, HasInventory
+public class StorageHouse : RtsBuilding, IHasInventory
 {
     public const int InventorySize = 1000;
 

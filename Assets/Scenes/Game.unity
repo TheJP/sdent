@@ -167,7 +167,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 12395708}
   m_LocalRotation: {x: -0.48861566, y: 0.18375096, z: -0.10608868, w: -0.84630704}
-  m_LocalPosition: {x: 3.79, y: 33.36, z: -17.47}
+  m_LocalPosition: {x: 0, y: 33.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72fa861dcea9663409c1bcbe9f13e429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeedKeyboard: 15
+  cameraSpeedKeyboard: 30
   cameraSpeedMouse: 0
   rotation: 335.5
   borderSize: {x: 10, y: 10}
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldMinePrefab: {fileID: 106646, guid: 38364b5327a2d8a4a9f668437b25f91e, type: 2}
-  goldMineAmount: 15
+  goldMineAmount: 60
   spawnCorner1: {fileID: 1082189581}
   spawnCorner2: {fileID: 1214132110}
   minimalDistance: 10

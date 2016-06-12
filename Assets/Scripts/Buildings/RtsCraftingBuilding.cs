@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 /// <summary>Base class for every building, which can craft certain recipes.</summary>
-public abstract class RtsCraftingBuilding : RtsBuilding, HasInventory
+public abstract class RtsCraftingBuilding : RtsBuilding, IHasInventory
 {
     /// <summary>Factor, how much more space a crafting building has, than it needs for one recipe (including output).</summary>
     public const int CraftingSpaceFactor = 2;

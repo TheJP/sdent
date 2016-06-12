@@ -57,7 +57,7 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
     /// <returns></returns>
     public IEnumerable<T> Get<T>() where T : RtsEntity
     {
-        if (entities.ContainsKey(typeof(T))) { return (IEnumerable<T>)entities[typeof(T)].AsReadOnly(); }
+        if (entities.ContainsKey(typeof(T))) { return entities[typeof(T)].AsReadOnly().Select(entity => (T) entity); }
         else { return Enumerable.Empty<T>(); }
     }
 

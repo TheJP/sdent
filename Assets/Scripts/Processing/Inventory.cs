@@ -1,20 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class Inventory
+public class Inventory : IEnumerable<KeyValuePair<ResourceTypes, int>>
 {
     private readonly Dictionary<ResourceTypes, int> inventory = new Dictionary<ResourceTypes, int>();
     private readonly int spaceAvailable;
     private int spaceTaken = 0;
-
-    /// <summary>Creates an inventory with the given size.</summary>
-    /// <param name="spaceAvailable">Size of the inventory</param>
-    public Inventory(int spaceAvailable)
-    {
-        this.spaceAvailable = spaceAvailable;
-    }
 
     public int this[ResourceTypes resource]
     {
@@ -24,6 +18,17 @@ public class Inventory
             return inventory[resource];
         }
     }
+
+    public int SpaceAvailable { get { return spaceAvailable; } }
+
+    /// <summary>Creates an inventory with the given size.</summary>
+    /// <param name="spaceAvailable">Size of the inventory</param>
+    public Inventory(int spaceAvailable)
+    {
+        this.spaceAvailable = spaceAvailable;
+    }
+
+    public int Count() { return spaceTaken; }
 
     public virtual bool AddResources(ResourceTypes resource, int amount)
     {
@@ -43,4 +48,7 @@ public class Inventory
         inventory[resource] -= amount;
         return true;
     }
+
+    public IEnumerator<KeyValuePair<ResourceTypes, int>> GetEnumerator() { return inventory.GetEnumerator(); }
+    IEnumerator IEnumerable.GetEnumerator() { return inventory.GetEnumerator(); }
 }
