@@ -97,6 +97,14 @@ public abstract class RtsEntity : NetworkBehaviour
         get { return null; }
     }
 
+    /// <summary>
+    /// Called, when the local player right clicks a target with this entity selected.
+    /// </summary>
+    public virtual AbilityWithTarget RightClickWithTargetAbility
+    {
+        get { return null; }
+    }
+
     protected virtual void Start()
     {
         state = MaxState; //Set initial state on server and clients (lag compensation)

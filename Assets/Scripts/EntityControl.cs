@@ -23,20 +23,17 @@ public class EntityControl : NetworkBehaviour
     {
         var leftClick = Input.GetMouseButtonDown(0);
         var rightClick = Input.GetMouseButtonDown(1);
-        if (leftClick)
+        if(leftClick || rightClick)
         {
-            if (!menu.HandleMouseClick(Input.mousePosition))
+            var clickedEntity = Utility.RayMouseToRtsEntity();
+            if (leftClick)
             {
-                //Cast a ray to determine, what was clicked
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
-                var hits = Physics.RaycastAll(ray);
-                LeftClick(ray, hits);
+                if (!menu.HandleMouseClick(Input.mousePosition)) { LeftClick(clickedEntity); }
             }
-        }
-        else if(rightClick)
-        {
-            RightClick();
+            else if (rightClick)
+            {
+                RightClick(clickedEntity);
+            }
         }
         //Execute abilities of active entities if possible
         foreach(var ability in selectedEntities.Get(activeType).ToList().SelectMany(entity => entity.Abilities))
@@ -48,38 +45,36 @@ public class EntityControl : NetworkBehaviour
         }
     }
 
-    private void RightClick()
+    private void RightClick(RtsEntity clickedEntity)
     {
         //Execute right click ability on all selected units
         foreach (var selectedEntity in selectedEntities.ToList())
         {
-            var ability = selectedEntity.RightClickAbility;
-            if (ability != null && ability.CanExecute) { ability.Execute(); }
+            var targetAbility = selectedEntity.RightClickWithTargetAbility;
+            if (targetAbility != null && clickedEntity != null && targetAbility.CanExecute) { targetAbility.Execute(clickedEntity); }
+            else
+            {
+                var ability = selectedEntity.RightClickAbility;
+                if (ability != null && ability.CanExecute) { ability.Execute(); }
+            }
         }
     }
 
-    private void LeftClick(Ray ray, RaycastHit[] hits)
+    private void LeftClick(RtsEntity clickedEntity)
     {
         // ToDo: IF click on menu: let menu handle it
 
-
-        //Find clicked unit (or none)
-        var entity = hits
-            .Where(hit => hit.transform.tag == "RtsEntity")
-            .OrderBy(hit => (hit.point - ray.origin).sqrMagnitude)
-            .Select(hit => hit.transform.gameObject.GetComponent<RtsEntity>())
-            .FirstOrDefault();
         //Select clicked unit
         foreach (var selectedEntity in selectedEntities.ToList())
         {
-            if (selectedEntity != entity) { selectedEntity.Selected = false; }
+            if (selectedEntity != clickedEntity) { selectedEntity.Selected = false; }
         }
         selectedEntities.Clear();
-        if (entity != null)
+        if (clickedEntity != null)
         {
-            if (!entity.Selected) { entity.Selected = true; }
-            selectedEntities.Add(entity);
-            activeType = entity.GetType();
+            if (!clickedEntity.Selected) { clickedEntity.Selected = true; }
+            selectedEntities.Add(clickedEntity);
+            activeType = clickedEntity.GetType();
         }
     }
 

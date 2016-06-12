@@ -16,10 +16,16 @@ public class Worker : RtsUnit
     private RtsEntity assignedWork = null;
     private States workerState = States.Idle;
     private readonly IAbility moveAbility;
+    private readonly AbilityWithTarget work;
 
     public override IAbility RightClickAbility
     {
         get { return moveAbility; }
+    }
+
+    public override AbilityWithTarget RightClickWithTargetAbility
+    {
+        get { return work; }
     }
 
     public Worker()
@@ -31,7 +37,20 @@ public class Worker : RtsUnit
         AddAbility(new Stop(new StopAbility(this), this, resume));
         AddAbility(resume);
         AddAbility(new NewOrder(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse), this, resume));
-        AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.W, this, Buildings.Stable), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
+        work = new Work(KeyCode.W, this, resume);
+        AddAbility(work);
+    }
+
+    /// <summary>Stop the current work and switch to being Idle.</summary>
+    private void StopWork()
+    {
+        if (assignedWork != null)
+        {
+            if (assignedWork is ConstructionSite) { (assignedWork as ConstructionSite).WorkerStopBuilding(this); }
+        }
+        workerState = States.Idle;
+        assignedWork = null;
     }
 
     [ClientRpc]
@@ -127,6 +146,25 @@ public class Worker : RtsUnit
         }
     }
 
+    private class Work : AbilityWithTarget
+    {
+        private readonly Worker worker;
+        private readonly Resume resumeAbility;
+        public Work(KeyCode key, Worker worker, Resume resume) : base("Work", "Work at target. This can be: 'Building at a construction site' or 'Gathering resources'", key, "BuildBuilding")
+        {
+            this.worker = worker;
+            this.resumeAbility = resume;
+        }
+
+        public override void Execute(RtsEntity target)
+        {
+            worker.StopWork();
+            resumeAbility.ResumeAble = false;
+            worker.GetComponent<NavMeshAgent>().SetDestination(worker.transform.position);
+            if (target is ConstructionSite) { worker.assignedWork = target; }
+        }
+    }
+
     private class Resume : AbilityDecorator
     {
         private readonly Worker worker;
@@ -166,15 +204,10 @@ public class Worker : RtsUnit
         public override void Execute()
         {
             base.Execute();
-            if(worker.assignedWork != null)
-            {
-                if (worker.assignedWork is ConstructionSite) { (worker.assignedWork as ConstructionSite).WorkerStopBuilding(worker); }
-            }
             resumeAbility.PreviousAssignedWork = worker.assignedWork;
-            worker.assignedWork = null;
             resumeAbility.PreviousWorkerState = worker.workerState;
-            worker.workerState = States.Idle;
             resumeAbility.ResumeAble = true;
+            worker.StopWork();
         }
     }
 
@@ -190,12 +223,7 @@ public class Worker : RtsUnit
 
         public override void Execute()
         {
-            if (worker.assignedWork != null)
-            {
-                if (worker.assignedWork is ConstructionSite) { (worker.assignedWork as ConstructionSite).WorkerStopBuilding(worker); }
-            }
-            worker.workerState = States.Idle;
-            worker.assignedWork = null;
+            worker.StopWork();
             base.Execute();
             resumeAbility.ResumeAble = false;
         }
