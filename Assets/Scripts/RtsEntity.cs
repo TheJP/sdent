@@ -100,6 +100,7 @@ public abstract class RtsEntity : NetworkBehaviour
     protected virtual void Start()
     {
         state = MaxState; //Set initial state on server and clients (lag compensation)
+        FindObjectOfType<EntityControl>().AddEntity(this);
     }
 
     protected virtual void Update()
