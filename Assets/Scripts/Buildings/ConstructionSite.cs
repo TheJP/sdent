@@ -2,19 +2,29 @@
 using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using System;
 
 public class ConstructionSite : RtsBuilding
 {
-    private GameObject finalBuildingPrefab;
+    public GameObject[] buildingPrefabs;
+
+    private readonly Dictionary<Buildings, GameObject> prefabDictionary = new Dictionary<Buildings, GameObject>();
+
+    [SyncVar]
+    private Buildings finalBuilding;
+
     private readonly HashSet<Worker> buildingWorkers = new HashSet<Worker>();
     private bool finishedBuilding = false;
 
-    [ClientRpc]
-    public void RpcSetFinalBuilding(GameObject finalBuildingPrefab)
+    public Buildings FinalBuilding
     {
-        Debug.Log(finalBuildingPrefab);
-        //Everyone is allowed to know, which building this construction site will be when done
-        this.finalBuildingPrefab = finalBuildingPrefab;
+        get { return finalBuilding; }
+        set { finalBuilding = value; }
+    }
+
+    public override Buildings Type
+    {
+        get { return Buildings.ConstructionSite; }
     }
 
     [Command]
@@ -33,6 +43,10 @@ public class ConstructionSite : RtsBuilding
         finishedBuilding = false;
         buildingWorkers.Clear();
         state = 1f;
+        foreach(var prefab in buildingPrefabs)
+        {
+            prefabDictionary.Add(prefab.GetComponent<RtsBuilding>().Type, prefab);
+        }
     }
 
     protected override void Update()
@@ -46,7 +60,7 @@ public class ConstructionSite : RtsBuilding
                 finishedBuilding = true;
                 foreach (var worker in buildingWorkers) { worker.FinishedBuilding(); }
                 buildingWorkers.Clear();
-                CmdFinishBuilding(finalBuildingPrefab);
+                CmdFinishBuilding(prefabDictionary[FinalBuilding]);
             }
         }
     }

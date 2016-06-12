@@ -11,4 +11,9 @@ public class StorageHouse : RtsBuilding, HasInventory
     {
         get { return inventory; }
     }
+
+    public override Buildings Type
+    {
+        get { return Buildings.StorageHouse; }
+    }
 }

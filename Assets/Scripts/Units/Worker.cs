@@ -11,15 +11,13 @@ public class Worker : RtsUnit
 
     private enum States { Idle, Traveling, Building }
 
-    public GameObject storageHousePrefab;
-
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
     private RtsEntity assignedWork = null;
     private States workerState = States.Idle;
 
     public Worker()
     {
-        AddAbility(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, () => storageHousePrefab));
+        AddAbility(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse));
     }
 
     [ClientRpc]
@@ -87,30 +85,30 @@ public class Worker : RtsUnit
     }
 
     [Command]
-    private void CmdBuildBuilding(GameObject buildingPrefab)
+    private void CmdBuildBuilding(Buildings building)
     {
         var ground = Utility.RayMouseToGround();
         if (ground.HasValue)
         {
             //TODO: entity avoidance for new buildings
-            FindObjectOfType<EntityControl>().BuildConstructionSite(buildingPrefab, ground.Value, Client, gameObject);
+            FindObjectOfType<EntityControl>().BuildConstructionSite(building, ground.Value, Client, gameObject);
         }
     }
 
     private class BuildBuilding : AbilityBase
     {
         private Worker worker;
-        private Func<GameObject> finalBuildingPrefab;
+        private Buildings finalBuilding;
 
-        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Func<GameObject> finalBuildingPrefab) : base(name, lore, key, "BuildBuilding")
+        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Buildings finalBuilding) : base(name, lore, key, "BuildBuilding")
         {
             this.worker = worker;
-            this.finalBuildingPrefab = finalBuildingPrefab;
+            this.finalBuilding = finalBuilding;
         }
 
         public override void Execute()
         {
-            if (worker.hasAuthority) { worker.CmdBuildBuilding(finalBuildingPrefab()); }
+            if (worker.hasAuthority) { worker.CmdBuildBuilding(finalBuilding); }
         }
     }
 }

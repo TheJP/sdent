@@ -92,12 +92,13 @@ public class EntityControl : NetworkBehaviour
     }
 
     [Server]
-    private GameObject Spawn(GameObject prefab, Vector3 position, NetworkConnection player)
+    private GameObject Spawn(GameObject prefab, Vector3 position, NetworkConnection player, System.Action<RtsEntity> initalise = null)
     {
         var entity = (GameObject)Instantiate(prefab, position, prefab.transform.rotation);
         entity.transform.parent = transform;
         var rtsEntity = entity.GetComponent<RtsEntity>();
         rtsEntity.SetClient(player);
+        if (initalise != null) { initalise(rtsEntity); }
         NetworkServer.SpawnWithClientAuthority(entity, player);
         return entity;
     }
@@ -126,11 +127,10 @@ public class EntityControl : NetworkBehaviour
     /// <param name="player"></param>
     /// <param name="worker">Worker, which will get the job to work on the construction site.</param>
     [Server]
-    public void BuildConstructionSite(GameObject finalBuildingPrefab, Vector3 position, NetworkConnection player, GameObject worker)
+    public void BuildConstructionSite(Buildings finalBuilding, Vector3 position, NetworkConnection player, GameObject worker)
     {
-        var constructionSite = Spawn(constructionSitePrefab, position, player);
+        var constructionSite = Spawn(constructionSitePrefab, position, player, rtsEntity => (rtsEntity as ConstructionSite).FinalBuilding = finalBuilding);
         var site = constructionSite.GetComponent<ConstructionSite>();
-        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);Debug.Log(finalBuildingPrefab);
-        site.RpcSetFinalBuilding(finalBuildingPrefab);
+        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
     }
 }

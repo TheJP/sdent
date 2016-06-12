@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public abstract class RtsBuilding : RtsEntity
+public enum Buildings
 {
-    public abstract Buildings Type { get; }
+    Saloon,
+    ConstructionSite,
+    StorageHouse,
+    Stable
 }

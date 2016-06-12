@@ -15,6 +15,11 @@ public class Saloon : RtsTrainingBuilding
         get { return abilities; }
     }
 
+    public override Buildings Type
+    {
+        get { return Buildings.Saloon; }
+    }
+
     public Saloon()
     {
         abilities.Add(new TrainWorker(this));
