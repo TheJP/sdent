@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class EntityControl : NetworkBehaviour
 {
     public GameObject constructionSitePrefab;
+    public Menu menu;
 
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     private System.Type activeType;
@@ -22,11 +23,14 @@ public class EntityControl : NetworkBehaviour
         var rightClick = Input.GetMouseButtonDown(1);
         if (leftClick)
         {
-            //Cast a ray to determine, what was clicked
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
-            var hits = Physics.RaycastAll(ray);
-            LeftClick(ray, hits);
+            if (!menu.HandleMouseClick(Input.mousePosition))
+            {
+                //Cast a ray to determine, what was clicked
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+                var hits = Physics.RaycastAll(ray);
+                LeftClick(ray, hits);
+            }
         }
         else if(rightClick)
         {
@@ -54,6 +58,9 @@ public class EntityControl : NetworkBehaviour
 
     private void LeftClick(Ray ray, RaycastHit[] hits)
     {
+        // ToDo: IF click on menu: let menu handle it
+
+
         //Find clicked unit (or none)
         var entity = hits
             .Where(hit => hit.transform.tag == "RtsEntity")

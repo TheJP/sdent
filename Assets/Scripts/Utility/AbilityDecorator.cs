@@ -30,6 +30,11 @@ public abstract class AbilityDecorator : IAbility
         get { return Decorated.CanExecute; }
     }
 
+    public Texture Icon
+    {
+        get { return Decorated.Icon; }
+    }
+
     public AbilityDecorator(IAbility decorated)
     {
         this.Decorated = decorated;

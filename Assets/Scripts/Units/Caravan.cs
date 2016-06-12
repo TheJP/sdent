@@ -39,7 +39,7 @@ public class Caravan : RtsUnit
     private class BuildSaloon : AbilityBase
     {
         private Caravan caravan;
-        public BuildSaloon(Caravan caravan) : base("Build Saloon", "Builds a saloon at the current location of the caravan. This will be the start of a new city.", KeyCode.Q)
+        public BuildSaloon(Caravan caravan) : base("Build Saloon", "Builds a saloon at the current location of the caravan. This will be the start of a new city.", KeyCode.Q, "BuildSaloon")
         {
             this.caravan = caravan;
         }

@@ -1700,6 +1700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructionSitePrefab: {fileID: 156168, guid: 8cf89643d7fdb90419c5693e69264084,
     type: 2}
+  menu: {fileID: 1546405448}
 --- !u!4 &1244970957
 Transform:
   m_ObjectHideFlags: 0
@@ -2253,7 +2254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackgroundTexture: {fileID: 2800000, guid: f431f3abcaaa3e448a2155e677dd555c, type: 3}
-  UnitPortraitStyle:
+  PortraitStyle:
     m_Name: 
     m_Normal:
       m_Background: {fileID: 0}
@@ -2280,20 +2281,20 @@ MonoBehaviour:
       m_Background: {fileID: 0}
       m_TextColor: {r: 0, g: 0, b: 0, a: 1}
     m_Border:
-      m_Left: 2
-      m_Right: 2
-      m_Top: 2
-      m_Bottom: 2
-    m_Margin:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-    m_Padding:
+    m_Margin:
       m_Left: 10
       m_Right: 10
       m_Top: 10
       m_Bottom: 10
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
     m_Overflow:
       m_Left: 0
       m_Right: 0
@@ -2308,8 +2309,8 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 0
     m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 80
-    m_FixedHeight: 80
+    m_FixedWidth: 88
+    m_FixedHeight: 88
     m_StretchWidth: 1
     m_StretchHeight: 0
   EntityController: {fileID: 1244970956}

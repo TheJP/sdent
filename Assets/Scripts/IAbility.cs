@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +20,9 @@ public interface IAbility
 
     /// <summary>Flag, which determines, if this ability can currently be executed.</summary>
     bool CanExecute { get; }
+
+    /// <summary>The image of the ability</summary>
+    Texture Icon { get; }
 
     /// <summary>Execute the ability.</summary>
     /// <remarks>If the ability needs a target or further input, this data should be acquired via calls to helper methods.</remarks>
@@ -52,13 +56,20 @@ public abstract class AbilityBase : IAbility
         get { return canExecute; }
     }
 
+    private readonly Texture icon;
+    public virtual Texture Icon
+    {
+        get { return icon; }
+    }
+
     public abstract void Execute();
 
-    public AbilityBase(string name, string lore, KeyCode key, bool canExecute = true)
+    public AbilityBase(string name, string lore, KeyCode key, string iconName, bool canExecute = true)
     {
         this.name = name;
         this.lore = lore;
         this.key = key;
         this.canExecute = canExecute;
+        this.icon =  Resources.Load<Texture2D>("AbilitiesIcon/" + iconName);
     }
 }

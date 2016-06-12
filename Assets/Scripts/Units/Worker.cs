@@ -44,7 +44,7 @@ public class Worker : RtsUnit
         private Worker worker;
         private Func<GameObject> finalBuildingPrefab;
 
-        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Func<GameObject> finalBuildingPrefab) : base(name, lore, key)
+        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Func<GameObject> finalBuildingPrefab) : base(name, lore, key, "BuildBuilding")
         {
             this.worker = worker;
             this.finalBuildingPrefab = finalBuildingPrefab;
