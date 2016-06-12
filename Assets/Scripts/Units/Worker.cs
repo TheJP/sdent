@@ -18,6 +18,7 @@ public class Worker : RtsUnit
     public Worker()
     {
         AddAbility(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse));
+        AddAbility(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.W, this, Buildings.Stable));
     }
 
     [ClientRpc]
@@ -64,6 +65,7 @@ public class Worker : RtsUnit
         var agent = GetComponent<NavMeshAgent>();
         if (hasAuthority)
         {
+            //TODO: Get resources for the building first
             switch (workerState)
             {
                 case States.Idle:
