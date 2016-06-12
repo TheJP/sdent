@@ -14,8 +14,10 @@ public class EntityControl : NetworkBehaviour
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
 
-    public IEnumerable<RtsEntity> Entities { get { return entities.ToList(); } }
-    public IEnumerable<RtsEntity> SelectedEntities { get { return selectedEntities.ToList(); } }
+    /// <summary>Returns a read only collection of all known entities. (Read Only)</summary>
+    public EntityContainer Entities { get { return entities.AsReadOnly(); } }
+    /// <summary>Returns a read only collection of all selected entities. This should only be used on the client. (Read Only)</summary>
+    public EntityContainer SelectedEntities { get { return selectedEntities.AsReadOnly(); } }
 
     void Update()
     {
