@@ -6,7 +6,8 @@ using UnityEngine.Networking;
 
 public class Worker : RtsUnit
 {
-    public const double WorkDistance = 12;
+    public const float WorkDistance = 12;
+    public const float WorkerBuildingSpeed = 1f;
 
     private enum States { Idle, Traveling, Building }
 
@@ -27,11 +28,26 @@ public class Worker : RtsUnit
         if (hasAuthority) { assignedWork = entity.GetComponent<RtsEntity>(); }
     }
 
+    [Client]
+    public void FinishedBuilding()
+    {
+        if (workerState == States.Building)
+        {
+            assignedWork = null;
+            workerState = States.Idle;
+        }
+    }
+
+    [Client]
     private void DoAssignedWork(NavMeshAgent agent)
     {
         if ((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
         {
-            if (assignedWork is ConstructionSite) { workerState = States.Building; }
+            if (assignedWork is ConstructionSite)
+            {
+                (assignedWork as ConstructionSite).WorkerStartBuilding(this);
+                workerState = States.Building;
+            }
             else { workerState = States.Idle; }
         }
         else if(workerState != States.Traveling)
@@ -42,13 +58,6 @@ public class Worker : RtsUnit
                 workerState = States.Traveling;
             }
         }
-    }
-
-    [Command]
-    private void CmdBuild(GameObject assignedWork)
-    {
-        var constructionSite = assignedWork.GetComponent<ConstructionSite>();
-        constructionSite.state += 1f;
     }
 
     protected override void Update()
@@ -72,7 +81,6 @@ public class Worker : RtsUnit
                     break;
                 case States.Building:
                     if (assignedWork == null) { workerState = States.Idle; }
-                    else { CmdBuild(assignedWork.gameObject); }
                     break;
             }
         }

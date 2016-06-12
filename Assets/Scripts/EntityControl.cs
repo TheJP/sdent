@@ -123,7 +123,7 @@ public class EntityControl : NetworkBehaviour
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player);
         var site = constructionSite.GetComponent<ConstructionSite>();
-        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
+        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);Debug.Log(finalBuildingPrefab);
         site.RpcSetFinalBuilding(finalBuildingPrefab);
     }
 }
