@@ -8,5 +8,6 @@ public enum Buildings
     Saloon,
     ConstructionSite,
     StorageHouse,
-    Stable
+    Stable,
+    FarmHouse
 }
