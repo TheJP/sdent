@@ -1820,6 +1820,7 @@ MonoBehaviour:
   portraitImage: {fileID: 2800000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}
   entityColorMesh: {fileID: 2338950}
   workerPrefab: {fileID: 196684, guid: fca1101434e706345b5bbb4cb01de3d1, type: 2}
+  merchantPrefab: {fileID: 129360, guid: 239c743844215934793f3f3bf4196e64, type: 2}
   spawnPoint: {fileID: 405058}
 --- !u!114 &11470072
 MonoBehaviour:

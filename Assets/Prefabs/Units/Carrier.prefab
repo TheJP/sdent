@@ -183,7 +183,6 @@ GameObject:
   - 114: {fileID: 11493984}
   - 114: {fileID: 11421558}
   - 114: {fileID: 11480722}
-  - 114: {fileID: 11486142}
   - 114: {fileID: 11409914}
   m_Layer: 0
   m_Name: Carrier
@@ -1176,7 +1175,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!95 &9553550
 Animator:
@@ -1274,26 +1273,6 @@ MonoBehaviour:
     i15: 40
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &11486142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129166}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 2
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 0
-  m_InterpolateMovement: 1
 --- !u!114 &11493984
 MonoBehaviour:
   m_ObjectHideFlags: 1
