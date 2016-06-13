@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.Networking;
@@ -10,7 +11,7 @@ public class EntityControl : NetworkBehaviour
     public Menu menu;
 
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
-    private System.Type activeType;
+    public Type ActiveType { get; private set; }
 
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
@@ -19,6 +20,7 @@ public class EntityControl : NetworkBehaviour
     public EntityContainer Entities { get { return entities.AsReadOnly(); } }
     /// <summary>Returns a read only collection of all selected entities. This should only be used on the client. (Read Only)</summary>
     public EntityContainer SelectedEntities { get { return selectedEntities.AsReadOnly(); } }
+
 
     void Update()
     {
@@ -37,7 +39,7 @@ public class EntityControl : NetworkBehaviour
             }
         }
         //Execute abilities of active entities if possible
-        foreach(var ability in selectedEntities.Get(activeType).ToList().SelectMany(entity => entity.Abilities))
+        foreach(var ability in selectedEntities.Get(ActiveType).ToList().SelectMany(entity => entity.Abilities))
         {
             if (ability.CanExecute && Input.GetKeyDown(ability.Key))
             {
@@ -63,8 +65,6 @@ public class EntityControl : NetworkBehaviour
 
     private void LeftClick(RtsEntity clickedEntity)
     {
-        // ToDo: IF click on menu: let menu handle it
-
         //Select clicked unit
         foreach (var selectedEntity in selectedEntities.ToList())
         {
@@ -75,7 +75,7 @@ public class EntityControl : NetworkBehaviour
         {
             if (!clickedEntity.Selected) { clickedEntity.Selected = true; }
             selectedEntities.Add(clickedEntity);
-            activeType = clickedEntity.GetType();
+            ActiveType = clickedEntity.GetType();
         }
     }
 
@@ -83,9 +83,9 @@ public class EntityControl : NetworkBehaviour
     {
         selectedEntities.Remove(entity);
         entities.Remove(entity);
-        if (activeType != null && !selectedEntities.ContainsType(activeType))
+        if (ActiveType != null && !selectedEntities.ContainsType(ActiveType))
         {
-            activeType = selectedEntities.Select(activeEntity => activeEntity.GetType()).FirstOrDefault();
+            ActiveType = selectedEntities.Select(activeEntity => activeEntity.GetType()).FirstOrDefault();
         }
     }
 

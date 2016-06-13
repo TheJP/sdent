@@ -55,10 +55,18 @@ public abstract class AbilityBase : IAbility
         get { return canExecute; }
     }
 
-    private readonly Texture icon;
+    private Texture icon;
+    private readonly string iconName;
     public virtual Texture Icon
     {
-        get { return icon; }
+        get
+        {
+            if (icon == null)
+            {
+                this.icon = Resources.Load<Texture2D>("AbilitiesIcon/" + iconName);
+            }
+            return icon;
+        }
     }
 
     public abstract void Execute();
@@ -69,6 +77,6 @@ public abstract class AbilityBase : IAbility
         this.lore = lore;
         this.key = key;
         this.canExecute = canExecute;
-        this.icon =  Resources.Load<Texture2D>("AbilitiesIcon/" + iconName);
+        this.iconName = iconName;
     }
 }
