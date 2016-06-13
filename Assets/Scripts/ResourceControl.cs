@@ -9,10 +9,30 @@ using UnityEngine.Networking;
 /// </summary>
 public class ResourceControl : NetworkBehaviour, IEnumerable<RtsResource>
 {
+    public GameObject clayMinePrefab;
+    [Tooltip("Tells the resource control how many clay mines it has to spawn")]
+    [Range(0, 100)]
+    public int clayMineAmount;
+
+    public GameObject coalMinePrefab;
+    [Tooltip("Tells the resource control how many coal mines it has to spawn")]
+    [Range(0, 100)]
+    public int coalMineAmount;
+
     public GameObject goldMinePrefab;
     [Tooltip("Tells the resource control how many gold mines it has to spawn")]
     [Range(0, 100)]
     public int goldMineAmount;
+
+    public GameObject ironMinePrefab;
+    [Tooltip("Tells the resource control how many iron mines it has to spawn")]
+    [Range(0, 100)]
+    public int ironMineAmount;
+
+    public GameObject treeSourcePrefab;
+    [Tooltip("Tells the resource control how many forests it has to spawn")]
+    [Range(0, 100)]
+    public int treeSourceAmount;
 
     [Tooltip("The two corner attributes define the space, where resources may be spawned")]
     public Transform spawnCorner1;
@@ -40,12 +60,17 @@ public class ResourceControl : NetworkBehaviour, IEnumerable<RtsResource>
     /// </summary>
     void Start()
     {
-        for (int i = 0; i < goldMineAmount; ++i)
+        var prefabs = new[] { clayMinePrefab, coalMinePrefab, goldMinePrefab, ironMinePrefab, treeSourcePrefab };
+        var amounts = new[] { clayMineAmount, coalMineAmount, goldMineAmount, ironMineAmount, treeSourceAmount };
+        for (int i = 0; i < prefabs.Length; ++i)
         {
-            var mine = (GameObject)Instantiate(goldMinePrefab, GetSpawnPosition(), Quaternion.identity);
-            mine.transform.parent = transform;
-            NetworkServer.Spawn(mine);
-            resources.Add(mine.GetComponent<RtsResource>());
+            for (int j = 0; j < amounts[i]; ++j)
+            {
+                var resource = (GameObject)Instantiate(prefabs[i], GetSpawnPosition(), Quaternion.identity);
+                resource.transform.parent = transform;
+                NetworkServer.Spawn(resource);
+                resources.Add(resource.GetComponent<RtsResource>());
+            }
         }
     }
 

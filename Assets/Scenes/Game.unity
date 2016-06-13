@@ -2165,11 +2165,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f523a3fa7437d4fb05884ed32313c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clayMinePrefab: {fileID: 194376, guid: f61bb56831cbbd34099fd32f441732a5, type: 2}
+  clayMineAmount: 30
+  coalMinePrefab: {fileID: 157222, guid: c53815df337e0e743a825b9d774dac7c, type: 2}
+  coalMineAmount: 30
   goldMinePrefab: {fileID: 106646, guid: 38364b5327a2d8a4a9f668437b25f91e, type: 2}
-  goldMineAmount: 60
+  goldMineAmount: 30
+  ironMinePrefab: {fileID: 147974, guid: 241d4ba456db2064193c35845a555925, type: 2}
+  ironMineAmount: 30
+  treeSourcePrefab: {fileID: 145970, guid: 3fa5b3ebe8e034340af26db977e413af, type: 2}
+  treeSourceAmount: 30
   spawnCorner1: {fileID: 1082189581}
   spawnCorner2: {fileID: 1214132110}
-  minimalDistance: 10
+  minimalDistance: 30
 --- !u!4 &1448839585
 Transform:
   m_ObjectHideFlags: 0
