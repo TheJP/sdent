@@ -45,11 +45,11 @@ public class Worker : RtsUnit, IHasInventory
         AddAbility(moveAbility);
         AddAbility(new Stop(new StopAbility(this), this, resume));
         AddAbility(resume);
+        work = new Work(KeyCode.W, this, resume);
+        AddAbility(work);
         AddAbility(new NewOrder(new BuildBuilding("Farmhouse", "Build a farm house, which produces food.", KeyCode.F, this, Buildings.FarmHouse), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
-        work = new Work(KeyCode.W, this, resume);
-        AddAbility(work);
     }
 
     private RtsBuilding FindNearestStorage()

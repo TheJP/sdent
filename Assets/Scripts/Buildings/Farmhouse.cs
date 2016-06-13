@@ -6,9 +6,14 @@ using System.Linq;
 
 public class Farmhouse : RtsCraftingBuilding
 {
+    private readonly List<Recipe> recipes = new List<Recipe>()
+    {
+        new Recipe(1f, Enumerable.Empty<ResourceTuple>(), new [] { new ResourceTuple(ResourceTypes.Food, 1)})
+    };
+
     public override IEnumerable<Recipe> Recipes
     {
-        get { return Enumerable.Empty<Recipe>(); }
+        get { return recipes; }
     }
 
     public override Buildings Type
