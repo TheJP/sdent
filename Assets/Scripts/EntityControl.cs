@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class EntityControl : NetworkBehaviour
 {
     public GameObject constructionSitePrefab;
+    public GameObject carrierPrefab;
     public Menu menu;
 
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
@@ -127,7 +128,6 @@ public class EntityControl : NetworkBehaviour
     public void BuildConstructionSite(Buildings finalBuilding, Vector3 position, NetworkConnection player, GameObject worker)
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player, rtsEntity => (rtsEntity as ConstructionSite).FinalBuilding = finalBuilding);
-        var site = constructionSite.GetComponent<ConstructionSite>();
         worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
     }
 }

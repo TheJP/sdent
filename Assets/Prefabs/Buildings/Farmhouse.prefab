@@ -608,6 +608,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &198170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 496446}
+  m_Layer: 0
+  m_Name: CarrierSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &407482
 Transform:
   m_ObjectHideFlags: 1
@@ -713,6 +728,7 @@ Transform:
   - {fileID: 410310}
   - {fileID: 463374}
   - {fileID: 22469630}
+  - {fileID: 496446}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &424938
@@ -999,6 +1015,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 410310}
   m_RootOrder: 7
+--- !u!4 &496446
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198170}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.96, y: 0, z: -5.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 419282}
+  m_RootOrder: 14
 --- !u!4 &497328
 Transform:
   m_ObjectHideFlags: 1
@@ -1957,6 +1985,7 @@ MonoBehaviour:
   barFillImage: {fileID: 11410662}
   portraitImage: {fileID: 2800000, guid: 81e388b8fa5e7294c93593492430b777, type: 3}
   entityColorMesh: {fileID: 2349044}
+  carrierSpawn: {fileID: 496446}
 --- !u!114 &11410662
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class Worker : RtsUnit, IHasInventory
 {
     public const int InventorySize = 20;
     public const float WorkDistance = 12;
-    public const float WorkerBuildingSpeed = 1f;
+    public const float WorkerBuildingSpeed = 100f;
     public const float GatheringTime = 0.1f;
 
     private enum States { Idle, Traveling, Building, Gathering }

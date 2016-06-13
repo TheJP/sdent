@@ -1821,6 +1821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructionSitePrefab: {fileID: 156168, guid: 8cf89643d7fdb90419c5693e69264084,
     type: 2}
+  carrierPrefab: {fileID: 129166, guid: 675828db31571744993eec6919dd7128, type: 2}
   menu: {fileID: 1546405448}
 --- !u!4 &1244970957
 Transform:
