@@ -1,10 +1,12 @@
-﻿using System;
+﻿    using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
-using UnityEngine.UI;
+    using Assets.Scripts.Utility;
+    using UnityEngine.UI;
 
 public class Menu : MonoBehaviour
 {
@@ -33,11 +35,9 @@ public class Menu : MonoBehaviour
 	    var rtsEntities = EntityController.SelectedEntities;
 
 	    float scaleFactor = CalculateScaleFactor();
-
 	    DrawUnitPortraits(scaleFactor, rtsEntities);
-	    DrawAbilities(scaleFactor, rtsEntities);
-        // ToDo: Where are Recources
-	    DrawResources(scaleFactor, null);
+	    DrawAbilities(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
+	    DrawResources(scaleFactor, EntityController.Entities.OfType<IHasInventory>());
 
 	    DrawTooltip();
     }
@@ -99,11 +99,34 @@ public class Menu : MonoBehaviour
         return scaledPorttraitStyle;
     }
 
+    private GUIStyle CreateScaledResourceStyle(float scaleFactor)
+    {
+        GUIStyle scaledPorttraitStyle = new GUIStyle(PortraitStyle);
+        scaledPorttraitStyle.fixedWidth *= scaleFactor;
+        scaledPorttraitStyle.fixedHeight *= scaleFactor/2;
+        scaledPorttraitStyle.padding = new RectOffset
+        {
+            top = (int)(PortraitStyle.padding.top * scaleFactor/2),
+            bottom = (int)(PortraitStyle.padding.bottom * scaleFactor / 2),
+            left = (int)(PortraitStyle.padding.left * scaleFactor),
+            right = (int)(PortraitStyle.padding.right * scaleFactor)
+        };
+        scaledPorttraitStyle.margin = new RectOffset
+        {
+            top = (int)(PortraitStyle.margin.top * scaleFactor / 2),
+            bottom = (int)(PortraitStyle.margin.bottom * scaleFactor / 2),
+            left = (int)(PortraitStyle.margin.left * scaleFactor),
+            right = (int)(PortraitStyle.margin.right * scaleFactor)
+        };
+
+        return scaledPorttraitStyle;
+    }
+
     #endregion
 
     #region Resources
 
-    private void DrawResources(float scaleFactor, IEnumerable<RtsResource> rtsResources)
+    private void DrawResources(float scaleFactor, IEnumerable<IHasInventory> rtsEntity)
     {
         float guiWidth = 500 * scaleFactor;
         float guiHeight = 100 * scaleFactor;
@@ -116,12 +139,52 @@ public class Menu : MonoBehaviour
         };
         guiStyle.normal.background = BackgroundTexture;
 
+
+        var resources = rtsEntity
+            .Where(entity => true)
+            .SelectMany(entity => entity.Inventory)
+            .GroupBy(keyValue => keyValue.Key, keyValue => keyValue.Value)
+            .Select(p => new {Resource = p.Key, Amount= p.Sum()});
+
         GUILayout.BeginArea(ResourcesRect, guiStyle);
         {
-            GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
-            
+            GUIStyle scaledPortraitStyle = CreateScaledResourceStyle(scaleFactor);
+
+            int counter = 0;
+            foreach (var res in resources)
+            {
+                if (counter % 4 == 0)
+                {
+                    if (counter > 0)
+                    {
+                        GUILayout.EndHorizontal();
+                    }
+                    GUILayout.BeginHorizontal();
+                }
+                counter++;
+
+                DrawSingleResource(res.Resource, res.Amount, scaledPortraitStyle);
+            }
+
+            if (counter > 0)
+            {
+                GUILayout.EndHorizontal();
+            }
         }
+
         GUILayout.EndArea();
+    }
+
+    private void DrawSingleResource(ResourceTypes resource, int amount, GUIStyle scaledResourceStyle)
+    {
+        GUIContent content = new GUIContent(resource.GetIcon());
+        //content.text = amount.ToString();
+        content.tooltip = resource.ToString();
+
+        GUILayout.Box(content, scaledResourceStyle);
+        Rect resourcePos = GUILayoutUtility.GetLastRect();
+
+        GUI.Label(resourcePos, amount.ToString());
     }
 
     #endregion
@@ -146,7 +209,8 @@ public class Menu : MonoBehaviour
             GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
 
             int counter = 0;
-            foreach (RtsEntity entity in rtsEntities)
+            RtsEntity entity = rtsEntities.FirstOrDefault();
+            if(entity != null)
             {
                 foreach (IAbility ability in entity.Abilities)
                 {

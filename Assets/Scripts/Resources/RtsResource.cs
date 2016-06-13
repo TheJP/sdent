@@ -2,9 +2,11 @@
 using System.Collections;
 using UnityEngine.Networking;
 using System;
+using Assets.Scripts.Utility;
 
 public enum ResourceTypes
 {
+    // Name of the enum is the name of the icon
     Gold,
     Iron,
     Wood,
