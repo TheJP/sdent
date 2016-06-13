@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Saloon : RtsTrainingBuilding, IHasInventory
 {
-    public const int InventorySize = 5000;
+    public const int InventorySize = int.MaxValue;
 
     public GameObject workerPrefab;
     public Transform spawnPoint;

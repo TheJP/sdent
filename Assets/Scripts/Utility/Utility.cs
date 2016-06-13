@@ -22,4 +22,14 @@ public static class Utility
             .Select(hit => hit.transform.gameObject.GetComponent<RtsEntity>())
             .FirstOrDefault();
     }
+
+    public static RtsBuilding FindNearestStorage(EntityContainer entities, Vector3 position)
+    {
+        return Enumerable.Union(
+            entities.Get<Saloon>().Select(saloon => saloon as RtsBuilding),
+            entities.Get<StorageHouse>().Select(house => house as RtsBuilding))
+        .Where(house => house.hasAuthority)
+        .OrderBy(house => (house.transform.position - position).sqrMagnitude)
+        .FirstOrDefault();
+    }
 }

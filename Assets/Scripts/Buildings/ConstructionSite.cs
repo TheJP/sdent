@@ -50,9 +50,9 @@ public class ConstructionSite : RtsBuilding
     }
 
     [Command]
-    private void CmdBuild(float newState)
+    private void CmdBuild(float addToState)
     {
-        state = newState;
+        state += addToState;
         if (state >= MaxState)
         {
             RpcFinishedBuilding();
@@ -74,7 +74,7 @@ public class ConstructionSite : RtsBuilding
         base.Update();
         if (hasAuthority && !finishedBuilding)
         {
-            CmdBuild(state + buildingWorkers.Count * Worker.WorkerBuildingSpeed * Time.deltaTime);
+            CmdBuild(buildingWorkers.Count * Worker.WorkerBuildingSpeed * Time.deltaTime);
         }
     }
 }

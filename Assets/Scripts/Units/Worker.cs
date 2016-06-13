@@ -54,14 +54,9 @@ public class Worker : RtsUnit, IHasInventory
 
     private RtsBuilding FindNearestStorage()
     {
-        var entities = FindObjectOfType<EntityControl>().Entities;
-        return Enumerable.Union(
-            entities.Get<Saloon>().Select(saloon => saloon as RtsBuilding),
-            entities.Get<StorageHouse>().Select(house => house as RtsBuilding))
-        .Where(house => house.hasAuthority)
-        .OrderBy(house => (house.transform.position - transform.position).sqrMagnitude)
-        .FirstOrDefault();
+        return Utility.FindNearestStorage(FindObjectOfType<EntityControl>().Entities, transform.position);
     }
+
     /// <summary>Stop the current work and switch to being Idle.</summary>
     private void StopWork()
     {
