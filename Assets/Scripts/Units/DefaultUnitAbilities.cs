@@ -8,7 +8,7 @@ public class MoveAbility : AbilityBase
 {
     private readonly RtsEntity entity;
 
-    public MoveAbility(RtsEntity entity) : base("Move", "Move this unit to the target location", KeyCode.M, "Move")
+    public MoveAbility(RtsEntity entity) : base("Move", "Move this unit to the target location", KeyCode.G, "Move")
     {
         this.entity = entity;
     }
