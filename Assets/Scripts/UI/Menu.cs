@@ -243,8 +243,7 @@ public class Menu : MonoBehaviour
         GUILayout.BeginArea(selectedUnitInfoRect, guiStyle);
         {
             GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
-
-            int counter = 0;
+            
             RtsEntity entity = rtsEntities.FirstOrDefault();
             if (entity != null)
             {
@@ -273,8 +272,14 @@ public class Menu : MonoBehaviour
                         GUIStyle scaledResIconStyle = CreateScaledResIconStyle(scaleFactor);
                         GUIStyle scaledResTextStyle = CreateScaledResTextStyle(scaleFactor);
 
+                        int counter = 0;
                         foreach (var res in entityWithInv.Inventory)
                         {
+                            if (counter > 0 && counter % 4 == 0)
+                            {
+                                GUILayout.EndHorizontal();
+                                GUILayout.BeginHorizontal();
+                            }
                             DrawSingleResource(res.Key, res.Value, scaledResIconStyle, scaledResTextStyle);
                         }
                     }
