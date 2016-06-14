@@ -1,0 +1,160 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 28.03.2014 17:40:32
+
+newmtl Material__1585
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco_NRM.tga
+
+newmtl Material__341
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_logs.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_logs.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_logs_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_logs_NRM.tga
+
+newmtl Material__332
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_roof.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_roof.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_roof_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_roof_NRM.tga
+
+newmtl Material__592
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\TEXTURES\poorfolks_attic_planks.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\TEXTURES\poorfolks_attic_planks.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_attic_planks_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_attic_planks_NRM.tga
+
+newmtl Material__606
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_bricks.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_bricks.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_bricks_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_bricks_NRM.tga
+
+newmtl Material__605
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco2.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco2.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_stucco_NRM.tga
+
+newmtl Material__1005
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_door5.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_door5.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_door5_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_door5_NRM.tga
+
+newmtl Material__604
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_window.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_window.tga
+
+newmtl Material__644
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorlords_beam_end.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorlords_beam_end.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorlords_beam_end_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorlords_beam_end_NRM.tga
+
+newmtl Material__529
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka G:\3d\Modular castle\Poorfolks\House\poorfolks_chimney_long.tga
+	map_Kd G:\3d\Modular castle\Poorfolks\House\poorfolks_chimney_long.tga
+	map_bump G:\3d\Modular castle\Poorfolks\House\poorfolks_chimney_long_NRM.tga
+	bump G:\3d\Modular castle\Poorfolks\House\poorfolks_chimney_long_NRM.tga

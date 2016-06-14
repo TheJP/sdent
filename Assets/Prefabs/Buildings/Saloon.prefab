@@ -351,6 +351,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &134496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 464476}
+  m_Layer: 0
+  m_Name: SpawnPoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &135138
 GameObject:
   m_ObjectHideFlags: 1
@@ -405,7 +420,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405058}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: SpawnPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -968,11 +983,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 138994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 20}
+  m_LocalPosition: {x: -20.9, y: 0, z: 40.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 471776}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!4 &407922
 Transform:
   m_ObjectHideFlags: 1
@@ -1390,6 +1405,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 488964}
   m_RootOrder: 0
+--- !u!4 &464476
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 134496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.3, y: 0, z: 15.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 471776}
+  m_RootOrder: 4
 --- !u!4 &465174
 Transform:
   m_ObjectHideFlags: 1
@@ -1467,6 +1494,7 @@ Transform:
   - {fileID: 421972}
   - {fileID: 425496}
   - {fileID: 22441188}
+  - {fileID: 464476}
   - {fileID: 405058}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1819,9 +1847,11 @@ MonoBehaviour:
   barFillImage: {fileID: 11488498}
   portraitImage: {fileID: 2800000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}
   entityColorMesh: {fileID: 2338950}
+  spawnPoint1: {fileID: 464476}
+  spawnPoint2: {fileID: 405058}
   workerPrefab: {fileID: 196684, guid: fca1101434e706345b5bbb4cb01de3d1, type: 2}
   merchantPrefab: {fileID: 129360, guid: 239c743844215934793f3f3bf4196e64, type: 2}
-  spawnPoint: {fileID: 405058}
+  spawnPoint: {fileID: 464476}
 --- !u!114 &11470072
 MonoBehaviour:
   m_ObjectHideFlags: 1

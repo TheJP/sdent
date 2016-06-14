@@ -70,7 +70,7 @@ public class EntityControl : NetworkBehaviour
             }
         }
 
-        if (shouldAbortTargeting) { AbortTargeting(); }
+        if (shouldAbortTargeting || Input.GetKeyDown(KeyCode.Escape)) { AbortTargeting(); }
 
         //Set correct mouse cursor
         if (Targeting) { Cursor.SetCursor(corsshairTexture, new Vector2(32f, 32f), CursorMode.Auto); }
@@ -193,6 +193,7 @@ public class EntityControl : NetworkBehaviour
     public void BuildConstructionSite(Buildings finalBuilding, Vector3 position, NetworkConnection player, GameObject worker)
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player, rtsEntity => (rtsEntity as ConstructionSite).FinalBuilding = finalBuilding);
+        AddEntity(constructionSite.GetComponent<RtsEntity>());
         worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
     }
 }

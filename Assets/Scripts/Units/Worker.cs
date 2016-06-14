@@ -90,6 +90,47 @@ public class Worker : RtsUnit, IHasInventory
         }
     }
 
+    /// <summary>Load all resources from the worker to the given inventory</summary>
+    /// <param name="storageInventory"></param>
+    [Client]
+    private void Loadoff(Inventory storageInventory)
+    {
+        foreach (var resource in Inventory.ToList())
+        {
+            if (storageInventory.AddResources(resource.Key, resource.Value)) { Inventory.RemoveResources(resource.Key, resource.Value); }
+        }
+    }
+
+    [Client]
+    private void FetchingResourcesForConstruction(NavMeshAgent agent)
+    {
+        var constructionSite = assignedWork as ConstructionSite;
+        var nearestStorage = FindNearestStorage();
+        if ((nearestStorage.transform.position - transform.position).sqrMagnitude > WorkDistance * WorkDistance)
+        {
+            //Travel to storage house
+            agent.SetDestination(nearestStorage.transform.position);
+            workerState = States.Traveling;
+        }
+        else
+        {
+            //Load needed resources
+            var target = (nearestStorage as IHasInventory).Inventory;
+            Loadoff(target);
+            foreach (var need in constructionSite.NeededResources)
+            {
+                var amount = Math.Min(target[need.Key], Math.Min(need.Value - constructionSite.Inventory[need.Key], Inventory.FreeSpace));
+                if(amount > 0 && target.RemoveResources(need.Key, amount))
+                {
+                    Inventory.AddResources(need.Key, amount);
+                }
+            }
+            //Travel to work
+            agent.SetDestination(assignedWork.transform.position);
+            workerState = States.FetchingResources;
+        }
+    }
+
     [Client]
     private void DoAssignedWork(NavMeshAgent agent)
     {
@@ -100,11 +141,7 @@ public class Worker : RtsUnit, IHasInventory
             if((nearesStorage.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
             {
                 //Load off resource
-                var target = (nearesStorage as IHasInventory).Inventory;
-                foreach (var resource in Inventory.ToList())
-                {
-                    if (target.AddResources(resource.Key, resource.Value)) { Inventory.RemoveResources(resource.Key, resource.Value); }
-                }
+                Loadoff((nearesStorage as IHasInventory).Inventory);
                 //Travel back to resource
                 if (Inventory.Count() < InventorySize && agent.SetDestination(assignedWork.transform.position))
                 {
@@ -121,6 +158,10 @@ public class Worker : RtsUnit, IHasInventory
                     workerState = States.Traveling;
                 }
             }
+        }
+        else if(assignedWork is ConstructionSite && (assignedWork as ConstructionSite).Inventory.FreeSpace > 0)
+        {
+            FetchingResourcesForConstruction(agent);
         }
         else if ((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
         {
@@ -154,7 +195,6 @@ public class Worker : RtsUnit, IHasInventory
         var agent = GetComponent<NavMeshAgent>();
         if (hasAuthority)
         {
-            //TODO: Get resources for the building first
             switch (workerState)
             {
                 case States.Idle:
@@ -188,6 +228,19 @@ public class Worker : RtsUnit, IHasInventory
                         lastGatheredTime = Time.time;
                         Inventory.AddResources((assignedWork as RtsResource).ResourceType, 1);
                         (assignedWork as RtsResource).CmdTakeResource(1);
+                    }
+                    break;
+                case States.FetchingResources:
+                    if(assignedWork == null) { workerState = States.Idle; }
+                    else if((assignedWork.transform.position - transform.position).sqrMagnitude <= WorkDistance * WorkDistance)
+                    {
+                        Loadoff((assignedWork as IHasInventory).Inventory);
+                        if ((assignedWork as ConstructionSite).Inventory.FreeSpace > 0)
+                        {
+                            agent.SetDestination(FindNearestStorage().transform.position);
+                            workerState = States.Traveling;
+                        }
+                        else { DoAssignedWork(agent); }
                     }
                     break;
             }

@@ -1,0 +1,38 @@
+Bryce Presets By GOSHTAC at Renderosity or aka GraphicGhost at Artzone
+
+GENERAL BRYCE FREEBIE PRESETS INFORMATION: 
+
+The enclosed Bryce Preset OBP freebie was created by GOSHTAC aka B Davey. They are given freely to use for any and all Bryce Projects and maybe modified as needed by the end user. That being said, the original models remains the property of the author and although they may be shared with others, they may not be sold or claimed as the work of others. So if sharing, please include this long winded silly text file.
+
+These Presets and any also included object files were created using Bryce 6 so I cannot say how if at all they may work with other versions of Bryce or any other 3D programs. Also I make no claim as to their use or safety in use with any system - So if your computer self destructs or changes into a gremlin, please do not call me or complain. Although all files I create as freebies are virus scanned prior to upload, I cannot 100% guarantee their safety. So when in doubt, please always virus scan any download.. duh!
+
+OBJECT FILES:
+
+In some of my presets zip files, I have also included boolean mesh OBJect files for those who do not have Bryce. I have received some requests to do this from non Bryce users but sometimes just unable to do this due to computer crashes during the boolean conversion process with more complex models. My apologies as I am still a bit new to 3D modeling as to what goes where with regards to runtime directories, etc. so usually all object files I share are just static non-textured models with no colors or textures provided so you are on your own in this regard. 
+
+DAZ STUDIO FILES:
+
+There are times I will include files specifically for DAZ Studio. These are scene files and I will include the textures in the included MAP folder in case you get error message that a particular texture file is not found - just look in the MAP folder. In DAZ scene files, I will also include from time to time moving or adjustable items. To locate these, expand your scene tree to see if any added objects are listed for adjustment purpose once the DAZ Studio scene is merged into the program. At this point in time, I am trying to provide as much access to these models as is possible, but DAZ Studio scene files are stand alones and not set up perse as Runtime Content so you need to just go to where ever you unzipped this file and use the MERGE function in DS to load this model into DAZ Studio. 
+
+BRYCE PRESET INFO:
+
+As to the Bryce models, the presets include the full textures as shown in the preview image but in some cases maybe modified by you in using the CTRL key and selecting objects in the mesh to assign your own colors and textures if you desire. Some of my Bryce Presets may also be ungrouped if you wish to make modifications to the model but be forewarned these items are all made from Primitives using positive and negative attributes so I cannot say what will occur once ungrouped. But you knew that already. ;) Sorry for stating the obvious to you Bryce oldtimers.. 
+
+BRYCE NEWBIE INFO:  ( We were all there sometime and I still am.. lol )
+
+For those new to Bryce and not sure how to use these files, you just unzip the files to folder of your choice. Then using Bryce click on the arrow next to CREATE on your Bryce screen. There you will be taken to your Presets list. At the bottom you will see IMPORT - click on that and go to the directory where you unzipped this file and import the OBP file. Don't worry about the OBJ file as this is for other artists not using Bryce. It will then be available in your presets folder for you to add to your own creations. NOTE: Your new Preset will show in menu as a small icon as such, then exit the menu. You then re-enter the Create Menu where you can select the new preset for use in your scene. When you select it, it will appear in a small window - then click on the CHECK mark at the right lower portion of the menu to load the item into your work area. Once selected on screen, the models may also be positioned or resized as needed in a scene. Sorry again for mentioning all of the obvious, but I had used Bryce for months before learning how the presets menu works... lol - All else fails, read the instructions I guess.
+
+THE LEGAL STUFF: I do these models for a hobby. I have no objection to them being used for commercial or non commercial renders and I do not require credit. But comments at my hosting site always appreciated. But that being said, I do retain all legal rights to the model itself. Feel free to share these models, but do not sell them or include them as any part of a product being sold for profit. Also please do not claim these as your own work. Furthermore I make no claims as to the usability of these models in any program and cannot guarantee they will not make your computer blow up or force you to pull your hair out. Reminder: Please Virus scan any downloads you may obtain from any source including mine. This file was virus and spyware free when I posted it, but I cannot make any guarantees as to its safety once it leaves my computer and ends up online. 
+
+FINAL WORDS: 
+
+In closing, I just want to thank you for allowing me to join in with some of your fantastic art creations by downloading some of my modest models. Being that I am just an old retired geek and 3D Hobbyist, Feedback - good or bad is always appreciated from my peers in the 3D community and I go by GOSHTAC or GRAPHICGHOST in some of the groups I belong to such as Renderosity and Artzone. 
+
+
+
+Thanks again for downloading this file and I hope you get some use from it. Have a great day and keep on creating.. :)
+
+Bruce
+
+
+PS: I always love to see final artwork created using any of my models, so feel free to give me a shout if posting some new work online...
