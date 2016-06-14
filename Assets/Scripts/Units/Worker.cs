@@ -195,7 +195,6 @@ public class Worker : RtsUnit, IHasInventory
         var agent = GetComponent<NavMeshAgent>();
         if (hasAuthority)
         {
-            //TODO: Get resources for the building first
             switch (workerState)
             {
                 case States.Idle:

@@ -48,7 +48,6 @@ public class ConstructionSite : RtsBuilding, IHasInventory
 
     protected override void Start()
     {
-        base.Start();
         finishedBuilding = false;
         buildingWorkers.Clear();
         state = 1f;
@@ -56,6 +55,12 @@ public class ConstructionSite : RtsBuilding, IHasInventory
         {
             prefabDictionary.Add(prefab.GetComponent<RtsBuilding>().Type, prefab);
         }
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        FindObjectOfType<EntityControl>().AddEntity(this);
     }
 
     public override void OnStartAuthority()
@@ -70,18 +75,9 @@ public class ConstructionSite : RtsBuilding, IHasInventory
         state += addToState;
         if (state >= MaxState)
         {
-            RpcFinishedBuilding();
             FindObjectOfType<EntityControl>().SpawnEntity(prefabDictionary[FinalBuilding], transform.position, Client);
             CmdDie();
         }
-    }
-
-    [ClientRpc]
-    private void RpcFinishedBuilding()
-    {
-        finishedBuilding = true;
-        foreach (var worker in buildingWorkers) { worker.FinishedBuilding(); }
-        buildingWorkers.Clear();
     }
 
     protected override void Update()
