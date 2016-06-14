@@ -8,8 +8,4 @@ public class GoldMine : RtsResource
     {
         get { return ResourceTypes.Gold; }
     }
-    public override float MaxState
-    {
-        get { return 5000f; }
-    }
 }

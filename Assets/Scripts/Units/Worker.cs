@@ -187,7 +187,7 @@ public class Worker : RtsUnit, IHasInventory
                     {
                         lastGatheredTime = Time.time;
                         Inventory.AddResources((assignedWork as RtsResource).ResourceType, 1);
-                        //TODO: Romve remote resource
+                        (assignedWork as RtsResource).CmdTakeResource(1);
                     }
                     break;
             }
@@ -197,7 +197,6 @@ public class Worker : RtsUnit, IHasInventory
     [Command]
     private void CmdBuildBuilding(Buildings building, Vector3 position)
     {
-        //TODO: entity avoidance for new buildings
         var entityControl = FindObjectOfType<EntityControl>();
         var collision = entityControl.Entities.Any(entity => (entity is RtsUnit) ?
             //Checks for unit
