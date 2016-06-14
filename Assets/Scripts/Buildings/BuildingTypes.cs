@@ -9,5 +9,8 @@ public enum Buildings
     ConstructionSite,
     StorageHouse,
     Stable,
-    FarmHouse
+    FarmHouse,
+    Smeltery,
+    Workshop,
+    Pottery
 }

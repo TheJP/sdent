@@ -80,6 +80,7 @@ GameObject:
   - 114: {fileID: 11449444}
   - 114: {fileID: 11479098}
   - 208: {fileID: 20817078}
+  - 114: {fileID: 11406248}
   m_Layer: 0
   m_Name: Smeltery
   m_TagString: RtsEntity
@@ -115,7 +116,7 @@ GameObject:
   - 114: {fileID: 11467700}
   - 114: {fileID: 11418830}
   m_Layer: 0
-  m_Name: Resourcebar
+  m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -150,6 +151,21 @@ GameObject:
   - 95: {fileID: 9543682}
   m_Layer: 0
   m_Name: poorfolks_barn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &136428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459618}
+  m_Layer: 0
+  m_Name: CarrierSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,6 +351,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
+  - {fileID: 459618}
   - {fileID: 22453620}
   - {fileID: 483010}
   m_Father: {fileID: 0}
@@ -375,6 +392,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 483010}
   m_RootOrder: 6
+--- !u!4 &459618
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136428}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -8.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 413256}
+  m_RootOrder: 0
 --- !u!4 &473272
 Transform:
   m_ObjectHideFlags: 1
@@ -394,7 +423,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.94, y: 5.69, z: 12.95}
+  m_LocalPosition: {x: -3.94, y: 4.37, z: 12.95}
   m_LocalScale: {x: 0.6666667, y: 0.6666667, z: 0.6666667}
   m_Children:
   - {fileID: 492850}
@@ -408,7 +437,7 @@ Transform:
   - {fileID: 427158}
   - {fileID: 412508}
   m_Father: {fileID: 413256}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &485684
 Transform:
   m_ObjectHideFlags: 1
@@ -808,6 +837,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11406248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 117942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32892714694bd58419df94a0685581e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  barSlider: {fileID: 11467700}
+  barFillImage: {fileID: 11482104}
+  portraitImage: {fileID: 2800000, guid: 8643e408744a6c64aac7d58f169306e2, type: 3}
+  entityColorMesh: {fileID: 2358152}
+  carrierSpawn: {fileID: 459618}
 --- !u!114 &11417670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -872,7 +918,7 @@ MonoBehaviour:
     i14: 93
     i15: 205
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &11467700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1106,7 +1152,7 @@ RectTransform:
   m_Children:
   - {fileID: 22431966}
   m_Father: {fileID: 413256}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.4}

@@ -46,6 +46,7 @@ GameObject:
   - 114: {fileID: 11404684}
   - 114: {fileID: 11427692}
   - 208: {fileID: 20874576}
+  - 114: {fileID: 11432822}
   m_Layer: 0
   m_Name: Pottery
   m_TagString: RtsEntity
@@ -182,7 +183,7 @@ GameObject:
   - 114: {fileID: 11408696}
   - 114: {fileID: 11437886}
   m_Layer: 0
-  m_Name: Resourcebar
+  m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,6 +271,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &199018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 468816}
+  m_Layer: 0
+  m_Name: carrierSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &406718
 Transform:
   m_ObjectHideFlags: 1
@@ -289,7 +305,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.9333315, y: 1.0666666, z: -2.4666626}
+  m_LocalPosition: {x: 4.9333315, y: 0, z: -2.4666626}
   m_LocalScale: {x: 1.1666666, y: 1.1666666, z: 1.1666666}
   m_Children:
   - {fileID: 426380}
@@ -300,7 +316,7 @@ Transform:
   - {fileID: 433086}
   - {fileID: 406718}
   m_Father: {fileID: 416328}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &416328
 Transform:
   m_ObjectHideFlags: 1
@@ -308,9 +324,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: -30.62}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
+  - {fileID: 468816}
   - {fileID: 22461966}
   - {fileID: 411258}
   - {fileID: 437430}
@@ -359,12 +376,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189028}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -1.0333347, y: 1.0666666, z: 5.5333357}
+  m_LocalPosition: {x: -1.0333347, y: 0, z: 5.5333357}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 418346}
   m_Father: {fileID: 416328}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &442046
 Transform:
   m_ObjectHideFlags: 1
@@ -389,6 +406,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 411258}
   m_RootOrder: 3
+--- !u!4 &468816
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.21, y: 0, z: -8.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 416328}
+  m_RootOrder: 0
 --- !u!4 &473736
 Transform:
   m_ObjectHideFlags: 1
@@ -741,7 +770,7 @@ MonoBehaviour:
     i14: 142
     i15: 173
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &11408696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -837,6 +866,23 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 0
   m_InterpolateMovement: 1
+--- !u!114 &11432822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d70521a37e6318468fba81599c0ae64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  barSlider: {fileID: 11408696}
+  barFillImage: {fileID: 11411136}
+  portraitImage: {fileID: 2800000, guid: b42fd33e2a601244f8f347702c76256a, type: 3}
+  entityColorMesh: {fileID: 2389700}
+  carrierSpawn: {fileID: 468816}
 --- !u!114 &11437886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1007,10 +1053,10 @@ RectTransform:
   m_Children:
   - {fileID: 22461480}
   m_Father: {fileID: 416328}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.4}
+  m_AnchoredPosition: {x: 0, y: 0.76}
   m_SizeDelta: {x: 310, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22467920

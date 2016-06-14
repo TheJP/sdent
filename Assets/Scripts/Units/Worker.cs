@@ -53,9 +53,12 @@ public class Worker : RtsUnit, IHasInventory
         AddAbility(resume);
         work = new Work(KeyCode.W, this, resume);
         AddAbility(work);
-        AddAbility(new NewOrder(new BuildBuilding("Farmhouse", "Build a farm house, which produces food.", KeyCode.F, this, Buildings.FarmHouse), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Farmhouse", "Build a farm house, which produces food.", KeyCode.F, this, Buildings.FarmHouse), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Pottery", "Build a pottery, which produces bricks.", KeyCode.E, this, Buildings.Pottery), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Workshop", "Build a workshop, which produces planks.", KeyCode.V, this, Buildings.Workshop), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Smeltery", "Build a smeltery, which produces steel.", KeyCode.G, this, Buildings.FarmHouse), this, resume));
     }
 
     private RtsBuilding FindNearestStorage()
