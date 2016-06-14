@@ -1823,6 +1823,7 @@ MonoBehaviour:
     type: 2}
   carrierPrefab: {fileID: 129166, guid: 675828db31571744993eec6919dd7128, type: 2}
   menu: {fileID: 1546405448}
+  corsshairTexture: {fileID: 2800000, guid: cfe61072adf3fa04786fdd1871f427b6, type: 3}
 --- !u!4 &1244970957
 Transform:
   m_ObjectHideFlags: 0

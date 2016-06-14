@@ -20,6 +20,9 @@ public interface IAbility
     /// <summary>Flag, which determines, if this ability can currently be executed.</summary>
     bool CanExecute { get; }
 
+    /// <summary>True, if the ability is using the EntityControl targeting api.</summary>
+    bool IsSettingTarget { get; }
+
     /// <summary>The image of the ability</summary>
     Texture Icon { get; }
 
@@ -69,14 +72,21 @@ public abstract class AbilityBase : IAbility
         }
     }
 
+    private readonly bool isSettingTarget;
+    public virtual bool IsSettingTarget
+    {
+        get { return isSettingTarget; }
+    }
+
     public abstract void Execute();
 
-    public AbilityBase(string name, string lore, KeyCode key, string iconName, bool canExecute = true)
+    public AbilityBase(string name, string lore, KeyCode key, string iconName, bool canExecute = true, bool isSettingTarget = false)
     {
         this.name = name;
         this.lore = lore;
         this.key = key;
         this.canExecute = canExecute;
         this.iconName = iconName;
+        this.isSettingTarget = isSettingTarget;
     }
 }

@@ -9,10 +9,12 @@ public class EntityControl : NetworkBehaviour
     public GameObject constructionSitePrefab;
     public GameObject carrierPrefab;
     public Menu menu;
+    public Texture2D corsshairTexture;
 
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     public Type ActiveType { get; private set; }
 
+    private Func<IEnumerable<RaycastHit>, bool> targetLambda = null;
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
 
@@ -20,10 +22,14 @@ public class EntityControl : NetworkBehaviour
     public EntityContainer Entities { get { return entities.AsReadOnly(); } }
     /// <summary>Returns a read only collection of all selected entities. This should only be used on the client. (Read Only)</summary>
     public EntityContainer SelectedEntities { get { return selectedEntities.AsReadOnly(); } }
+    /// <summary>Determines, if there is currently a targeting ability running.</summary>
+    public bool Targeting { get { return targetLambda != null; } }
 
 
     void Update()
     {
+        //Handle clicks
+        var shouldAbortTargeting = false;
         var leftClick = Input.GetMouseButtonDown(0);
         var rightClick = Input.GetMouseButtonDown(1);
         if(leftClick || rightClick)
@@ -31,21 +37,39 @@ public class EntityControl : NetworkBehaviour
             var clickedEntity = Utility.RayMouseToRtsEntity();
             if (leftClick)
             {
-                if (!menu.HandleMouseClick(Input.mousePosition)) { LeftClick(clickedEntity); }
+                if (!menu.HandleMouseClick(Input.mousePosition))
+                {
+                    if (!Targeting) { LeftClick(clickedEntity); }
+                    else
+                    {
+                        var success = targetLambda(Utility.RayMouseToGroundOrRtsEntity());
+                        shouldAbortTargeting = success || shouldAbortTargeting;
+                        if (success) { ShowHintText(null); }
+                    }
+                }
             }
             else if (rightClick)
             {
                 RightClick(clickedEntity);
+                shouldAbortTargeting = true;
             }
         }
+
         //Execute abilities of active entities if possible
         foreach(var ability in selectedEntities.Get(ActiveType).ToList().SelectMany(entity => entity.Abilities))
         {
             if (ability.CanExecute && Input.GetKeyDown(ability.Key))
             {
                 ability.Execute();
+                shouldAbortTargeting = shouldAbortTargeting || !ability.IsSettingTarget;
             }
         }
+
+        if (shouldAbortTargeting) { AbortTargeting(); }
+
+        //Set correct mouse cursor
+        if (Targeting) { Cursor.SetCursor(corsshairTexture, new Vector2(32f, 32f), CursorMode.Auto); }
+        else { Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
     }
 
     private void RightClick(RtsEntity clickedEntity)
@@ -77,6 +101,24 @@ public class EntityControl : NetworkBehaviour
             selectedEntities.Add(clickedEntity);
             ActiveType = clickedEntity.GetType();
         }
+    }
+
+    public void StartTargeting(Func<IEnumerable<RaycastHit>, bool> onClickTarget, string hintText = null)
+    {
+        targetLambda = onClickTarget;
+        ShowHintText(hintText);
+    }
+
+    public void ShowHintText(string hintText)
+    {
+        //TODO: Implement
+        //Debug.Log(hintText);
+    }
+
+    public void AbortTargeting()
+    {
+        targetLambda = null;
+        ShowHintText(null);
     }
 
     private void EntityDied(RtsEntity entity)

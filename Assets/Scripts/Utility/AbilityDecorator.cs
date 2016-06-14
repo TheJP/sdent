@@ -35,6 +35,11 @@ public abstract class AbilityDecorator : IAbility
         get { return Decorated.Icon; }
     }
 
+    public bool IsSettingTarget
+    {
+        get { return Decorated.IsSettingTarget; }
+    }
+
     public AbilityDecorator(IAbility decorated)
     {
         this.Decorated = decorated;
