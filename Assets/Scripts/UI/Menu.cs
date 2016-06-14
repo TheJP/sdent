@@ -1,17 +1,14 @@
-﻿    using System;
+﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
-    using Assets.Scripts.Utility;
-    using UnityEngine.UI;
+using Assets.Scripts.Utility;
 
 public class Menu : MonoBehaviour
 {
     public Texture2D BackgroundTexture;
     public Texture2D ResourceBackgroundTexture;
+    public Texture2D Map;
 
     public GUIStyle PortraitStyle;
     public GUIStyle ResourceIconStyle;
@@ -27,10 +24,22 @@ public class Menu : MonoBehaviour
     private Rect abilitiesRect = new Rect();
     private Rect resourcesRect = new Rect();
     private Rect selectedUnitInfoRect = new Rect();
+    private Rect minimapRect = new Rect();
+    private Rect actualMapPos;
+
+    private float mapScaleFactor;
+
+    private const int MAP_WIDTH = 1000;
+    private const int MAP_HEIGHT = 2000;
+    private const int MAP_OFFSET_X = -500;
+    private const int MAP_OFFSET_Y = -1900;
+
+    private CameraControl camera;
 
     public string HintText { get; set; }
 
     private static Texture2D whiteTexture;
+
     public static Texture2D WhiteTexture
     {
         get
@@ -56,13 +65,21 @@ public class Menu : MonoBehaviour
 	// Update is called once per frame
 	void OnGUI ()
 	{
+	    if (camera == null)
+	    {
+	        camera = FindObjectOfType<CameraControl>();
+	    }
+
 	    var rtsEntities = EntityController.SelectedEntities;
 
 	    float scaleFactor = CalculateScaleFactor();
 	    DrawUnitPortraits(scaleFactor, rtsEntities);
 	    DrawAbilities(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
 	    DrawSelectedUnitInfo(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
-	    DrawResources(scaleFactor, EntityController.Entities.OfType<IHasInventory>());
+	    DrawResources(scaleFactor, EntityController.Entities
+            .Where(e => e.hasAuthority)
+            .OfType<IHasInventory>());
+	    DrawMinimap(scaleFactor, EntityController.Entities);
 
 	    DrawUnitSelectionBox();
 	    DrawHintText(scaleFactor);
@@ -112,10 +129,25 @@ public class Menu : MonoBehaviour
     {
         Vector2 relPos = new Vector2(mousePosition.x, Screen.height - mousePosition.y);
 
-        return unitPortraitRect.Contains(relPos)
-               || abilitiesRect.Contains(relPos)
-               || resourcesRect.Contains(relPos)
-               || selectedUnitInfoRect.Contains(relPos);
+        if (unitPortraitRect.Contains(relPos)
+            || abilitiesRect.Contains(relPos)
+            || resourcesRect.Contains(relPos)
+            || selectedUnitInfoRect.Contains(relPos))
+        {
+            return true;
+        }
+        else if (minimapRect.Contains(relPos))
+        {
+            // ToDo: Position isn't correct yet
+            Vector3 scaledMapPos = new Vector3(relPos.x - (minimapRect.x + actualMapPos.x), 0, relPos.y - (minimapRect.y + actualMapPos.y));
+            Vector3 mapPos = scaledMapPos/mapScaleFactor;
+            mapPos.x += MAP_OFFSET_X;
+            mapPos.z += MAP_OFFSET_Y;
+            camera.MoveToMapPos(mapPos);
+
+            return true;
+        }
+        return false;
     }
 
     #region Helpers
@@ -391,6 +423,72 @@ public class Menu : MonoBehaviour
         healthBarRect.height = healthBarHeight;
         healthBarRect.width = healthBarWidth;
         GUI.DrawTexture(healthBarRect, healthTexture, ScaleMode.StretchToFill);
+    }
+
+    #endregion
+
+    #region Minimap
+
+    private void DrawMinimap(float scaleFactor, EntityContainer entities)
+    {
+        float border = 10*scaleFactor;
+        float guiWidth = 320 * scaleFactor;
+        float guiHeight = 620 * scaleFactor;
+        minimapRect = new Rect(Screen.width - guiWidth, Screen.height - guiHeight, guiWidth, guiHeight);
+
+        GUIStyle guiStyle = new GUIStyle()
+        {
+            fixedWidth = guiWidth,
+            fixedHeight = guiHeight,
+        };
+        guiStyle.normal.background = BackgroundTexture;
+
+        mapScaleFactor = Mathf.Min((guiWidth-2*border)/MAP_WIDTH, (guiHeight-2*border)/MAP_HEIGHT);
+        float actualMapWidth = MAP_WIDTH* mapScaleFactor;
+        float actualMapHeight = MAP_HEIGHT* mapScaleFactor;
+
+        GUILayout.BeginArea(minimapRect, guiStyle);
+        {
+            float x0 = (guiWidth - actualMapWidth)/2;
+            float y0 = (guiHeight - actualMapHeight)/2;
+            int mapIconSize = (int)(16*scaleFactor);
+            actualMapPos = new Rect(x0, y0, actualMapWidth, actualMapHeight);
+
+            GUI.DrawTexture(actualMapPos, Map);
+
+            foreach (var entity in entities)
+            {
+                Rect unitPos = GetMapUnitPos(mapScaleFactor, scaleFactor, actualMapHeight, x0, y0, entity);
+                var resource = entity as RtsResource;
+                if (resource != null)
+                {
+                    unitPos.width = mapIconSize;
+                    unitPos.height = mapIconSize;
+                    unitPos.y -= 8*scaleFactor;
+                    RtsResource res = resource;
+                    GUI.DrawTexture(unitPos, res.ResourceType.GetIcon());
+                }
+                else if (entity.hasAuthority)
+                {
+                    GUI.DrawTexture(unitPos, GUIHelper.FriendlyUnitTexture);
+                }
+                else
+                {
+                    GUI.DrawTexture(unitPos, GUIHelper.EnemyUnitTexture);
+                }
+            }
+
+            //Camera.main.transform
+        }
+        GUILayout.EndArea();
+    }
+
+    private Rect GetMapUnitPos(float mapScaleFactor, float scaleFactor, float actualMapHeight, float x0, float y0, RtsEntity entity)
+    {
+        float posX = entity.transform.position.x - MAP_OFFSET_X;
+        float posY = entity.transform.position.z - MAP_OFFSET_Y; // Units move on the (x-z)-plane
+
+        return new Rect(posX * mapScaleFactor, actualMapHeight - (posY * mapScaleFactor), 5 * scaleFactor, 5 * scaleFactor);
     }
 
     #endregion

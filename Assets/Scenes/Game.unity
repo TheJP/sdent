@@ -2387,6 +2387,7 @@ MonoBehaviour:
   BackgroundTexture: {fileID: 2800000, guid: f431f3abcaaa3e448a2155e677dd555c, type: 3}
   ResourceBackgroundTexture: {fileID: 2800000, guid: b04a6939101942849b6c6ab3114fe014,
     type: 3}
+  Map: {fileID: 2800000, guid: f22700c600808324dbc191835684cfdf, type: 3}
   PortraitStyle:
     m_Name: 
     m_Normal:
