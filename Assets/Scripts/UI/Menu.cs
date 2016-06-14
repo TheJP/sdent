@@ -138,8 +138,8 @@ public class Menu : MonoBehaviour
         }
         else if (minimapRect.Contains(relPos))
         {
-            // ToDo: Position isn't correct yet
-            Vector3 scaledMapPos = new Vector3(relPos.x - (minimapRect.x + actualMapPos.x), 0, relPos.y - (minimapRect.y + actualMapPos.y));
+            // hack, Don't look at it!
+            Vector3 scaledMapPos = new Vector3(relPos.x - (minimapRect.x + actualMapPos.x), 0, actualMapPos.height - (relPos.y - (minimapRect.y + actualMapPos.y)));
             Vector3 mapPos = scaledMapPos/mapScaleFactor;
             mapPos.x += MAP_OFFSET_X;
             mapPos.z += MAP_OFFSET_Y;
