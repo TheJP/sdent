@@ -14,8 +14,9 @@ public class EntityControl : NetworkBehaviour
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     public Type ActiveType { get; private set; }
 
-    private bool selecting = false;
-    private Vector3 selectionStart;
+    public bool Selecting { get; private set; }
+    public Vector3 SelectionStart { get; private set; }
+
     private Func<IEnumerable<RaycastHit>, bool> targetLambda = null;
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
@@ -57,7 +58,7 @@ public class EntityControl : NetworkBehaviour
             }
         }
 
-        if (selecting && leftClickEnd) { LeftClickEnd(); }
+        if (Selecting && leftClickEnd) { LeftClickEnd(); }
 
         //Execute abilities of active entities if possible
         foreach(var ability in selectedEntities.Get(ActiveType).ToList().SelectMany(entity => entity.Abilities))
@@ -94,14 +95,14 @@ public class EntityControl : NetworkBehaviour
 
     private void LeftClickStart()
     {
-        selecting = true;
-        selectionStart = Input.mousePosition;
+        Selecting = true;
+        SelectionStart = Input.mousePosition;
     }
 
     private void LeftClickEnd()
     {
         //Selection rectangle
-        var bounds = Utility.BoundsFromScreenPoints(selectionStart, Input.mousePosition);
+        var bounds = Utility.BoundsFromScreenPoints(SelectionStart, Input.mousePosition);
         var clickedEntities = new HashSet<RtsEntity>(Entities
             .Where(entity => bounds.Contains(Camera.main.WorldToViewportPoint(entity.transform.position)))
             .Select(entity => entity.GetComponent<RtsEntity>()));
@@ -129,7 +130,7 @@ public class EntityControl : NetworkBehaviour
     {
         targetLambda = onClickTarget;
         ShowHintText(hintText);
-        selecting = false; //Stop selecting, when targeting
+        Selecting = false; //Stop selecting, when targeting
     }
 
     public void ShowHintText(string hintText)
