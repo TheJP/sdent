@@ -138,8 +138,11 @@ public class Menu : MonoBehaviour
         }
         else if (minimapRect.Contains(relPos))
         {
+            float scaleFactor = CalculateScaleFactor();
+
             // hack, Don't look at it!
             Vector3 scaledMapPos = new Vector3(relPos.x - (minimapRect.x + actualMapPos.x), 0, actualMapPos.height - (relPos.y - (minimapRect.y + actualMapPos.y)));
+
             Vector3 mapPos = scaledMapPos/mapScaleFactor;
             mapPos.x += MAP_OFFSET_X;
             mapPos.z += MAP_OFFSET_Y;
@@ -465,6 +468,7 @@ public class Menu : MonoBehaviour
                     unitPos.width = mapIconSize;
                     unitPos.height = mapIconSize;
                     unitPos.y -= 8*scaleFactor;
+                    unitPos.x -= 8*scaleFactor;
                     RtsResource res = resource;
                     GUI.DrawTexture(unitPos, res.ResourceType.GetIcon());
                 }
@@ -477,18 +481,18 @@ public class Menu : MonoBehaviour
                     GUI.DrawTexture(unitPos, GUIHelper.EnemyUnitTexture);
                 }
             }
-
-            //Camera.main.transform
         }
         GUILayout.EndArea();
     }
 
     private Rect GetMapUnitPos(float mapScaleFactor, float scaleFactor, float actualMapHeight, float x0, float y0, RtsEntity entity)
     {
+        float size = 5*scaleFactor;
+
         float posX = entity.transform.position.x - MAP_OFFSET_X;
         float posY = entity.transform.position.z - MAP_OFFSET_Y; // Units move on the (x-z)-plane
 
-        return new Rect(posX * mapScaleFactor, actualMapHeight - (posY * mapScaleFactor), 5 * scaleFactor, 5 * scaleFactor);
+        return new Rect(x0 + posX * mapScaleFactor-size/2, y0 + actualMapHeight - (posY * mapScaleFactor - size/2), size, size);
     }
 
     #endregion
