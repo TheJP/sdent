@@ -107,9 +107,14 @@ public class Merchant : RtsUnit, IHasInventory
         private bool SetSource(IEnumerable<RaycastHit> hits)
         {
             var entity = Utility.GetRtsEntityFromHits(hits);
+            if (!entity.hasAuthority)
+            {
+                merchant.EntityControl.ShowHintText("You don't own this source... Select route source");
+                return false;
+            }
             if (!(entity is Saloon || entity is StorageHouse))
             {
-                merchant.EntityControl.ShowHintText("Source has to be a storage building... Select route target");
+                merchant.EntityControl.ShowHintText("Source has to be a storage building... Select route source");
                 return false;
             }
             source = entity;
@@ -120,6 +125,11 @@ public class Merchant : RtsUnit, IHasInventory
         private bool SetTarget(IEnumerable<RaycastHit> hits)
         {
             var entity = Utility.GetRtsEntityFromHits(hits);
+            if (!entity.hasAuthority)
+            {
+                merchant.EntityControl.ShowHintText("You don't own this target... Select route target");
+                return false;
+            }
             if (!(entity is Saloon || entity is StorageHouse))
             {
                 merchant.EntityControl.ShowHintText("Target has to be a storage building... Select route target");

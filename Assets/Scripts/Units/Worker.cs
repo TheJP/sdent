@@ -12,6 +12,10 @@ public class Worker : RtsUnit, IHasInventory
     public const float WorkerBuildingSpeed = 100f;
     public const float GatheringTime = 0.1f;
 
+    //Used vor collision avoidance, when constructing buildings
+    public const float BuildingSpace = 12f;
+    public const float UnitSpace = 7f;
+
     private enum States { Idle, Traveling, Building, Gathering }
 
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
@@ -189,14 +193,29 @@ public class Worker : RtsUnit, IHasInventory
     }
 
     [Command]
-    private void CmdBuildBuilding(Buildings building)
+    private void CmdBuildBuilding(Buildings building, Vector3 position)
     {
-        var ground = Utility.RayMouseToGround();
-        if (ground.HasValue)
-        {
-            //TODO: entity avoidance for new buildings
-            FindObjectOfType<EntityControl>().BuildConstructionSite(building, ground.Value, Client, gameObject);
-        }
+        //TODO: entity avoidance for new buildings
+        var entityControl = FindObjectOfType<EntityControl>();
+        var collision = entityControl.Entities.Any(entity => (entity is RtsUnit) ?
+            //Checks for unit
+            position.x >= entity.transform.position.x - UnitSpace &&
+            position.x <= entity.transform.position.x + UnitSpace &&
+            position.z >= entity.transform.position.z - UnitSpace &&
+            position.z <= entity.transform.position.z + UnitSpace :
+            //Checks for buildings
+            position.x >= entity.transform.position.x - BuildingSpace &&
+            position.x <= entity.transform.position.x + BuildingSpace &&
+            position.z >= entity.transform.position.z - BuildingSpace &&
+            position.z <= entity.transform.position.z + BuildingSpace);
+        if (!collision) { entityControl.BuildConstructionSite(building, position, Client, gameObject); }
+        else { RpcCantBuildHere(position); }
+    }
+
+    [ClientRpc]
+    private void RpcCantBuildHere(Vector3 position)
+    {
+        if (hasAuthority) { Debug.Log("möööp"); }
     }
 
     private class BuildBuilding : AbilityBase
@@ -212,7 +231,11 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute()
         {
-            if (worker.hasAuthority) { worker.CmdBuildBuilding(finalBuilding); }
+            if (worker.hasAuthority)
+            {
+                var ground = Utility.RayMouseToGround();
+                if (ground.HasValue) { worker.CmdBuildBuilding(finalBuilding, ground.Value); }
+            }
         }
     }
 
