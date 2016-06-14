@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class StorageHouse : RtsBuilding, IHasInventory
 {
@@ -15,5 +16,10 @@ public class StorageHouse : RtsBuilding, IHasInventory
     public override Buildings Type
     {
         get { return Buildings.StorageHouse; }
+    }
+
+    public override IEnumerable<ResourceTuple> BuildingCosts
+    {
+        get { return new[] { ResourceTypes.Plank.Times(200), ResourceTypes.Steel.Times(100), ResourceTypes.Brick.Times(100) }; }
     }
 }

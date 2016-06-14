@@ -14,7 +14,10 @@ public enum ResourceTypes
     Wood,
     Coal,
     Clay,
-    Food
+    Food,
+    Steel,
+    Plank,
+    Brick
 }
 
 public abstract class RtsResource : RtsEntity
@@ -23,10 +26,23 @@ public abstract class RtsResource : RtsEntity
     {
         get { return (IEnumerable<ResourceTypes>)Enum.GetValues(typeof(ResourceTypes)); }
     }
+
     public abstract ResourceTypes ResourceType { get; }
+
     protected override NetworkConnection Client
     {
         get { return base.Client; }
         set { throw new InvalidOperationException(); }
+    }
+    public override float MaxState
+    {
+        get { return 99999f; }
+    }
+
+    [Command]
+    public void CmdTakeResource(int amount)
+    {
+        if(amount <= 0) { return; }
+        state -= amount;
     }
 }

@@ -21,6 +21,8 @@ public class Inventory : IEnumerable<KeyValuePair<ResourceTypes, int>>
 
     public int SpaceAvailable { get { return spaceAvailable; } }
 
+    public int FreeSpace { get { return SpaceAvailable - spaceTaken; } }
+
     /// <summary>Creates an inventory with the given size.</summary>
     /// <param name="spaceAvailable">Size of the inventory</param>
     public Inventory(int spaceAvailable)

@@ -123,6 +123,7 @@ public class EntityControl : NetworkBehaviour
             selectedEntities.Add(clickedEntity);
             ActiveType = clickedEntity.GetType();
         }
+        Selecting = false;
     }
 
     public void StartTargeting(Func<IEnumerable<RaycastHit>, bool> onClickTarget, string hintText = null)
@@ -134,8 +135,7 @@ public class EntityControl : NetworkBehaviour
 
     public void ShowHintText(string hintText)
     {
-        //TODO: Implement
-        //Debug.Log(hintText);
+        this.menu.HintText = hintText;
     }
 
     public void AbortTargeting()
@@ -193,6 +193,7 @@ public class EntityControl : NetworkBehaviour
     public void BuildConstructionSite(Buildings finalBuilding, Vector3 position, NetworkConnection player, GameObject worker)
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player, rtsEntity => (rtsEntity as ConstructionSite).FinalBuilding = finalBuilding);
+        AddEntity(constructionSite.GetComponent<RtsEntity>());
         worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
     }
 }

@@ -280,6 +280,7 @@ MonoBehaviour:
   barFillImage: {fileID: 11492486}
   portraitImage: {fileID: 2800000, guid: cfbec50211f22924d801639a63593756, type: 3}
   entityColorMesh: {fileID: 2324834}
+  cantBuildHere: {fileID: 130658, guid: bf1897cd19df9b6428a63b29e2c2ef3b, type: 2}
 --- !u!114 &11425480
 MonoBehaviour:
   m_ObjectHideFlags: 1

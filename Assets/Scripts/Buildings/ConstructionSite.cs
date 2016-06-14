@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
-public class ConstructionSite : RtsBuilding
+public class ConstructionSite : RtsBuilding, IHasInventory
 {
     public GameObject[] buildingPrefabs;
 
@@ -14,6 +15,7 @@ public class ConstructionSite : RtsBuilding
     private Buildings finalBuilding;
 
     private readonly HashSet<Worker> buildingWorkers = new HashSet<Worker>();
+    private Inventory inventory = new Inventory(0);
     private bool finishedBuilding = false;
 
     public Buildings FinalBuilding
@@ -22,16 +24,23 @@ public class ConstructionSite : RtsBuilding
         set { finalBuilding = value; }
     }
 
+    public Inventory Inventory
+    {
+        get { return inventory; }
+    }
+
     public override Buildings Type
     {
         get { return Buildings.ConstructionSite; }
     }
 
-    [Command]
-    public void CmdFinishBuilding(GameObject buildingPrefab)
+    public Dictionary<ResourceTypes, int> NeededResources
     {
-        FindObjectOfType<EntityControl>().SpawnEntity(buildingPrefab, transform.position, Client);
-        CmdDie();
+        get
+        {
+            var costs = prefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
+            return costs.ToDictionary(tuple => tuple.Resource, tuple => tuple.Amount);
+        }
     }
 
     public void WorkerStartBuilding(Worker worker) { buildingWorkers.Add(worker); }
@@ -39,7 +48,6 @@ public class ConstructionSite : RtsBuilding
 
     protected override void Start()
     {
-        base.Start();
         finishedBuilding = false;
         buildingWorkers.Clear();
         state = 1f;
@@ -49,24 +57,27 @@ public class ConstructionSite : RtsBuilding
         }
     }
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        FindObjectOfType<EntityControl>().AddEntity(this);
+    }
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+        inventory = new FilteredInventory(NeededResources);
+    }
+
     [Command]
     private void CmdBuild(float addToState)
     {
         state += addToState;
         if (state >= MaxState)
         {
-            RpcFinishedBuilding();
             FindObjectOfType<EntityControl>().SpawnEntity(prefabDictionary[FinalBuilding], transform.position, Client);
             CmdDie();
         }
-    }
-
-    [ClientRpc]
-    private void RpcFinishedBuilding()
-    {
-        finishedBuilding = true;
-        foreach (var worker in buildingWorkers) { worker.FinishedBuilding(); }
-        buildingWorkers.Clear();
     }
 
     protected override void Update()
