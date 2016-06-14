@@ -31,7 +31,7 @@ public class Merchant : RtsUnit, IHasInventory
         var key = 0;
         foreach (var resource in RtsResource.Resources)
         {
-            AddAbility(new MerchantRoute(resource, keys[key++], "BuildBuilding", this));
+            AddAbility(new MerchantRoute(resource, keys[key++], "Move"+resource.ToString(), this));
         }
     }
 
