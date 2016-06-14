@@ -58,7 +58,7 @@ public class Worker : RtsUnit, IHasInventory
         AddAbility(new NewOrder(new BuildBuilding("Pottery", "Build a pottery, which produces bricks.", KeyCode.E, this, Buildings.Pottery), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
         AddAbility(new NewOrder(new BuildBuilding("Workshop", "Build a workshop, which produces planks.", KeyCode.V, this, Buildings.Workshop), this, resume));
-        AddAbility(new NewOrder(new BuildBuilding("Smeltery", "Build a smeltery, which produces steel.", KeyCode.G, this, Buildings.FarmHouse), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Smeltery", "Build a smeltery, which produces steel.", KeyCode.G, this, Buildings.Smeltery), this, resume));
     }
 
     private RtsBuilding FindNearestStorage()

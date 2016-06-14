@@ -88,7 +88,7 @@ public class Carrier : NetworkBehaviour, IHasInventory
     {
         foreach (var resource in Inventory.Where(tuple => tuple.Value > 0).ToList())
         {
-            var amount = Math.Min(resource.Value, targetInventory.SpaceAvailable - targetInventory.Count());
+            var amount = Math.Min(resource.Value, targetInventory.FreeSpace);
             if (amount > 0 && targetInventory.AddResources(resource.Key, amount))
             {
                 Inventory.RemoveResources(resource.Key, amount);
@@ -102,7 +102,7 @@ public class Carrier : NetworkBehaviour, IHasInventory
     {
         foreach (var input in assignedBuilding.Recipes.SelectMany(recipe => recipe.Input))
         {
-            var amount = Math.Min(storageInventory[input.Resource], Math.Min(RtsCraftingBuilding.CraftingSpaceFactor * input.Amount, Inventory.SpaceAvailable - Inventory.Count()));
+            var amount = Math.Min(storageInventory[input.Resource], Math.Min((RtsCraftingBuilding.CraftingSpaceFactor * input.Amount) - assignedBuilding.Inventory[input.Resource], Inventory.FreeSpace));
             if (amount > 0 && storageInventory.RemoveResources(input.Resource, amount))
             {
                 Inventory.AddResources(input.Resource, amount);
