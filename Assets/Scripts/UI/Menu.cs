@@ -28,6 +28,8 @@ public class Menu : MonoBehaviour
     private Rect resourcesRect = new Rect();
     private Rect selectedUnitInfoRect = new Rect();
 
+    public string HintText { get; set; }
+
     private static Texture2D whiteTexture;
     public static Texture2D WhiteTexture
     {
@@ -61,9 +63,24 @@ public class Menu : MonoBehaviour
 	    DrawAbilities(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
 	    DrawSelectedUnitInfo(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
 	    DrawResources(scaleFactor, EntityController.Entities.OfType<IHasInventory>());
+
 	    DrawUnitSelectionBox();
+	    DrawHintText(scaleFactor);
 
 	    DrawTooltip();
+    }
+
+    private void DrawHintText(float scaleFactor)
+    {
+        if (!string.IsNullOrEmpty(HintText))
+        {
+            GUI.skin.box.wordWrap = true;
+
+            Rect hintTextPos = new Rect(unitPortraitRect);
+            hintTextPos.y -= 65;
+            hintTextPos.height = 60;
+            GUI.Box(hintTextPos, HintText);
+        }
     }
 
     private void DrawUnitSelectionBox()

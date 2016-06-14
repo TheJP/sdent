@@ -109,7 +109,7 @@ public class Merchant : RtsUnit, IHasInventory
             var entity = Utility.GetRtsEntityFromHits(hits);
             if (!(entity is Saloon || entity is StorageHouse))
             {
-                merchant.EntityControl.ShowHintText("Source has to be a storage building... Select route target");
+                merchant.EntityControl.ShowHintText("Source has to be a storage building...\nSelect route target");
                 return false;
             }
             source = entity;
@@ -122,12 +122,12 @@ public class Merchant : RtsUnit, IHasInventory
             var entity = Utility.GetRtsEntityFromHits(hits);
             if (!(entity is Saloon || entity is StorageHouse))
             {
-                merchant.EntityControl.ShowHintText("Target has to be a storage building... Select route target");
+                merchant.EntityControl.ShowHintText("Target has to be a storage building...\nSelect route target");
                 return false;
             }
             if (entity == source)
             {
-                merchant.EntityControl.ShowHintText("Source and target can't be the same... Select route target");
+                merchant.EntityControl.ShowHintText("Source and target can't be the same...\nSelect route target");
                 return false;
             }
             merchant.resource = resource;
