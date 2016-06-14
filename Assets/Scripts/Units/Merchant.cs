@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class Merchant : RtsUnit, IHasInventory
 {
-    public const int InventorySize = 10;
+    public const int InventorySize = 40;
     public const float LoadingDistance = 12f;
 
     private enum States { Idle, TravelingToSource, TravelingToTarget }
@@ -20,6 +20,11 @@ public class Merchant : RtsUnit, IHasInventory
     public Inventory Inventory
     {
         get { return inventory; }
+    }
+
+    public override IAbility RightClickAbility
+    {
+        get { return null; }
     }
 
     public Merchant()

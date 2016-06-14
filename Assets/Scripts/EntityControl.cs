@@ -14,6 +14,8 @@ public class EntityControl : NetworkBehaviour
     /// <summary>Determines, which entity type of the selected entities is active.</summary>
     public Type ActiveType { get; private set; }
 
+    private bool selecting = false;
+    private Vector3 selectionStart;
     private Func<IEnumerable<RaycastHit>, bool> targetLambda = null;
     private readonly EntityContainer selectedEntities = new EntityContainer();
     private readonly EntityContainer entities = new EntityContainer();
@@ -31,15 +33,15 @@ public class EntityControl : NetworkBehaviour
         //Handle clicks
         var shouldAbortTargeting = false;
         var leftClick = Input.GetMouseButtonDown(0);
+        var leftClickEnd = Input.GetMouseButtonUp(0);
         var rightClick = Input.GetMouseButtonDown(1);
-        if(leftClick || rightClick)
+        if (leftClick || rightClick)
         {
-            var clickedEntity = Utility.RayMouseToRtsEntity();
             if (leftClick)
             {
                 if (!menu.HandleMouseClick(Input.mousePosition))
                 {
-                    if (!Targeting) { LeftClick(clickedEntity); }
+                    if (!Targeting) { LeftClickStart(); }
                     else
                     {
                         var success = targetLambda(Utility.RayMouseToGroundOrRtsEntity());
@@ -50,10 +52,12 @@ public class EntityControl : NetworkBehaviour
             }
             else if (rightClick)
             {
-                RightClick(clickedEntity);
+                RightClick();
                 shouldAbortTargeting = true;
             }
         }
+
+        if (selecting && leftClickEnd) { LeftClickEnd(); }
 
         //Execute abilities of active entities if possible
         foreach(var ability in selectedEntities.Get(ActiveType).ToList().SelectMany(entity => entity.Abilities))
@@ -72,8 +76,9 @@ public class EntityControl : NetworkBehaviour
         else { Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); }
     }
 
-    private void RightClick(RtsEntity clickedEntity)
+    private void RightClick()
     {
+        var clickedEntity = Utility.RayMouseToRtsEntity();
         //Execute right click ability on all selected units
         foreach (var selectedEntity in selectedEntities.ToList())
         {
@@ -87,15 +92,31 @@ public class EntityControl : NetworkBehaviour
         }
     }
 
-    private void LeftClick(RtsEntity clickedEntity)
+    private void LeftClickStart()
     {
+        selecting = true;
+        selectionStart = Input.mousePosition;
+    }
+
+    private void LeftClickEnd()
+    {
+        //Selection rectangle
+        var bounds = Utility.BoundsFromScreenPoints(selectionStart, Input.mousePosition);
+        var clickedEntities = new HashSet<RtsEntity>(Entities
+            .Where(entity => bounds.Contains(Camera.main.WorldToViewportPoint(entity.transform.position)))
+            .Select(entity => entity.GetComponent<RtsEntity>()));
+
+        //Single click
+        var clicked = Utility.RayMouseToRtsEntity();
+        if (clicked != null) { clickedEntities.Add(clicked); }
+
         //Select clicked unit
         foreach (var selectedEntity in selectedEntities.ToList())
         {
-            if (selectedEntity != clickedEntity) { selectedEntity.Selected = false; }
+            if (!clickedEntities.Contains(selectedEntity)) { selectedEntity.Selected = false; }
         }
         selectedEntities.Clear();
-        if (clickedEntity != null)
+        foreach(var clickedEntity in clickedEntities)
         {
             if (!clickedEntity.Selected) { clickedEntity.Selected = true; }
             selectedEntities.Add(clickedEntity);
@@ -107,6 +128,7 @@ public class EntityControl : NetworkBehaviour
     {
         targetLambda = onClickTarget;
         ShowHintText(hintText);
+        selecting = false; //Stop selecting, when targeting
     }
 
     public void ShowHintText(string hintText)

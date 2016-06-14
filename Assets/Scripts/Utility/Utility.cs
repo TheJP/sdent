@@ -54,4 +54,17 @@ public static class Utility
         .OrderBy(house => (house.transform.position - position).sqrMagnitude)
         .FirstOrDefault();
     }
+
+    public static Bounds BoundsFromScreenPoints(Vector3 screenPoint1, Vector3 screenPoint2)
+    {
+        var position1 = Camera.main.ScreenToViewportPoint(screenPoint1);
+        var position2 = Camera.main.ScreenToViewportPoint(screenPoint2);
+        var boundsMin = Vector3.Min(position1, position2);
+        var boundsMax = Vector3.Max(position1, position2);
+        boundsMin.z = Camera.main.nearClipPlane;
+        boundsMax.z = Camera.main.farClipPlane;
+        var bounds = new Bounds();
+        bounds.SetMinMax(boundsMin, boundsMax);
+        return bounds;
+    }
 }
