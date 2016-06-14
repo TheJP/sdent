@@ -31,6 +31,14 @@ public class CameraControl : MonoBehaviour
         }
     }
 
+    public void MoveToMapPos(Vector3 mapPos)
+    {
+        hasInitialPosition = true;
+        var toCamera = transform.rotation * Vector3.back;
+        var factor = (transform.position.y - mapPos.y) / toCamera.y;
+        transform.position = mapPos + factor * toCamera;
+    }
+
     void Update()
     {
         //Camera movement (keyboard)

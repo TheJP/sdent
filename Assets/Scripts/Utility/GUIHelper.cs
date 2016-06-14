@@ -20,6 +20,54 @@ namespace Assets.Scripts.Utility
             }
         }
 
+        private static Texture2D blackTexture;
+        public static Texture2D BlackTexture
+        {
+            get
+            {
+                if (blackTexture == null)
+                {
+                    blackTexture = new Texture2D(1, 1);
+                    blackTexture.SetPixel(0, 0, Color.black);
+                    blackTexture.Apply();
+                }
+
+                return blackTexture;
+            }
+        }
+
+        private static Texture2D friendlyUnitTexture;
+        public static Texture2D FriendlyUnitTexture
+        {
+            get
+            {
+                if (friendlyUnitTexture == null)
+                {
+                    friendlyUnitTexture = new Texture2D(1, 1);
+                    friendlyUnitTexture.SetPixel(0, 0, Color.blue);
+                    friendlyUnitTexture.Apply();
+                }
+
+                return friendlyUnitTexture;
+            }
+        }
+
+        private static Texture2D enemyUnitTexture;
+        public static Texture2D EnemyUnitTexture
+        {
+            get
+            {
+                if (enemyUnitTexture == null)
+                {
+                    enemyUnitTexture = new Texture2D(1, 1);
+                    enemyUnitTexture.SetPixel(0, 0, Color.red);
+                    enemyUnitTexture.Apply();
+                }
+
+                return enemyUnitTexture;
+            }
+        }
+
         public static void DrawScreenRect(Rect rect, Color color)
         {
             var oldColor = GUI.color;
