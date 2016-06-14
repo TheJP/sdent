@@ -11,6 +11,11 @@ public class Farmhouse : RtsCraftingBuilding
         new Recipe(1f, Enumerable.Empty<ResourceTuple>(), new [] { new ResourceTuple(ResourceTypes.Food, 1)})
     };
 
+    public override IEnumerable<ResourceTuple> BuildingCosts
+    {
+        get { return new[] { ResourceTypes.Wood.Times(100) }; }
+    }
+
     public override IEnumerable<Recipe> Recipes
     {
         get { return recipes; }

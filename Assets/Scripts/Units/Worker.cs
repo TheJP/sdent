@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 
 public class Worker : RtsUnit, IHasInventory
 {
-    public const int InventorySize = 20;
+    public const int InventorySize = int.MaxValue; //Allow for all building materials to be brought at once
+    public const int MaxGatheringSize = 20;
     public const float WorkDistance = 12;
     public const float WorkerBuildingSpeed = 100f;
     public const float GatheringTime = 0.1f;
@@ -18,7 +19,7 @@ public class Worker : RtsUnit, IHasInventory
 
     public GameObject cantBuildHere;
 
-    private enum States { Idle, Traveling, Building, Gathering }
+    private enum States { Idle, Traveling, Building, Gathering, FetchingResources }
 
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
     private RtsEntity assignedWork = null;
@@ -93,7 +94,7 @@ public class Worker : RtsUnit, IHasInventory
     [Client]
     private void DoAssignedWork(NavMeshAgent agent)
     {
-        if (assignedWork is RtsResource && Inventory.Count() >= InventorySize)
+        if (assignedWork is RtsResource && Inventory.Count() >= MaxGatheringSize)
         {
             var nearesStorage = FindNearestStorage();
             if(nearesStorage == null) { return; }
@@ -106,7 +107,7 @@ public class Worker : RtsUnit, IHasInventory
                     if (target.AddResources(resource.Key, resource.Value)) { Inventory.RemoveResources(resource.Key, resource.Value); }
                 }
                 //Travel back to resource
-                if (Inventory.Count() < InventorySize && agent.SetDestination(assignedWork.transform.position))
+                if (Inventory.Count() < MaxGatheringSize && agent.SetDestination(assignedWork.transform.position))
                 {
                     agent.Resume();
                     workerState = States.Traveling;
@@ -173,7 +174,7 @@ public class Worker : RtsUnit, IHasInventory
                     break;
                 case States.Gathering:
                     if (assignedWork == null) { workerState = States.Idle; }
-                    else if(Inventory.Count() >= InventorySize)
+                    else if(Inventory.Count() >= MaxGatheringSize)
                     {
                         //Go home
                         var nearestStorage = FindNearestStorage();

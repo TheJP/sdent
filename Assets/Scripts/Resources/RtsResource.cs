@@ -14,7 +14,10 @@ public enum ResourceTypes
     Wood,
     Coal,
     Clay,
-    Food
+    Food,
+    Steel,
+    Planks,
+    Bricks
 }
 
 public abstract class RtsResource : RtsEntity
