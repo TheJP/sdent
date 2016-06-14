@@ -135,8 +135,7 @@ public class EntityControl : NetworkBehaviour
 
     public void ShowHintText(string hintText)
     {
-        //TODO: Implement
-        //Debug.Log(hintText);
+        this.menu.HintText = hintText;
     }
 
     public void AbortTargeting()
