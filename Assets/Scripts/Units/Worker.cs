@@ -120,7 +120,8 @@ public class Worker : RtsUnit, IHasInventory
             //Load needed resources
             var target = (nearestStorage as IHasInventory).Inventory;
             Loadoff(target);
-            foreach (var need in constructionSite.NeededResources)
+            var random = new System.Random();
+            foreach (var need in constructionSite.NeededResources.OrderBy(n => random.NextDouble()))
             {
                 var amount = Math.Min(target[need.Key], Math.Min(need.Value - constructionSite.Inventory[need.Key], Inventory.FreeSpace));
                 if(amount > 0 && target.RemoveResources(need.Key, amount))

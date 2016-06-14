@@ -100,7 +100,8 @@ public class Carrier : NetworkBehaviour, IHasInventory
     /// <param name="storageInventory"></param>
     private void LoadCarrierFromStorage(Inventory storageInventory)
     {
-        foreach (var input in assignedBuilding.Recipes.SelectMany(recipe => recipe.Input))
+        var random = new System.Random();
+        foreach (var input in assignedBuilding.Recipes.SelectMany(recipe => recipe.Input).OrderBy(i => random.NextDouble()))
         {
             var amount = Math.Min(storageInventory[input.Resource], Math.Min((RtsCraftingBuilding.CraftingSpaceFactor * input.Amount) - assignedBuilding.Inventory[input.Resource], Inventory.FreeSpace));
             if (amount > 0 && storageInventory.RemoveResources(input.Resource, amount))
