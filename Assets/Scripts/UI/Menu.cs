@@ -203,7 +203,7 @@ public class Menu : MonoBehaviour
 
     private void DrawSelectedUnitInfo(float scaleFactor, IEnumerable<RtsEntity> rtsEntities)
     {
-        float guiWidth = 400 * scaleFactor;
+        float guiWidth =500 * scaleFactor;
         float guiHeight = 300 * scaleFactor;
         selectedUnitInfoRect = new Rect(Screen.width / 2 + 2, Screen.height - guiHeight, guiWidth, guiHeight);
 
@@ -249,12 +249,13 @@ public class Menu : MonoBehaviour
                         int counter = 0;
                         foreach (var res in entityWithInv.Inventory)
                         {
-                            if (counter > 0 && counter % 4 == 0)
+                            if (counter > 0 && counter % 5 == 0)
                             {
                                 GUILayout.EndHorizontal();
                                 GUILayout.BeginHorizontal();
                             }
                             DrawSingleResource(res.Key, res.Value, scaledResIconStyle, scaledResTextStyle);
+                            counter++;
                         }
                     }
                 }
