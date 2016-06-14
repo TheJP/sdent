@@ -186,7 +186,7 @@ public class Menu : MonoBehaviour
             int counter = 0;
             foreach (var res in resources)
             {
-                if (counter % 4 == 0)
+                if (counter % 5 == 0)
                 {
                     if (counter > 0)
                     {
