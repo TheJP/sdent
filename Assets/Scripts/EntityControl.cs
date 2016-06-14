@@ -123,7 +123,7 @@ public class EntityControl : NetworkBehaviour
             selectedEntities.Add(clickedEntity);
             ActiveType = clickedEntity.GetType();
         }
-        selecting = false;
+        Selecting = false;
     }
 
     public void StartTargeting(Func<IEnumerable<RaycastHit>, bool> onClickTarget, string hintText = null)
