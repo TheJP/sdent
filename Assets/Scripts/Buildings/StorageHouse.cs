@@ -20,6 +20,6 @@ public class StorageHouse : RtsBuilding, IHasInventory
 
     public override IEnumerable<ResourceTuple> BuildingCosts
     {
-        get { return new[] { ResourceTypes.Planks.Times(200), ResourceTypes.Steel.Times(100), ResourceTypes.Bricks.Times(100) }; }
+        get { return new[] { ResourceTypes.Plank.Times(200), ResourceTypes.Steel.Times(100), ResourceTypes.Brick.Times(100) }; }
     }
 }

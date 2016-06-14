@@ -34,6 +34,15 @@ public class ConstructionSite : RtsBuilding, IHasInventory
         get { return Buildings.ConstructionSite; }
     }
 
+    public Dictionary<ResourceTypes, int> NeededResources
+    {
+        get
+        {
+            var costs = prefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
+            return costs.ToDictionary(tuple => tuple.Resource, tuple => tuple.Amount);
+        }
+    }
+
     public void WorkerStartBuilding(Worker worker) { buildingWorkers.Add(worker); }
     public void WorkerStopBuilding(Worker worker) { buildingWorkers.Remove(worker); }
 
@@ -52,8 +61,7 @@ public class ConstructionSite : RtsBuilding, IHasInventory
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
-        var costs = prefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
-        inventory = new FilteredInventory(costs.ToDictionary(tuple => tuple.Resource, tuple => tuple.Amount));
+        inventory = new FilteredInventory(NeededResources);
     }
 
     [Command]
