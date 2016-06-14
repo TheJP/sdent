@@ -49,19 +49,32 @@ public class ConstructionSite : RtsBuilding
         }
     }
 
+    [Command]
+    private void CmdBuild(float addToState)
+    {
+        state += addToState;
+        if (state >= MaxState)
+        {
+            RpcFinishedBuilding();
+            FindObjectOfType<EntityControl>().SpawnEntity(prefabDictionary[FinalBuilding], transform.position, Client);
+            CmdDie();
+        }
+    }
+
+    [ClientRpc]
+    private void RpcFinishedBuilding()
+    {
+        finishedBuilding = true;
+        foreach (var worker in buildingWorkers) { worker.FinishedBuilding(); }
+        buildingWorkers.Clear();
+    }
+
     protected override void Update()
     {
         base.Update();
         if (hasAuthority && !finishedBuilding)
         {
-            state += buildingWorkers.Count * Worker.WorkerBuildingSpeed;
-            if (state >= MaxState)
-            {
-                finishedBuilding = true;
-                foreach (var worker in buildingWorkers) { worker.FinishedBuilding(); }
-                buildingWorkers.Clear();
-                CmdFinishBuilding(prefabDictionary[FinalBuilding]);
-            }
+            CmdBuild(buildingWorkers.Count * Worker.WorkerBuildingSpeed * Time.deltaTime);
         }
     }
 }

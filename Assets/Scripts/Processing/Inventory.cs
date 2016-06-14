@@ -30,6 +30,14 @@ public class Inventory : IEnumerable<KeyValuePair<ResourceTypes, int>>
 
     public int Count() { return spaceTaken; }
 
+    /// <summary>Determines, if all the resources can be added.</summary>
+    /// <param name="resources"></param>
+    /// <returns>True if those resources can be added.</returns>
+    public  virtual bool CanAddResources(IEnumerable<ResourceTuple> resources)
+    {
+        return resources.Sum(tuple => Math.Abs(tuple.Amount)) + spaceTaken <= SpaceAvailable;
+    }
+
     public virtual bool AddResources(ResourceTypes resource, int amount)
     {
         if(amount < 0) { return RemoveResources(resource, -amount); }

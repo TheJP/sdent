@@ -1880,7 +1880,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constructionSitePrefab: {fileID: 156168, guid: 8cf89643d7fdb90419c5693e69264084,
     type: 2}
+  carrierPrefab: {fileID: 129166, guid: 675828db31571744993eec6919dd7128, type: 2}
   menu: {fileID: 1546405448}
+  corsshairTexture: {fileID: 2800000, guid: cfe61072adf3fa04786fdd1871f427b6, type: 3}
 --- !u!4 &1244970957
 Transform:
   m_ObjectHideFlags: 0
@@ -2223,11 +2225,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f523a3fa7437d4fb05884ed32313c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clayMinePrefab: {fileID: 194376, guid: f61bb56831cbbd34099fd32f441732a5, type: 2}
+  clayMineAmount: 30
+  coalMinePrefab: {fileID: 157222, guid: c53815df337e0e743a825b9d774dac7c, type: 2}
+  coalMineAmount: 30
   goldMinePrefab: {fileID: 106646, guid: 38364b5327a2d8a4a9f668437b25f91e, type: 2}
-  goldMineAmount: 60
+  goldMineAmount: 30
+  ironMinePrefab: {fileID: 147974, guid: 241d4ba456db2064193c35845a555925, type: 2}
+  ironMineAmount: 30
+  treeSourcePrefab: {fileID: 145970, guid: 3fa5b3ebe8e034340af26db977e413af, type: 2}
+  treeSourceAmount: 30
   spawnCorner1: {fileID: 1082189581}
   spawnCorner2: {fileID: 1214132110}
-  minimalDistance: 10
+  minimalDistance: 30
 --- !u!4 &1448839585
 Transform:
   m_ObjectHideFlags: 0
@@ -2434,6 +2444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackgroundTexture: {fileID: 2800000, guid: f431f3abcaaa3e448a2155e677dd555c, type: 3}
+  ResourceBackgroundTexture: {fileID: 2800000, guid: b04a6939101942849b6c6ab3114fe014,
+    type: 3}
   PortraitStyle:
     m_Name: 
     m_Normal:
@@ -2491,6 +2503,124 @@ MonoBehaviour:
     m_ContentOffset: {x: 0, y: 0}
     m_FixedWidth: 88
     m_FixedHeight: 88
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  ResourceIconStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 10
+      m_Right: 10
+      m_Top: 5
+      m_Bottom: 5
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 88
+    m_FixedHeight: 44
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  ResourceTextStyle:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 10
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 0}
+    m_FontSize: 20
+    m_FontStyle: 1
+    m_Alignment: 5
+    m_WordWrap: 0
+    m_RichText: 0
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
   EntityController: {fileID: 1244970956}

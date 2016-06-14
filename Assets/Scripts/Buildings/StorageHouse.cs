@@ -4,7 +4,7 @@ using System;
 
 public class StorageHouse : RtsBuilding, IHasInventory
 {
-    public const int InventorySize = 1000;
+    public const int InventorySize = int.MaxValue;
 
     private readonly Inventory inventory = new Inventory(InventorySize);
     public Inventory Inventory

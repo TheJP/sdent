@@ -33,6 +33,17 @@ public class FilteredInventory : Inventory
             .ToDictionary(group => group.Key, group => RtsCraftingBuilding.CraftingSpaceFactor * group.Sum());
     }
 
+    public override bool CanAddResources(IEnumerable<ResourceTuple> resources)
+    {
+        foreach (var tuple in resources
+            .GroupBy(tuple => tuple.Resource, tuple => tuple.Amount)
+            .Select(group => group.Key.Times(group.Sum())))
+        {
+            if (!maximals.ContainsKey(tuple.Resource) || this[tuple.Resource] + tuple.Amount > maximals[tuple.Resource]) { return false; }
+        }
+        return base.CanAddResources(resources);
+    }
+
     public override bool AddResources(ResourceTypes resource, int amount)
     {
         if (!maximals.ContainsKey(resource) || this[resource] + amount > maximals[resource]) { return false; }

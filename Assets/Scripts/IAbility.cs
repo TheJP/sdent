@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +19,9 @@ public interface IAbility
 
     /// <summary>Flag, which determines, if this ability can currently be executed.</summary>
     bool CanExecute { get; }
+
+    /// <summary>True, if the ability is using the EntityControl targeting api.</summary>
+    bool IsSettingTarget { get; }
 
     /// <summary>The image of the ability</summary>
     Texture Icon { get; }
@@ -56,20 +58,35 @@ public abstract class AbilityBase : IAbility
         get { return canExecute; }
     }
 
-    private readonly Texture icon;
+    private Texture icon;
+    private readonly string iconName;
     public virtual Texture Icon
     {
-        get { return icon; }
+        get
+        {
+            if (icon == null)
+            {
+                this.icon = Resources.Load<Texture2D>("AbilitiesIcon/" + iconName);
+            }
+            return icon;
+        }
+    }
+
+    private readonly bool isSettingTarget;
+    public virtual bool IsSettingTarget
+    {
+        get { return isSettingTarget; }
     }
 
     public abstract void Execute();
 
-    public AbilityBase(string name, string lore, KeyCode key, string iconName, bool canExecute = true)
+    public AbilityBase(string name, string lore, KeyCode key, string iconName, bool canExecute = true, bool isSettingTarget = false)
     {
         this.name = name;
         this.lore = lore;
         this.key = key;
         this.canExecute = canExecute;
-        this.icon =  Resources.Load<Texture2D>("AbilitiesIcon/" + iconName);
+        this.iconName = iconName;
+        this.isSettingTarget = isSettingTarget;
     }
 }

@@ -9,7 +9,7 @@ public class Worker : RtsUnit, IHasInventory
 {
     public const int InventorySize = 20;
     public const float WorkDistance = 12;
-    public const float WorkerBuildingSpeed = 1f;
+    public const float WorkerBuildingSpeed = 100f;
     public const float GatheringTime = 0.1f;
 
     private enum States { Idle, Traveling, Building, Gathering }
@@ -45,22 +45,18 @@ public class Worker : RtsUnit, IHasInventory
         AddAbility(moveAbility);
         AddAbility(new Stop(new StopAbility(this), this, resume));
         AddAbility(resume);
-        AddAbility(new NewOrder(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse), this, resume));
-        AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
         work = new Work(KeyCode.W, this, resume);
         AddAbility(work);
+        AddAbility(new NewOrder(new BuildBuilding("Farmhouse", "Build a farm house, which produces food.", KeyCode.F, this, Buildings.FarmHouse), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Storage House", "Build a storage house, where workers can load off their resources.", KeyCode.Q, this, Buildings.StorageHouse), this, resume));
+        AddAbility(new NewOrder(new BuildBuilding("Stable", "Build a stable, where riding units can be trained.", KeyCode.R, this, Buildings.Stable), this, resume));
     }
 
     private RtsBuilding FindNearestStorage()
     {
-        var entities = FindObjectOfType<EntityControl>().Entities;
-        return Enumerable.Union(
-            entities.Get<Saloon>().Select(saloon => saloon as RtsBuilding),
-            entities.Get<StorageHouse>().Select(house => house as RtsBuilding))
-        .Where(house => house.hasAuthority)
-        .OrderBy(house => (house.transform.position - transform.position).sqrMagnitude)
-        .FirstOrDefault();
+        return Utility.FindNearestStorage(FindObjectOfType<EntityControl>().Entities, transform.position);
     }
+
     /// <summary>Stop the current work and switch to being Idle.</summary>
     private void StopWork()
     {
@@ -232,6 +228,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute(RtsEntity target)
         {
+            if (!worker.hasAuthority) { return; }
             worker.StopWork();
             resumeAbility.ResumeAble = false;
             worker.GetComponent<NavMeshAgent>().SetDestination(worker.transform.position);
@@ -252,6 +249,7 @@ public class Worker : RtsUnit, IHasInventory
         }
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             base.Execute();
             if (ResumeAble)
             {
@@ -277,6 +275,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             base.Execute();
             resumeAbility.PreviousAssignedWork = worker.assignedWork;
             resumeAbility.PreviousWorkerState = worker.workerState;
@@ -297,6 +296,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             worker.StopWork();
             base.Execute();
             resumeAbility.ResumeAble = false;

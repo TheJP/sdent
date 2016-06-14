@@ -6,16 +6,16 @@ using System.Text;
 /// <summary>Represents a crafting recipe: This turns some material into some other material.</summary>
 public class Recipe
 {
-    /// <summary>Time in ms, which this recipe takes to being crafted.</summary>
-    public int CraftingTime { get; private set; }
+    /// <summary>Time in seconds, which this recipe takes to being crafted.</summary>
+    public float CraftingTime { get; private set; }
 
     public IEnumerable<ResourceTuple> Input { get; private set; }
 
     public IEnumerable<ResourceTuple> Output { get; private set; }
 
     /// <summary>Creates a new recipe from the given parameters.</summary>
-    /// <param name="craftingTime">Time in ms, which this recipe takes to being crafted.</param>
-    public Recipe(int craftingTime, IEnumerable<ResourceTuple> input, IEnumerable<ResourceTuple> output)
+    /// <param name="craftingTime">Time in seconds, which this recipe takes to being crafted.</param>
+    public Recipe(float craftingTime, IEnumerable<ResourceTuple> input, IEnumerable<ResourceTuple> output)
     {
         this.CraftingTime = craftingTime;
         this.Input = input;
