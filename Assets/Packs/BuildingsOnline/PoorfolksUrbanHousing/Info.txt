@@ -1,0 +1,39 @@
+Distribution:
+
+http://alkoponen.deviantart.com/
+http://www.sharecg.com/pf/full_uploads.php?pf_user_name=keppu
+
+----------------------------------------------------------
+
+Some urban housing for the Poorfolk's set. Package contains 3 story high main building and two separate 2 stories high side buildings. 
+One side building with a pathway piercing it and a storage space in the upper floor. Second side building is kind of a small 
+shop with shop downstairs and living space upstairs. The shop can also work as standalone building.
+
+If you have previous building of the Poorfolk's set, this comes with 2 new textures, stucco2 and door5.
+
+----------------------------------------------------------
+
+Checklist:
+
+- Real world scale
+- Clean topology, checked for ngons, 99% quads
+- Pivot centered and object set at the origin
+- Everything named and organized
+- Single texture per element
+- Texture resolutions power of two
+- Simple second UV unwrap for lightmap
+- Checked in Unreal Development Kit
+
+----------------------------------------------------------
+
+AK_objects_013_poorfolks_urban_housing
+
+Programs used: 3ds Max 2013, PS CS 5 and Crazy Bump.
+
+Model: 1043 polys .FBX + .obj
+
+Textures: 24 bit .TGA format | 256x256px, 256x512px, 512x512px, 512x1024px, 1024x1024px | Diffusal + Specular + Normal maps
+
+License: Free to use in any project, non-commercial or commercial. Please credit in appropriate manner and link me your work if it is published. Do not redistribute the model or texture outside your project!
+
+"One or more textures on this 3D model have been created with images from CGTextures.com. These images may not be redistributed by default, please visit www.cgtextures.com for more information."

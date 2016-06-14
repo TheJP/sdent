@@ -1,0 +1,134 @@
+fileFormatVersion: 2
+guid: b8a364744744b5d418c4d151b931415b
+timeCreated: 1465914143
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: poorfolks_cottage_beam_end
+    100004: poorfolks_cottage_beams
+    100006: poorfolks_cottage_bricks
+    100008: poorfolks_cottage_chimney_inside
+    100010: poorfolks_cottage_door
+    100012: poorfolks_cottage_frames_mid
+    100014: poorfolks_cottage_planks
+    100016: poorfolks_cottage_roof_beam
+    100018: poorfolks_cottage_thatched_attached
+    100020: poorfolks_cottage_thatched_roof
+    100022: poorfolks_cottage_window_black
+    100024: poorfolks_cottage_window_frames
+    400000: //RootNode
+    400002: poorfolks_cottage_beam_end
+    400004: poorfolks_cottage_beams
+    400006: poorfolks_cottage_bricks
+    400008: poorfolks_cottage_chimney_inside
+    400010: poorfolks_cottage_door
+    400012: poorfolks_cottage_frames_mid
+    400014: poorfolks_cottage_planks
+    400016: poorfolks_cottage_roof_beam
+    400018: poorfolks_cottage_thatched_attached
+    400020: poorfolks_cottage_thatched_roof
+    400022: poorfolks_cottage_window_black
+    400024: poorfolks_cottage_window_frames
+    2300000: poorfolks_cottage_beam_end
+    2300002: poorfolks_cottage_beams
+    2300004: poorfolks_cottage_bricks
+    2300006: poorfolks_cottage_chimney_inside
+    2300008: poorfolks_cottage_door
+    2300010: poorfolks_cottage_frames_mid
+    2300012: poorfolks_cottage_planks
+    2300014: poorfolks_cottage_roof_beam
+    2300016: poorfolks_cottage_thatched_attached
+    2300018: poorfolks_cottage_thatched_roof
+    2300020: poorfolks_cottage_window_black
+    2300022: poorfolks_cottage_window_frames
+    3300000: poorfolks_cottage_beam_end
+    3300002: poorfolks_cottage_beams
+    3300004: poorfolks_cottage_bricks
+    3300006: poorfolks_cottage_chimney_inside
+    3300008: poorfolks_cottage_door
+    3300010: poorfolks_cottage_frames_mid
+    3300012: poorfolks_cottage_planks
+    3300014: poorfolks_cottage_roof_beam
+    3300016: poorfolks_cottage_thatched_attached
+    3300018: poorfolks_cottage_thatched_roof
+    3300020: poorfolks_cottage_window_black
+    3300022: poorfolks_cottage_window_frames
+    4300000: poorfolks_cottage_thatched_roof
+    4300002: poorfolks_cottage_planks
+    4300004: poorfolks_cottage_beams
+    4300006: poorfolks_cottage_roof_beam
+    4300008: poorfolks_cottage_door
+    4300010: poorfolks_cottage_bricks
+    4300012: poorfolks_cottage_chimney_inside
+    4300014: poorfolks_cottage_window_frames
+    4300016: poorfolks_cottage_frames_mid
+    4300018: poorfolks_cottage_window_black
+    4300020: poorfolks_cottage_beam_end
+    4300022: poorfolks_cottage_thatched_attached
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
