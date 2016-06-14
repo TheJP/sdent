@@ -1,0 +1,190 @@
+newmtl default
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl default_TieKnot
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl default_TieOffRope
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl default_Coil
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl default_RopeOne
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl default_Noose
+d 1
+Ns 1
+Ni 0
+Ka 0.505882 0.505882 0.505882
+Kd 0.752941 0.752941 0.752941
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl FloorSupports
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl Angles
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl Uprights
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredAUP.jpg
+
+newmtl BaseCrossBeams
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl CrossBraces
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl Floor
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl MiscTextures
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl BaseOfSteps
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredAUP.jpg
+
+newmtl Steps
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredA.jpg
+
+newmtl StairSupport
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredAUP.jpg
+
+newmtl RailUprights
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredAUP.jpg
+
+newmtl Metal
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 0.27451 0.27451 0.27451
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/RustyRoughMetal1.jpg
+
+newmtl Default
+d 1
+Ns 1
+Ni 0
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.6 0.6 0.6
+Km 0
+map_Kd /Maps/Cedar2WeatheredAUP.jpg
+

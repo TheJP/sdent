@@ -1,0 +1,113 @@
+fileFormatVersion: 2
+guid: 186291a5b78193a4ab5d926e6cec71f9
+timeCreated: 1465914839
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Coil
+    100002: Cube
+    100004: Noose
+    100006: RopeEnd
+    100008: RopeOne
+    100010: TieKnot
+    100012: TieOffRope
+    100014: //RootNode
+    100016: WoodGallows
+    400000: Coil
+    400002: Cube
+    400004: Noose
+    400006: RopeEnd
+    400008: RopeOne
+    400010: TieKnot
+    400012: TieOffRope
+    400014: WoodGallows
+    400016: //RootNode
+    2300000: Coil
+    2300002: Cube
+    2300004: Noose
+    2300006: RopeEnd
+    2300008: RopeOne
+    2300010: TieKnot
+    2300012: TieOffRope
+    2300014: WoodGallows
+    3300000: Coil
+    3300002: Cube
+    3300004: Noose
+    3300006: RopeEnd
+    3300008: RopeOne
+    3300010: TieKnot
+    3300012: TieOffRope
+    3300014: WoodGallows
+    4300000: Coil
+    4300002: Cube
+    4300004: Noose
+    4300006: RopeEnd
+    4300008: RopeOne
+    4300010: TieKnot
+    4300012: TieOffRope
+    4300014: WoodGallows
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
