@@ -28,6 +28,23 @@ public class Menu : MonoBehaviour
     private Rect resourcesRect = new Rect();
     private Rect selectedUnitInfoRect = new Rect();
 
+    private static Texture2D whiteTexture;
+    public static Texture2D WhiteTexture
+    {
+        get
+        {
+            if (whiteTexture == null)
+            {
+                whiteTexture = new Texture2D(1, 1);
+                whiteTexture.SetPixel(0, 0, Color.white);
+                whiteTexture.wrapMode = TextureWrapMode.Repeat;
+                whiteTexture.Apply();
+            }
+
+            return whiteTexture;
+        }
+    }
+
     // Use this for initialization
     void Start ()
     {
@@ -44,8 +61,19 @@ public class Menu : MonoBehaviour
 	    DrawAbilities(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
 	    DrawSelectedUnitInfo(scaleFactor, rtsEntities.Get(EntityController.ActiveType));
 	    DrawResources(scaleFactor, EntityController.Entities.OfType<IHasInventory>());
+	    DrawUnitSelectionBox();
 
 	    DrawTooltip();
+    }
+
+    private void DrawUnitSelectionBox()
+    {
+        if (EntityController.Selecting)
+        {
+            var rect = GUIHelper.GetScreenRect(EntityController.SelectionStart, Input.mousePosition);
+            GUIHelper.DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
+            GUIHelper.DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
+        }
     }
 
     private void DrawTooltip()
@@ -83,77 +111,6 @@ public class Menu : MonoBehaviour
         return Mathf.Min(heightFactor, widthFactor, 1);
     }
 
-    private GUIStyle CreateScaledPortraitStyle(float scaleFactor)
-    {
-        GUIStyle scaledPorttraitStyle = new GUIStyle(PortraitStyle);
-        scaledPorttraitStyle.fixedWidth *= scaleFactor;
-        scaledPorttraitStyle.fixedHeight *= scaleFactor;
-        scaledPorttraitStyle.padding = new RectOffset
-        {
-            top = (int)(PortraitStyle.padding.top * scaleFactor),
-            bottom = (int)(PortraitStyle.padding.bottom * scaleFactor),
-            left = (int)(PortraitStyle.padding.left * scaleFactor),
-            right = (int)(PortraitStyle.padding.right * scaleFactor)
-        };
-        scaledPorttraitStyle.margin = new RectOffset
-        {
-            top = (int)(PortraitStyle.margin.top * scaleFactor),
-            bottom = (int)(PortraitStyle.margin.bottom * scaleFactor),
-            left = (int)(PortraitStyle.margin.left * scaleFactor),
-            right = (int)(PortraitStyle.margin.right * scaleFactor)
-        };
-
-        return scaledPorttraitStyle;
-    }
-
-    private GUIStyle CreateScaledResIconStyle(float scaleFactor)
-    {
-        GUIStyle scaledPorttraitStyle = new GUIStyle(ResourceIconStyle);
-        scaledPorttraitStyle.fixedWidth *= scaleFactor;
-        scaledPorttraitStyle.fixedHeight *= scaleFactor;
-        scaledPorttraitStyle.padding = new RectOffset
-        {
-            top = (int)(ResourceIconStyle.padding.top * scaleFactor),
-            bottom = (int)(ResourceIconStyle.padding.bottom * scaleFactor),
-            left = (int)(ResourceIconStyle.padding.left * scaleFactor),
-            right = (int)(ResourceIconStyle.padding.right * scaleFactor)
-        };
-        scaledPorttraitStyle.margin = new RectOffset
-        {
-            top = (int)(ResourceIconStyle.margin.top * scaleFactor),
-            bottom = (int)(ResourceIconStyle.margin.bottom * scaleFactor),
-            left = (int)(ResourceIconStyle.margin.left * scaleFactor),
-            right = (int)(ResourceIconStyle.margin.right * scaleFactor)
-        };
-
-        return scaledPorttraitStyle;
-    }
-
-    private GUIStyle CreateScaledResTextStyle(float scaleFactor)
-    {
-        GUIStyle scaledStyle = new GUIStyle(ResourceTextStyle);
-        scaledStyle.fixedWidth *= scaleFactor;
-        scaledStyle.fixedHeight *= scaleFactor;
-        scaledStyle.padding = new RectOffset
-        {
-            top = (int)(ResourceTextStyle.padding.top * scaleFactor),
-            bottom = (int)(ResourceTextStyle.padding.bottom * scaleFactor),
-            left = (int)(ResourceTextStyle.padding.left * scaleFactor),
-            right = (int)(ResourceTextStyle.padding.right * scaleFactor)
-        };
-        scaledStyle.margin = new RectOffset
-        {
-            top = (int)(ResourceTextStyle.margin.top * scaleFactor),
-            bottom = (int)(ResourceTextStyle.margin.bottom * scaleFactor),
-            left = (int)(ResourceTextStyle.margin.left * scaleFactor),
-            right = (int)(ResourceTextStyle.margin.right * scaleFactor)
-        };
-
-        scaledStyle.fontSize = (int)(scaledStyle.fontSize*scaleFactor);
-
-        return scaledStyle;
-    }
-
     #endregion
 
     #region Resources
@@ -180,8 +137,8 @@ public class Menu : MonoBehaviour
 
         GUILayout.BeginArea(resourcesRect, guiStyle);
         {
-            GUIStyle scaledResIconStyle = CreateScaledResIconStyle(scaleFactor);
-            GUIStyle scaledResTextStyle = CreateScaledResTextStyle(scaleFactor);
+            GUIStyle scaledResIconStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceIconStyle);
+            GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
 
             int counter = 0;
             foreach (var res in resources)
@@ -242,7 +199,7 @@ public class Menu : MonoBehaviour
 
         GUILayout.BeginArea(selectedUnitInfoRect, guiStyle);
         {
-            GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
+            GUIStyle scaledPortraitStyle = GUIHelper.ScaleStyle(scaleFactor, PortraitStyle);
             
             RtsEntity entity = rtsEntities.FirstOrDefault();
             if (entity != null)
@@ -269,8 +226,8 @@ public class Menu : MonoBehaviour
                     var entityWithInv = entity as IHasInventory;
                     if (entityWithInv != null)
                     {
-                        GUIStyle scaledResIconStyle = CreateScaledResIconStyle(scaleFactor);
-                        GUIStyle scaledResTextStyle = CreateScaledResTextStyle(scaleFactor);
+                        GUIStyle scaledResIconStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceIconStyle);
+                        GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
 
                         int counter = 0;
                         foreach (var res in entityWithInv.Inventory)
@@ -309,10 +266,10 @@ public class Menu : MonoBehaviour
 
         GUILayout.BeginArea(abilitiesRect, guiStyle);
         {
-            GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
+            GUIStyle scaledPortraitStyle = GUIHelper.ScaleStyle(scaleFactor, PortraitStyle);
 
             int counter = 0;
-            RtsEntity entity = rtsEntities.FirstOrDefault();
+            RtsEntity entity = rtsEntities.FirstOrDefault(e => e.hasAuthority);
             if(entity != null)
             {
                 foreach (IAbility ability in entity.Abilities)
@@ -372,7 +329,7 @@ public class Menu : MonoBehaviour
 
         GUILayout.BeginArea(unitPortraitRect, guiStyle);
         {
-            GUIStyle scaledPortraitStyle = CreateScaledPortraitStyle(scaleFactor);
+            GUIStyle scaledPortraitStyle = GUIHelper.ScaleStyle(scaleFactor, PortraitStyle);
             int counter = 0;
 
             foreach (RtsEntity entity in rtsEntities)
