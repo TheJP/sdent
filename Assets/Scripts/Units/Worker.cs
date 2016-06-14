@@ -228,6 +228,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute(RtsEntity target)
         {
+            if (!worker.hasAuthority) { return; }
             worker.StopWork();
             resumeAbility.ResumeAble = false;
             worker.GetComponent<NavMeshAgent>().SetDestination(worker.transform.position);
@@ -248,6 +249,7 @@ public class Worker : RtsUnit, IHasInventory
         }
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             base.Execute();
             if (ResumeAble)
             {
@@ -273,6 +275,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             base.Execute();
             resumeAbility.PreviousAssignedWork = worker.assignedWork;
             resumeAbility.PreviousWorkerState = worker.workerState;
@@ -293,6 +296,7 @@ public class Worker : RtsUnit, IHasInventory
 
         public override void Execute()
         {
+            if (!worker.hasAuthority) { return; }
             worker.StopWork();
             base.Execute();
             resumeAbility.ResumeAble = false;

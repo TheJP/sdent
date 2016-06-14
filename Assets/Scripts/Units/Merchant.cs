@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class Merchant : RtsUnit, IHasInventory
 {
     public const int InventorySize = 10;
+    public const float LoadingDistance = 12f;
 
     private enum States { Idle, TravelingToSource, TravelingToTarget }
 
@@ -25,6 +26,8 @@ public class Merchant : RtsUnit, IHasInventory
     {
         var keys = new[] { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R, KeyCode.F, KeyCode.Y, KeyCode.X, KeyCode.C, KeyCode.V };
         foreach (var ability in Abilities.ToList()) { RemoveAbility(ability); } //No custom movement abilities at the moment. Nice-to-have for later
+        AddAbility(new StopAbility(this));
+        AddAbility(new ResumeAbility(this));
         var key = 0;
         foreach (var resource in RtsResource.Resources)
         {
@@ -38,7 +41,42 @@ public class Merchant : RtsUnit, IHasInventory
     {
         base.Update();
         if (!hasAuthority) { return; }
-
+        switch (merchantState)
+        {
+            case States.Idle:
+                break;
+            case States.TravelingToSource:
+                if(source != null && (source.transform.position - transform.position).sqrMagnitude < LoadingDistance * LoadingDistance)
+                {
+                    //Load merchant
+                    var sourceInventory = (source as IHasInventory).Inventory;
+                    var amount = Math.Min(Inventory.SpaceAvailable - Inventory.Count(), sourceInventory[resource]);
+                    if(amount > 0 && sourceInventory.RemoveResources(resource, amount))
+                    {
+                        Inventory.AddResources(resource, amount);
+                    }
+                    GetComponent<NavMeshAgent>().SetDestination(target.transform.position);
+                    merchantState = States.TravelingToTarget;
+                }
+                break;
+            case States.TravelingToTarget:
+                if (target != null && (target.transform.position - transform.position).sqrMagnitude < LoadingDistance * LoadingDistance)
+                {
+                    //Unload merchant
+                    var targetInventory = (target as IHasInventory).Inventory;
+                    foreach (var stored in Inventory.ToList())
+                    {
+                        var amount = Math.Min(stored.Value, targetInventory.SpaceAvailable - targetInventory.Count());
+                        if (amount > 0 && targetInventory.AddResources(stored.Key, amount))
+                        {
+                            Inventory.RemoveResources(stored.Key, amount);
+                        }
+                    }
+                    GetComponent<NavMeshAgent>().SetDestination(source.transform.position);
+                    merchantState = States.TravelingToSource;
+                }
+                break;
+        }
     }
 
     private class MerchantRoute : AbilityBase
@@ -56,6 +94,7 @@ public class Merchant : RtsUnit, IHasInventory
 
         public override void Execute()
         {
+            if (!merchant.hasAuthority) { return; }
             merchant.EntityControl.StartTargeting(SetSource, "Select route source");
             merchant.merchantState = States.Idle;
         }
@@ -89,6 +128,10 @@ public class Merchant : RtsUnit, IHasInventory
             merchant.resource = resource;
             merchant.source = source;
             merchant.target = entity;
+            merchant.merchantState = States.TravelingToSource;
+            var agent = merchant.GetComponent<NavMeshAgent>();
+            agent.SetDestination(merchant.source.transform.position);
+            agent.Resume();
             return true;
         }
     }
