@@ -13,8 +13,8 @@ public class Merchant : RtsUnit, IHasInventory
     private States merchantState = States.Idle;
     private readonly Inventory inventory = new Inventory(InventorySize);
     private ResourceTypes resource;
-    private RtsEntity source;
-    private RtsEntity target;
+    private RtsEntity source = null;
+    private RtsEntity target = null;
 
     public Inventory Inventory
     {
@@ -33,6 +33,13 @@ public class Merchant : RtsUnit, IHasInventory
     }
 
     private EntityControl EntityControl { get { return FindObjectOfType<EntityControl>(); } }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (!hasAuthority) { return; }
+
+    }
 
     private class MerchantRoute : AbilityBase
     {
