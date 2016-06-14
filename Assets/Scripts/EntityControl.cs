@@ -70,7 +70,7 @@ public class EntityControl : NetworkBehaviour
             }
         }
 
-        if (shouldAbortTargeting) { AbortTargeting(); }
+        if (shouldAbortTargeting || Input.GetKeyDown(KeyCode.Escape)) { AbortTargeting(); }
 
         //Set correct mouse cursor
         if (Targeting) { Cursor.SetCursor(corsshairTexture, new Vector2(32f, 32f), CursorMode.Auto); }
