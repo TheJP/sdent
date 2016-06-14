@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
-public class ConstructionSite : RtsBuilding
+public class ConstructionSite : RtsBuilding, IHasInventory
 {
     public GameObject[] buildingPrefabs;
 
@@ -14,6 +15,7 @@ public class ConstructionSite : RtsBuilding
     private Buildings finalBuilding;
 
     private readonly HashSet<Worker> buildingWorkers = new HashSet<Worker>();
+    private Inventory inventory = new Inventory(0);
     private bool finishedBuilding = false;
 
     public Buildings FinalBuilding
@@ -22,16 +24,14 @@ public class ConstructionSite : RtsBuilding
         set { finalBuilding = value; }
     }
 
+    public Inventory Inventory
+    {
+        get { return inventory; }
+    }
+
     public override Buildings Type
     {
         get { return Buildings.ConstructionSite; }
-    }
-
-    [Command]
-    public void CmdFinishBuilding(GameObject buildingPrefab)
-    {
-        FindObjectOfType<EntityControl>().SpawnEntity(buildingPrefab, transform.position, Client);
-        CmdDie();
     }
 
     public void WorkerStartBuilding(Worker worker) { buildingWorkers.Add(worker); }
@@ -47,6 +47,13 @@ public class ConstructionSite : RtsBuilding
         {
             prefabDictionary.Add(prefab.GetComponent<RtsBuilding>().Type, prefab);
         }
+    }
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+        var costs = prefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
+        inventory = new FilteredInventory(costs.ToDictionary(tuple => tuple.Resource, tuple => tuple.Amount));
     }
 
     [Command]
