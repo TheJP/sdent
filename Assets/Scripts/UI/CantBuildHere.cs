@@ -3,8 +3,8 @@ using System.Collections;
 
 public class CantBuildHere : MonoBehaviour
 {
-    public const float StayingTime = 2f;
-    public const float FadingTime = 5f;
+    public const float StayingTime = 0.5f;
+    public const float FadingTime = 1f;
 
     public MeshRenderer meshRenderer;
 
@@ -26,8 +26,7 @@ public class CantBuildHere : MonoBehaviour
             else
             {
                 var material = meshRenderer.material;
-                var newAlpha = startAlpha * ((Time.time - startTime) / (startTime + StayingTime + FadingTime));
-                Debug.Log((startTime - Time.time) / (startTime + StayingTime + FadingTime));
+                var newAlpha = startAlpha * ((startTime + StayingTime + FadingTime - Time.time) / FadingTime);
                 material.SetColor("_Color", new Color(material.color.r, material.color.g, material.color.b, newAlpha));
             }
         }

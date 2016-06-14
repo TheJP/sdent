@@ -16,6 +16,8 @@ public class Worker : RtsUnit, IHasInventory
     public const float BuildingSpace = 12f;
     public const float UnitSpace = 7f;
 
+    public GameObject cantBuildHere;
+
     private enum States { Idle, Traveling, Building, Gathering }
 
     /// <summary>Building or Resource, which this worker is assigned to. This is not null only for the client with authority.</summary>
@@ -215,7 +217,7 @@ public class Worker : RtsUnit, IHasInventory
     [ClientRpc]
     private void RpcCantBuildHere(Vector3 position)
     {
-        if (hasAuthority) { Debug.Log("möööp"); }
+        if (hasAuthority) { Instantiate(cantBuildHere, position, Quaternion.identity); }
     }
 
     private class BuildBuilding : AbilityBase
