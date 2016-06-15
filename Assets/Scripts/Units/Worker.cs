@@ -43,6 +43,11 @@ public class Worker : RtsUnit, IHasInventory
         get { return inventory; }
     }
 
+    private EntityControl EntityControl
+    {
+        get { return FindObjectOfType<EntityControl>(); }
+    }
+
     public Worker()
     {
         foreach (var ability in Abilities.ToList()) { RemoveAbility(ability); }
@@ -80,7 +85,15 @@ public class Worker : RtsUnit, IHasInventory
     [ClientRpc]
     public void RpcAssignWork(GameObject entity)
     {
-        if (hasAuthority) { assignedWork = entity.GetComponent<RtsEntity>(); }
+        if (hasAuthority)
+        {
+            assignedWork = entity.GetComponent<RtsEntity>();
+            //Set work for every selected worker
+            foreach(var worker in FindObjectOfType<EntityControl>().SelectedEntities.Get<Worker>())
+            {
+                worker.assignedWork = assignedWork;
+            }
+        }
     }
 
     [Client]
@@ -281,7 +294,7 @@ public class Worker : RtsUnit, IHasInventory
         private Worker worker;
         private Buildings finalBuilding;
 
-        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Buildings finalBuilding) : base(name, lore, key, "BuildBuilding")
+        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Buildings finalBuilding) : base(name, lore, key, "BuildBuilding", isSettingTarget: true)
         {
             this.worker = worker;
             this.finalBuilding = finalBuilding;
@@ -291,9 +304,16 @@ public class Worker : RtsUnit, IHasInventory
         {
             if (worker.hasAuthority)
             {
-                var ground = Utility.RayMouseToGround();
-                if (ground.HasValue) { worker.CmdBuildBuilding(finalBuilding, ground.Value); }
+                worker.EntityControl.StartTargeting(ClickedTarget, "Select building location...");
             }
+        }
+
+        private bool ClickedTarget(IEnumerable<RaycastHit> hits)
+        {
+            //Only execute this for one worker
+            var ground = Utility.GetGroundFromHits(hits);
+            if (ground.HasValue) { worker.CmdBuildBuilding(finalBuilding, ground.Value); return true; }
+            else { worker.EntityControl.ShowHintText("Select valid building location..."); return false; }
         }
     }
 
