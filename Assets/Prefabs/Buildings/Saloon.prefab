@@ -1845,7 +1845,7 @@ MonoBehaviour:
   state: 0
   barSlider: {fileID: 11479122}
   barFillImage: {fileID: 11488498}
-  portraitImage: {fileID: 2800000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}
+  portraitImage: {fileID: 2800000, guid: e072805e8d7705c4090e2c424fff3a55, type: 3}
   entityColorMesh: {fileID: 2338950}
   spawnPoint1: {fileID: 464476}
   spawnPoint2: {fileID: 405058}

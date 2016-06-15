@@ -1011,7 +1011,7 @@ MonoBehaviour:
   state: 0
   barSlider: {fileID: 11408936}
   barFillImage: {fileID: 11412510}
-  portraitImage: {fileID: 2800000, guid: 217ad9e57cca95a45917595677c6d8dd, type: 3}
+  portraitImage: {fileID: 2800000, guid: a68e5e43d6dd5454e99ebb6e562a6fea, type: 3}
   entityColorMesh: {fileID: 2335792}
 --- !u!114 &11425800
 MonoBehaviour:

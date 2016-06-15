@@ -333,7 +333,7 @@ MonoBehaviour:
   state: 0
   barSlider: {fileID: 11432866}
   barFillImage: {fileID: 11474924}
-  portraitImage: {fileID: 2800000, guid: 55b08c17a138f8f4e88b89b46c4f52cb, type: 3}
+  portraitImage: {fileID: 2800000, guid: ece50dc2d9dc5414c9d26fb839afa7a8, type: 3}
   entityColorMesh: {fileID: 2373860}
   buildingPrefabs:
   - {fileID: 141058, guid: 06b9cc47076e11c48b23051dde8e2b32, type: 2}
