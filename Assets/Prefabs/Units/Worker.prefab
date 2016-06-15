@@ -388,7 +388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &153650
 GameObject:
   m_ObjectHideFlags: 1
@@ -1450,7 +1450,7 @@ MonoBehaviour:
   state: 0
   barSlider: {fileID: 11407614}
   barFillImage: {fileID: 11492486}
-  portraitImage: {fileID: 2800000, guid: cfbec50211f22924d801639a63593756, type: 3}
+  portraitImage: {fileID: 2800000, guid: b5d506919519aa6478aa940e8e70d411, type: 3}
   entityColorMesh: {fileID: 0}
   cantBuildHere: {fileID: 130658, guid: bf1897cd19df9b6428a63b29e2c2ef3b, type: 2}
   selection: {fileID: 147812}
