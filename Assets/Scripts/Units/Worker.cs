@@ -52,7 +52,7 @@ public class Worker : RtsUnit, IHasInventory
         set
         {
             target = value;
-            GetComponent<AICharacterControl>().SetTarget(value.transform);
+            GetComponent<AICharacterControl>().SetTarget(value == null ? null : value.transform);
         }
     }
 
@@ -85,7 +85,7 @@ public class Worker : RtsUnit, IHasInventory
     {
         foreach (var ability in Abilities.ToList()) { RemoveAbility(ability); }
         resumeAbility = new Resume(new ResumeAbility(this), this);
-        moveAbility = new NewOrder(new MoveAbility(this), this, resumeAbility);
+        moveAbility = new NewOrder(new Move(this), this, resumeAbility);
         AddAbility(moveAbility);
         AddAbility(new Stop(new StopAbility(this), this, resumeAbility));
         AddAbility(resumeAbility);
@@ -491,6 +491,33 @@ public class Worker : RtsUnit, IHasInventory
             worker.StopWork();
             base.Execute();
             resumeAbility.Resumeable = false;
+        }
+    }
+
+    public class Move : AbilityBase
+    {
+        private readonly Worker worker;
+
+        public Move(Worker worker) : base("Move", "Move this unit to the target location", KeyCode.G, "Move")
+        {
+            this.worker = worker;
+        }
+
+        public override void Execute()
+        {
+            if (!worker.hasAuthority) { return; }
+            //Cast a ray to determine where to move
+            var ground = Utility.RayMouseToGround();
+            if (ground.HasValue)
+            {
+                //Move to location, where the ground was hit
+                //TODO: Fix worker movement!
+                worker.Target = null;
+                worker.CmdSetTarget(null);
+                var agent = worker.GetComponent<NavMeshAgent>();
+                agent.SetDestination(ground.Value);
+                agent.Resume();
+            }
         }
     }
 }
