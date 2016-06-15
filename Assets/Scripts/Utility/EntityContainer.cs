@@ -9,7 +9,7 @@ using System.Text;
 /// </summary>
 public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
 {
-    private readonly Dictionary<Type, List<RtsEntity>> entities;
+    private readonly Dictionary<Type, HashSet<RtsEntity>> entities;
 
     public int Count
     {
@@ -26,11 +26,11 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
         get { return entities.Keys; }
     }
 
-    public EntityContainer() { this.entities = new Dictionary<Type, List<RtsEntity>>(); }
-    protected EntityContainer(Dictionary<Type, List<RtsEntity>> entities)
+    public EntityContainer() { this.entities = new Dictionary<Type, HashSet<RtsEntity>>(); }
+    protected EntityContainer(Dictionary<Type, HashSet<RtsEntity>> entities)
     {
         if (entities != null) { this.entities = entities; }
-        else { this.entities = new Dictionary<Type, List<RtsEntity>>(); }
+        else { this.entities = new Dictionary<Type, HashSet<RtsEntity>>(); }
     }
 
     /// <summary>Add the given entity to the container.</summary>
@@ -38,7 +38,7 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
     public virtual void Add(RtsEntity entity)
     {
         var type = entity.GetType();
-        if (!entities.ContainsKey(type)) { entities.Add(type, new List<RtsEntity>()); }
+        if (!entities.ContainsKey(type)) { entities.Add(type, new HashSet<RtsEntity>()); }
         entities[type].Add(entity);
     }
 
@@ -57,7 +57,7 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
     /// <returns></returns>
     public IEnumerable<T> Get<T>() where T : RtsEntity
     {
-        if (entities.ContainsKey(typeof(T))) { return entities[typeof(T)].AsReadOnly().Select(entity => (T) entity); }
+        if (entities.ContainsKey(typeof(T))) { return entities[typeof(T)].Select(entity => (T) entity).ToList(); }
         else { return Enumerable.Empty<T>(); }
     }
 
@@ -66,7 +66,7 @@ public class EntityContainer : IEnumerable<RtsEntity>, ICollection<RtsEntity>
     /// <returns></returns>
     public IEnumerable<RtsEntity> Get(Type entityType)
     {
-        if (entityType != null && entities.ContainsKey(entityType)) { return entities[entityType].AsReadOnly(); }
+        if (entityType != null && entities.ContainsKey(entityType)) { return entities[entityType].ToList(); }
         else { return Enumerable.Empty<RtsEntity>(); }
     }
 

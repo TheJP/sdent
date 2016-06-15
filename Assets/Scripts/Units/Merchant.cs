@@ -140,7 +140,7 @@ public class Merchant : RtsUnit, IHasInventory
                 merchant.EntityControl.ShowHintText("Source and target can't be the same...\nSelect route target");
                 return false;
             }
-            foreach (var merchant in merchant.EntityControl.Entities.Get<Merchant>())
+            foreach (var merchant in this.merchant.EntityControl.Entities.Get<Merchant>())
             {
                 ApplyForMerchant(merchant, entity);
             }
