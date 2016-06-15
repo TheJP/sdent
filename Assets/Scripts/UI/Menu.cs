@@ -185,6 +185,7 @@ public class Menu : MonoBehaviour
             .Where(entity => true)
             .SelectMany(entity => entity.Inventory)
             .GroupBy(keyValue => keyValue.Key, keyValue => keyValue.Value)
+            .OrderBy(p => p.Key)
             .Select(p => new {Resource = p.Key, Amount= p.Sum()});
 
         GUILayout.BeginArea(resourcesRect, guiStyle);
@@ -292,16 +293,24 @@ public class Menu : MonoBehaviour
                     GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
 
                     GUILayout.BeginHorizontal();
-                    foreach (var res in craftingBuilding.Recipes.SelectMany(recipe => recipe.Input))
+                    bool hasInput = false;
+                    foreach (var res in craftingBuilding.Recipes.SelectMany(recipe => recipe.Input).OrderBy(p => p.Resource))
                     {
+                        hasInput = true;
                         DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle, " needed per recipe.");
+                    }
+                    if (!hasInput)
+                    {
+                        GUILayout.BeginVertical();
+                        GUILayout.Space(scaledResIconStyle.fixedHeight + scaledResIconStyle.margin.top / 2F);
+                        GUILayout.EndVertical();
                     }
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
                     foreach (var recipe in craftingBuilding.Recipes)
                     {
-                        foreach (var res in recipe.Output)
+                        foreach (var res in recipe.Output.OrderBy(p => p.Resource))
                         {
                             DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle, " crafted per Recipe. \n\n(Time: " + recipe.CraftingTime.ToString("0.0") + "s)");
                         }
@@ -317,7 +326,7 @@ public class Menu : MonoBehaviour
                     GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
                     GUILayout.BeginHorizontal();
                     {
-                        foreach (var res in constructionSite.NeededResources)
+                        foreach (var res in constructionSite.NeededResources.OrderBy(p => p.Key))
                         {
                             if (counter == 5)
                             {
@@ -358,7 +367,7 @@ public class Menu : MonoBehaviour
                         GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
 
                         int counter = 0;
-                        foreach (var res in entityWithInv.Inventory)
+                        foreach (var res in entityWithInv.Inventory.OrderBy(p => p.Key))
                         {
                             if (counter > 0 && counter % 5 == 0)
                             {
@@ -493,7 +502,7 @@ public class Menu : MonoBehaviour
     private void DrawSingleUnitPortrait(RtsEntity entity, GUIStyle scaledPortraitStyle)
     {
         GUIContent content = new GUIContent(entity.portraitImage);
-        content.tooltip = entity.name;
+        content.tooltip = entity.name.Replace("(Clone)", "");
 
         float relativeState = entity.state/entity.MaxState;
         float healthBarHeight = scaledPortraitStyle.fixedHeight / 8F;
