@@ -27,6 +27,7 @@ public class Carrier : NetworkBehaviour, IHasInventory
     [SyncVar(hook = "SetTarget")]
     private GameObject target;
 
+    //Hook method
     private void SetTarget(GameObject target)
     {
         this.Target = target;
