@@ -452,47 +452,47 @@ public class Menu : MonoBehaviour
 
         GUILayout.BeginArea(minimapRect, guiStyle);
         {
-            float x0 = (guiWidth - actualMapWidth)/2;
-            float y0 = (guiHeight - actualMapHeight)/2;
-            int mapIconSize = (int)(16*scaleFactor);
-            actualMapPos = new Rect(x0, y0, actualMapWidth, actualMapHeight);
+            Vector2 offset = new Vector2((guiWidth - actualMapWidth) / 2, (guiHeight - actualMapHeight) / 2);
+            actualMapPos = new Rect(offset.x, offset.y, actualMapWidth, actualMapHeight);
 
             GUI.DrawTexture(actualMapPos, Map);
 
             foreach (var entity in entities)
             {
-                Rect unitPos = GetMapUnitPos(mapScaleFactor, scaleFactor, actualMapHeight, x0, y0, entity);
                 var resource = entity as RtsResource;
                 if (resource != null)
                 {
-                    unitPos.width = mapIconSize;
-                    unitPos.height = mapIconSize;
-                    unitPos.y -= 8*scaleFactor;
-                    unitPos.x -= 8*scaleFactor;
+                    Rect unitPos = GetMapUnitPos(scaleFactor, actualMapHeight, offset, entity.transform.position, new Vector2(16, 16));
                     RtsResource res = resource;
                     GUI.DrawTexture(unitPos, res.ResourceType.GetIcon());
                 }
                 else if (entity.hasAuthority)
                 {
+                    Rect unitPos = GetMapUnitPos(scaleFactor, actualMapHeight, offset, entity.transform.position, new Vector2(5, 5));
                     GUI.DrawTexture(unitPos, GUIHelper.FriendlyUnitTexture);
                 }
                 else
                 {
+                    Rect unitPos = GetMapUnitPos(scaleFactor, actualMapHeight, offset, entity.transform.position, new Vector2(5,5));
                     GUI.DrawTexture(unitPos, GUIHelper.EnemyUnitTexture);
                 }
             }
+
+            var cameraPos = Utility.RayCameraToGround() ?? Vector3.zero;
+            Rect curLocPos = GetMapUnitPos(scaleFactor, actualMapHeight, offset, cameraPos, new Vector2(192/5F, 108/5F));
+            GUIHelper.DrawScreenRectBorder(curLocPos, 2, new Color(0.8f, 0.8f, 0.95f));
         }
         GUILayout.EndArea();
     }
 
-    private Rect GetMapUnitPos(float mapScaleFactor, float scaleFactor, float actualMapHeight, float x0, float y0, RtsEntity entity)
+    private Rect GetMapUnitPos(float scaleFactor, float actualMapHeight, Vector2 offset, Vector3 entityPos, Vector2 entitySize)
     {
-        float size = 5*scaleFactor;
+        Vector2 scaledSize = entitySize*scaleFactor;
 
-        float posX = entity.transform.position.x - MAP_OFFSET_X;
-        float posY = entity.transform.position.z - MAP_OFFSET_Y; // Units move on the (x-z)-plane
+        float posX = entityPos.x - MAP_OFFSET_X;
+        float posY = entityPos.z - MAP_OFFSET_Y; // Units move on the (x-z)-plane
 
-        return new Rect(x0 + posX * mapScaleFactor-size/2, y0 + actualMapHeight - (posY * mapScaleFactor - size/2), size, size);
+        return new Rect(offset.x + posX*mapScaleFactor - scaledSize.x/2, offset.y + actualMapHeight - (posY*mapScaleFactor + scaledSize.y/2), scaledSize.x, scaledSize.y);
     }
 
     #endregion

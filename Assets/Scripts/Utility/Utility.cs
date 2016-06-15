@@ -29,6 +29,14 @@ public static class Utility
             .Where(hit => hit.transform.tag == "RtsEntity" || hit.transform.tag == "Ground");
     }
 
+    public static Vector3? RayCameraToGround()
+    {
+        return Physics.RaycastAll(Camera.main.ScreenPointToRay(new Vector3(Screen.width/2F, Screen.height/2F)))
+                      .Where(hit => hit.transform.tag == "Ground")
+                      .Select(hit => (Vector3?)hit.point)
+                      .FirstOrDefault();
+    }
+
     public static RtsEntity GetRtsEntityFromHits(IEnumerable<RaycastHit> hits)
     {
         return hits
