@@ -205,7 +205,7 @@ public class Menu : MonoBehaviour
                 }
                 counter++;
 
-                DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle);
+                DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle, " in all Inventories.");
             }
 
             if (counter > 0)
@@ -217,11 +217,11 @@ public class Menu : MonoBehaviour
         GUILayout.EndArea();
     }
 
-    private void DrawSingleResource(ResourceTypes resource, int amount, GUIStyle scaledResIconStyle, GUIStyle scaledResTextStyle)
+    private void DrawSingleResource(ResourceTypes resource, int amount, GUIStyle scaledResIconStyle, GUIStyle scaledResTextStyle, string toolTipSuffix)
     {
         GUIContent content = new GUIContent(ResourceBackgroundTexture);
         //content.text = amount.ToString();
-        content.tooltip = resource.ToString();
+        content.tooltip = resource.ToString() + toolTipSuffix;
 
         GUILayout.Box(content, scaledResIconStyle);
         Rect resourcePos = GUILayoutUtility.GetLastRect();
@@ -265,12 +265,88 @@ public class Menu : MonoBehaviour
                 GUILayout.EndHorizontal();
 
                 // Build Queue
-                GUILayout.BeginHorizontal();
+                RtsTrainingBuilding building = entity as RtsTrainingBuilding;
+
+                if (building != null)
                 {
-                    // ToDo: Build Queue
-                    DrawSingleUnitPortrait(entity, scaledPortraitStyle);
+                    GUILayout.BeginHorizontal();
+                    {
+                        foreach (GameObject o in building.TrainingQueue)
+                        {
+                            var inTrain = o.GetComponent<RtsEntity>();
+                            DrawSingleUnitPortrait(inTrain, scaledPortraitStyle);
+                        }
+                        if (!building.TrainingQueue.Any())
+                        {
+                            GUILayout.BeginVertical();
+                            GUILayout.Space(scaledPortraitStyle.fixedHeight + scaledPortraitStyle.margin.top/2F);
+                            GUILayout.EndVertical();
+                        }
+                    }
+                    GUILayout.EndHorizontal();
                 }
-                GUILayout.EndHorizontal();
+                else if (entity is RtsCraftingBuilding)
+                {
+                    var craftingBuilding = (RtsCraftingBuilding) entity;
+                    GUIStyle scaledResIconStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceIconStyle);
+                    GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
+
+                    GUILayout.BeginHorizontal();
+                    foreach (var res in craftingBuilding.Recipes.SelectMany(recipe => recipe.Input))
+                    {
+                        DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle, " needed per recipe.");
+                    }
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    foreach (var recipe in craftingBuilding.Recipes)
+                    {
+                        foreach (var res in recipe.Output)
+                        {
+                            DrawSingleResource(res.Resource, res.Amount, scaledResIconStyle, scaledResTextStyle, " crafted per Recipe. \n\n(Time: " + recipe.CraftingTime.ToString("0.0") + "s)");
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+                }
+                else if (entity is ConstructionSite)
+                {
+                    var constructionSite = (ConstructionSite)entity;
+
+                    int counter = 0;
+                    GUIStyle scaledResIconStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceIconStyle);
+                    GUIStyle scaledResTextStyle = GUIHelper.ScaleStyle(scaleFactor, ResourceTextStyle);
+                    GUILayout.BeginHorizontal();
+                    {
+                        foreach (var res in constructionSite.NeededResources)
+                        {
+                            if (counter == 5)
+                            {
+                                GUILayout.EndHorizontal();
+                                GUILayout.BeginHorizontal();
+                            }
+                            DrawSingleResource(res.Key, res.Value, scaledResIconStyle, scaledResTextStyle, " needed for finishing the building.");
+                            counter++;
+                        }
+                    }
+                    GUILayout.EndHorizontal();
+
+                    if (counter < 5)
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUILayout.BeginVertical();
+                        GUILayout.Space(scaledResIconStyle.fixedHeight + scaledResIconStyle.margin.top / 2F);
+                        GUILayout.EndVertical();
+                        GUILayout.EndHorizontal();
+                    }
+                }
+                else
+                {
+                    GUILayout.BeginHorizontal();
+                    GUILayout.BeginVertical();
+                    GUILayout.Space(scaledPortraitStyle.fixedHeight + scaledPortraitStyle.margin.top / 2F);
+                    GUILayout.BeginVertical();
+                    GUILayout.EndHorizontal();
+                }
 
                 // Inventory
                 GUILayout.BeginHorizontal();
@@ -289,7 +365,7 @@ public class Menu : MonoBehaviour
                                 GUILayout.EndHorizontal();
                                 GUILayout.BeginHorizontal();
                             }
-                            DrawSingleResource(res.Key, res.Value, scaledResIconStyle, scaledResTextStyle);
+                            DrawSingleResource(res.Key, res.Value, scaledResIconStyle, scaledResTextStyle, " in local Inventory.");
                             counter++;
                         }
                     }
@@ -360,6 +436,12 @@ public class Menu : MonoBehaviour
             && ability.CanExecute)
         {
             ability.Execute();
+        }
+
+        if (!ability.CanExecute)
+        {
+            Rect abilityRect = GUILayoutUtility.GetLastRect();
+            GUI.DrawTexture(abilityRect, GUIHelper.DisableTexture);
         }
     }
 
