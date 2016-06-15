@@ -49,6 +49,11 @@ public class Worker : RtsUnit, IHasInventory
         get { return FindObjectOfType<EntityControl>(); }
     }
 
+    public bool IsIdle
+    {
+        get { return workerState == States.Idle; }
+    }
+
     public Worker()
     {
         foreach (var ability in Abilities.ToList()) { RemoveAbility(ability); }

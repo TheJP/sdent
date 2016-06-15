@@ -70,6 +70,12 @@ public class EntityControl : NetworkBehaviour
             }
         }
 
+        //Select idle workers
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SelectEntities(new HashSet<RtsEntity>(Entities.Get<Worker>().Where(worker => worker.hasAuthority && worker.IsIdle).Cast<RtsEntity>()));
+        }
+
         if (shouldAbortTargeting || Input.GetKeyDown(KeyCode.Escape)) { AbortTargeting(); }
 
         //Set correct mouse cursor
@@ -112,12 +118,17 @@ public class EntityControl : NetworkBehaviour
         if (clicked != null) { clickedEntities.Add(clicked); }
 
         //Select clicked unit
+        SelectEntities(clickedEntities);
+    }
+
+    private void SelectEntities(HashSet<RtsEntity> newSelection)
+    {
         foreach (var selectedEntity in selectedEntities.ToList())
         {
-            if (!clickedEntities.Contains(selectedEntity)) { selectedEntity.Selected = false; }
+            if (!newSelection.Contains(selectedEntity)) { selectedEntity.Selected = false; }
         }
         selectedEntities.Clear();
-        foreach(var clickedEntity in clickedEntities)
+        foreach (var clickedEntity in newSelection)
         {
             if (!clickedEntity.Selected) { clickedEntity.Selected = true; }
             selectedEntities.Add(clickedEntity);
