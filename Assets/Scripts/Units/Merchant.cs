@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class Merchant : RtsUnit, IHasInventory
 {
-    public const int InventorySize = 40;
+    public const int InventorySize = 100;
     public const float LoadingDistance = 12f;
 
     private enum States { Idle, TravelingToSource, TravelingToTarget }
