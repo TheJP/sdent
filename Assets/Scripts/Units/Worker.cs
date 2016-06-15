@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using UnityEngine.Networking;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Worker : RtsUnit, IHasInventory
 {
@@ -17,6 +18,7 @@ public class Worker : RtsUnit, IHasInventory
     public const float UnitSpace = 7f;
 
     public GameObject cantBuildHere;
+    public GameObject selection;
 
     private enum States { Idle, Traveling, Building, Gathering, FetchingResources }
 
@@ -28,6 +30,31 @@ public class Worker : RtsUnit, IHasInventory
     private readonly Resume resumeAbility;
     private readonly AbilityWithTarget work;
     private readonly Inventory inventory = new Inventory(InventorySize);
+
+    [SyncVar(hook = "SetTarget")]
+    private GameObject target;
+
+    //Hook method
+    private void SetTarget(GameObject target)
+    {
+        this.Target = target;
+    }
+
+    [Command]
+    private void CmdSetTarget(GameObject target)
+    {
+        this.Target = target;
+    }
+
+    public GameObject Target
+    {
+        get { return target; }
+        set
+        {
+            target = value;
+            GetComponent<AICharacterControl>().SetTarget(value.transform);
+        }
+    }
 
     public override IAbility RightClickAbility
     {
@@ -135,7 +162,8 @@ public class Worker : RtsUnit, IHasInventory
         if ((nearestStorage.transform.position - transform.position).sqrMagnitude > WorkDistance * WorkDistance)
         {
             //Travel to storage house
-            agent.SetDestination(nearestStorage.transform.position);
+            Target = nearestStorage.gameObject;
+            CmdSetTarget(Target);
             workerState = States.Traveling;
         }
         else
@@ -153,7 +181,8 @@ public class Worker : RtsUnit, IHasInventory
                 }
             }
             //Travel to work
-            agent.SetDestination(assignedWork.transform.position);
+            Target = assignedWork.gameObject;
+            CmdSetTarget(Target);
             workerState = States.FetchingResources;
         }
     }
@@ -170,8 +199,10 @@ public class Worker : RtsUnit, IHasInventory
                 //Load off resource
                 Loadoff((nearesStorage as IHasInventory).Inventory);
                 //Travel back to resource
-                if (Inventory.Count() < InventorySize && agent.SetDestination(assignedWork.transform.position))
+                if (Inventory.Count() < InventorySize)
                 {
+                    Target = assignedWork.gameObject;
+                    CmdSetTarget(Target);
                     agent.Resume();
                     workerState = States.Traveling;
                 }
@@ -179,11 +210,10 @@ public class Worker : RtsUnit, IHasInventory
             else
             {
                 //Travel to storage house
-                if (agent.SetDestination(nearesStorage.transform.position))
-                {
-                    agent.Resume();
-                    workerState = States.Traveling;
-                }
+                Target = nearesStorage.gameObject;
+                CmdSetTarget(Target);
+                agent.Resume();
+                workerState = States.Traveling;
             }
         }
         else if(assignedWork is ConstructionSite && (assignedWork as ConstructionSite).Inventory.FreeSpace > 0)
@@ -208,11 +238,24 @@ public class Worker : RtsUnit, IHasInventory
         }
         else if(workerState != States.Traveling)
         {
-            if (agent.SetDestination(assignedWork.transform.position))
-            {
-                agent.Resume();
-                workerState = States.Traveling;
-            }
+            Target = assignedWork.gameObject;
+            CmdSetTarget(Target);
+            agent.Resume();
+            workerState = States.Traveling;
+        }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        SelectionChanged += WorkerSelectionChanged;
+    }
+
+    private void WorkerSelectionChanged()
+    {
+        if(selection != null)
+        {
+            selection.SetActive(Selected);
         }
     }
 
@@ -244,8 +287,10 @@ public class Worker : RtsUnit, IHasInventory
                     {
                         //Go home
                         var nearestStorage = FindNearestStorage();
-                        if (nearestStorage != null && agent.SetDestination(nearestStorage.transform.position))
+                        if (nearestStorage != null)
                         {
+                            Target = nearestStorage.gameObject;
+                            CmdSetTarget(Target);
                             agent.Resume();
                             workerState = States.Traveling;
                         }
@@ -264,7 +309,8 @@ public class Worker : RtsUnit, IHasInventory
                         Loadoff((assignedWork as IHasInventory).Inventory);
                         if ((assignedWork as ConstructionSite).Inventory.FreeSpace > 0)
                         {
-                            agent.SetDestination(FindNearestStorage().transform.position);
+                            Target = FindNearestStorage().gameObject;
+                            CmdSetTarget(Target);
                             workerState = States.Traveling;
                         }
                         else { DoAssignedWork(agent); }
@@ -375,7 +421,8 @@ public class Worker : RtsUnit, IHasInventory
         {
             worker.StopWork();
             worker.resumeAbility.Resumeable = false;
-            worker.GetComponent<NavMeshAgent>().SetDestination(worker.transform.position);
+            worker.Target = worker.gameObject;
+            worker.CmdSetTarget(worker.Target);
             worker.assignedWork = target;
         }
     }

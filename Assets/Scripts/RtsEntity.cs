@@ -75,7 +75,7 @@ public abstract class RtsEntity : NetworkBehaviour
 
     private void EntitySelectionChanged()
     {
-        if (isActiveAndEnabled) { entityColorMesh.material.color = Selected ? Color.green : Color.white; }
+        if (isActiveAndEnabled && entityColorMesh != null) { entityColorMesh.material.color = Selected ? Color.green : Color.white; }
     }
 
     [Command]
