@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class AbilityWithTarget : AbilityBase
 {
     public AbilityWithTarget(string name, string lore, KeyCode key, string iconName, bool canExecute = true) : base(name, lore, key, iconName, canExecute) { }
-    public sealed override void Execute()
+    public override void Execute()
     {
         Execute(Utility.RayMouseToRtsEntity());
     }
