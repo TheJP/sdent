@@ -205,6 +205,6 @@ public class EntityControl : NetworkBehaviour
     {
         var constructionSite = Spawn(constructionSitePrefab, position, player, rtsEntity => (rtsEntity as ConstructionSite).FinalBuilding = finalBuilding);
         AddEntity(constructionSite.GetComponent<RtsEntity>());
-        worker.GetComponent<Worker>().RpcAssignWork(constructionSite);
+        if (worker != null) { worker.GetComponent<Worker>().RpcAssignWork(constructionSite); }
     }
 }

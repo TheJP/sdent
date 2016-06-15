@@ -6,7 +6,7 @@ public class RailBent : RtsBuilding
 {
     public override Buildings Type
     {
-        get { return Buildings.RailStraight; }
+        get { return Buildings.RailBent; }
     }
 
     public override IEnumerable<ResourceTuple> BuildingCosts
