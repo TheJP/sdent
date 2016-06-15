@@ -113,8 +113,11 @@ public abstract class RtsEntity : NetworkBehaviour
 
     protected virtual void Update()
     {
-        var relativeState = state / MaxState;
-        barSlider.value = relativeState;
-        barFillImage.color = Color.Lerp(emptyColor, fullColor, relativeState);
+        if (barSlider != null && barFillImage != null)
+        {
+            var relativeState = state / MaxState;
+            barSlider.value = relativeState;
+            barFillImage.color = Color.Lerp(emptyColor, fullColor, relativeState);
+        }
     }
 }
