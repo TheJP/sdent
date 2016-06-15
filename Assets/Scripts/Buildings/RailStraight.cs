@@ -31,7 +31,7 @@ public class RailStraight : RtsBuilding
     private class BuildRailAbility : AbilityBase
     {
         private readonly RailStraight rail;
-        public BuildRailAbility(RailStraight rail) : base("Build Rail", "Starts the construction of a straight rail at the end of the current line.", KeyCode.R, "BuildBuilding")
+        public BuildRailAbility(RailStraight rail) : base("Build Rail", "Starts the construction of a straight rail at the end of the current line.", KeyCode.R, "BuildRail")
         {
             this.rail = rail;
         }
