@@ -39,6 +39,6 @@ public class Saloon : RtsTrainingBuilding
         abilities.Add(new TrainUnit(this, saloon => (saloon as Saloon).workerPrefab, new[] { ResourceTypes.Food.Times(40) },
             "Worker", "Train a worker, which can build structures and harvest resources.", KeyCode.W, "TrainWorker"));
         abilities.Add(new TrainUnit(this, saloon => (saloon as Saloon).merchantPrefab, new[] { ResourceTypes.Plank.Times(100), ResourceTypes.Gold.Times(50) },
-            "Merchant", "Train a merchant, which can transport resources between storage buildings.", KeyCode.E, "TrainWorker"));
+            "Merchant", "Train a merchant, which can transport resources between storage buildings.", KeyCode.E, "TrainMerchant"));
     }
 }

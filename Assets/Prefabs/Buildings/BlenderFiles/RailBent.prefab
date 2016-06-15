@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 430926}
   - 95: {fileID: 9540202}
   m_Layer: 0
-  m_Name: RailBown1
+  m_Name: RailBent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

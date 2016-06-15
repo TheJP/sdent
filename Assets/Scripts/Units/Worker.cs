@@ -304,7 +304,7 @@ public class Worker : RtsUnit, IHasInventory
         private Worker worker;
         private Buildings finalBuilding;
 
-        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Buildings finalBuilding) : base(name, lore, key, "BuildBuilding", isSettingTarget: true)
+        public BuildBuilding(string name, string lore, KeyCode key, Worker worker, Buildings finalBuilding) : base(name, lore, key, "Build" + name.Replace(" ", ""), isSettingTarget: true)
         {
             this.worker = worker;
             this.finalBuilding = finalBuilding;
@@ -330,7 +330,7 @@ public class Worker : RtsUnit, IHasInventory
     private class Work : AbilityWithTarget
     {
         private readonly Worker worker;
-        public Work(KeyCode key, Worker worker) : base("Work", "Work at target. This can be: 'Building at a construction site' or 'Gathering resources'", key, "BuildBuilding")
+        public Work(KeyCode key, Worker worker) : base("Work", "Work at target. This can be: 'Building at a construction site' or 'Gathering resources'", key, "Work")
         {
             this.worker = worker;
         }
