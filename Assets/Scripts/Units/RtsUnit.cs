@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class RtsUnit : RtsEntity
 {
+    public abstract Units Type { get; }
+
     private readonly IAbility moveAbility;
     public override IAbility RightClickAbility
     {

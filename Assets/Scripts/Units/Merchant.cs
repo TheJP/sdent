@@ -42,6 +42,11 @@ public class Merchant : RtsUnit, IHasInventory
 
     private EntityControl EntityControl { get { return FindObjectOfType<EntityControl>(); } }
 
+    public override Units Type
+    {
+        get { return Units.Merchant; }
+    }
+
     protected override void Update()
     {
         base.Update();

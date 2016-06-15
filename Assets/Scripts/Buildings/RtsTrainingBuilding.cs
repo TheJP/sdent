@@ -14,24 +14,35 @@ public abstract class RtsTrainingBuilding : RtsBuilding, IHasInventory
 
     public Transform spawnPoint1;
     public Transform spawnPoint2;
+    public GameObject[] unitPrefabs;
 
-    private readonly Queue<GameObject> trainingQueue = new Queue<GameObject>();
+    private readonly Queue<Units> trainingQueue = new Queue<Units>();
     private float lastTrained = 0;
-
+    private readonly Dictionary<Units, GameObject> prefabDictionary = new Dictionary<Units, GameObject>();
+    
     public abstract Inventory Inventory { get; }
 
     public IEnumerable<GameObject> TrainingQueue
     {
-        get { return trainingQueue.ToList(); }
+        get { return trainingQueue.Select(entry => prefabDictionary[entry]).ToList(); }
     }
 
     [Command]
-    private void CmdTrainUnit(GameObject prefab)
+    private void CmdTrainUnit(Units unit)
     {
         if (!isActiveAndEnabled) { return; }
         var point1 = Vector3.Min(spawnPoint1.transform.position, spawnPoint2.transform.position);
         var point2 = Vector3.Max(spawnPoint1.transform.position, spawnPoint2.transform.position);
-        FindObjectOfType<EntityControl>().SpawnEntity(prefab, new Vector3(Random.Range(point1.x, point2.x), 0, Random.Range(point1.z, point2.z)), Client);
+        FindObjectOfType<EntityControl>().SpawnEntity(prefabDictionary[unit], new Vector3(Random.Range(point1.x, point2.x), 0, Random.Range(point1.z, point2.z)), Client);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        foreach (var unit in unitPrefabs)
+        {
+            prefabDictionary.Add(unit.GetComponent<RtsUnit>().Type, unit);
+        }
     }
 
     protected override void Update()
@@ -47,13 +58,13 @@ public abstract class RtsTrainingBuilding : RtsBuilding, IHasInventory
     protected class TrainUnit : AbilityBase
     {
         private readonly RtsTrainingBuilding building;
-        private readonly System.Func<RtsTrainingBuilding, GameObject> prefab;
+        private readonly Units unit;
         private readonly IEnumerable<ResourceTuple> costs;
-        public TrainUnit(RtsTrainingBuilding building, System.Func<RtsTrainingBuilding, GameObject> prefab, IEnumerable<ResourceTuple> costs, string name, string lore, KeyCode key, string iconName)
+        public TrainUnit(RtsTrainingBuilding building, Units unit, IEnumerable<ResourceTuple> costs, string name, string lore, KeyCode key, string iconName)
             : base(name, lore, key, iconName)
         {
             this.building = building;
-            this.prefab = prefab;
+            this.unit= unit;
             this.costs = costs;
         }
 
@@ -75,7 +86,7 @@ public abstract class RtsTrainingBuilding : RtsBuilding, IHasInventory
                     if(!building.Inventory.RemoveResources(cost.Resource, cost.Amount)) { return; }
                 }
                 if (!building.trainingQueue.Any()) { building.lastTrained = Time.time; }
-                building.trainingQueue.Enqueue(prefab(building));
+                building.trainingQueue.Enqueue(unit);
             }
         }
     }

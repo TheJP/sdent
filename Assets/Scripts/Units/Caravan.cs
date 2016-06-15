@@ -14,6 +14,11 @@ public class Caravan : RtsUnit
         set { throw new InvalidOperationException(); }
     }
 
+    public override Units Type
+    {
+        get { return Units.Caravan; }
+    }
+
     public Caravan()
     {
         AddAbility(new BuildSaloon(this));

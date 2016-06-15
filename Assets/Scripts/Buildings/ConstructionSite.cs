@@ -11,6 +11,21 @@ public class ConstructionSite : RtsBuilding, IHasInventory
 
     private readonly Dictionary<Buildings, GameObject> prefabDictionary = new Dictionary<Buildings, GameObject>();
 
+    private Dictionary<Buildings, GameObject> PrefabDictionary
+    {
+        get
+        {
+            if (!prefabDictionary.Any())
+            {
+                foreach (var prefab in buildingPrefabs)
+                {
+                    prefabDictionary.Add(prefab.GetComponent<RtsBuilding>().Type, prefab);
+                }
+            }
+            return prefabDictionary;
+        }
+    }
+
     [SyncVar]
     private Buildings finalBuilding;
 
@@ -38,7 +53,7 @@ public class ConstructionSite : RtsBuilding, IHasInventory
     {
         get
         {
-            var costs = prefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
+            var costs = PrefabDictionary[FinalBuilding].GetComponent<RtsBuilding>().BuildingCosts;
             return costs.ToDictionary(tuple => tuple.Resource, tuple => tuple.Amount);
         }
     }
@@ -51,10 +66,6 @@ public class ConstructionSite : RtsBuilding, IHasInventory
         finishedBuilding = false;
         buildingWorkers.Clear();
         state = 1f;
-        foreach(var prefab in buildingPrefabs)
-        {
-            prefabDictionary.Add(prefab.GetComponent<RtsBuilding>().Type, prefab);
-        }
     }
 
     public override void OnStartClient()
@@ -76,7 +87,7 @@ public class ConstructionSite : RtsBuilding, IHasInventory
         state += addToState;
         if (state >= MaxState)
         {
-            FindObjectOfType<EntityControl>().SpawnEntity(prefabDictionary[FinalBuilding], transform.position, Client);
+            FindObjectOfType<EntityControl>().SpawnEntity(PrefabDictionary[FinalBuilding], transform.position, Client);
             CmdDie();
         }
     }

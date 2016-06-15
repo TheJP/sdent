@@ -81,6 +81,11 @@ public class Worker : RtsUnit, IHasInventory
         get { return workerState == States.Idle; }
     }
 
+    public override Units Type
+    {
+        get { return Units.Worker; }
+    }
+
     public Worker()
     {
         foreach (var ability in Abilities.ToList()) { RemoveAbility(ability); }
@@ -511,7 +516,7 @@ public class Worker : RtsUnit, IHasInventory
             if (ground.HasValue)
             {
                 //Move to location, where the ground was hit
-                //TODO: Fix worker movement!
+                //Woraround for arbitary movement
                 worker.Target = null;
                 worker.CmdSetTarget(null);
                 var agent = worker.GetComponent<NavMeshAgent>();
