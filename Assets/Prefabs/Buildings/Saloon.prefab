@@ -1851,7 +1851,7 @@ MonoBehaviour:
   spawnPoint2: {fileID: 405058}
   workerPrefab: {fileID: 196684, guid: fca1101434e706345b5bbb4cb01de3d1, type: 2}
   merchantPrefab: {fileID: 129360, guid: 239c743844215934793f3f3bf4196e64, type: 2}
-  spawnPoint: {fileID: 464476}
+  straightRailPrefab: {fileID: 194578, guid: 43ef91060ee5e534588435c43e98ed35, type: 2}
 --- !u!114 &11470072
 MonoBehaviour:
   m_ObjectHideFlags: 1

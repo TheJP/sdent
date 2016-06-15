@@ -78,6 +78,7 @@ GameObject:
   - 114: {fileID: 11447554}
   - 114: {fileID: 11426242}
   - 114: {fileID: 11432352}
+  - 65: {fileID: 6590408}
   m_Layer: 0
   m_Name: RailStraight
   m_TagString: RtsEntity
@@ -144,7 +145,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 0.47, y: 0.47, z: 0.47}
   m_Children:
@@ -311,6 +312,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195598}
   m_Mesh: {fileID: 4300002, guid: e9fabc3ecef54d141b59d6696071531c, type: 3}
+--- !u!65 &6590408
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.916885, y: 1, z: 10.685546}
+  m_Center: {x: -0.016919374, y: 0, z: 0.097518444}
 --- !u!95 &9577764
 Animator:
   serializedVersion: 3

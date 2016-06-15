@@ -34,7 +34,7 @@ public class Menu : MonoBehaviour
     private const int MAP_OFFSET_X = -500;
     private const int MAP_OFFSET_Y = -1900;
 
-    private CameraControl camera;
+    private CameraControl cameraControl;
 
     public string HintText { get; set; }
 
@@ -65,9 +65,9 @@ public class Menu : MonoBehaviour
 	// Update is called once per frame
 	void OnGUI ()
 	{
-	    if (camera == null)
+	    if (cameraControl == null)
 	    {
-	        camera = FindObjectOfType<CameraControl>();
+	        cameraControl = FindObjectOfType<CameraControl>();
 	    }
 
 	    var rtsEntities = EntityController.SelectedEntities;
@@ -146,7 +146,7 @@ public class Menu : MonoBehaviour
             Vector3 mapPos = scaledMapPos/mapScaleFactor;
             mapPos.x += MAP_OFFSET_X;
             mapPos.z += MAP_OFFSET_Y;
-            camera.MoveToMapPos(mapPos);
+            cameraControl.MoveToMapPos(mapPos);
 
             return true;
         }

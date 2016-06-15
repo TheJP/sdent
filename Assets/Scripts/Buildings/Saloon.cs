@@ -10,6 +10,7 @@ public class Saloon : RtsTrainingBuilding
 
     public GameObject workerPrefab;
     public GameObject merchantPrefab;
+    public GameObject straightRailPrefab;
 
     private readonly Inventory inventory = new Inventory(InventorySize);
     private readonly List<IAbility> abilities = new List<IAbility>();
@@ -31,7 +32,17 @@ public class Saloon : RtsTrainingBuilding
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
-        Inventory.AddResources(ResourceTypes.Food, 200);
+        if (hasAuthority)
+        {
+            Inventory.AddResources(ResourceTypes.Food, 200);
+            CmdSpawnStraightRail();
+        }
+    }
+
+    [Command]
+    private void CmdSpawnStraightRail()
+    {
+        FindObjectOfType<EntityControl>().SpawnEntity(straightRailPrefab, new Vector3(transform.position.x + 12f, 0f, transform.position.z), Client);
     }
 
     public Saloon()

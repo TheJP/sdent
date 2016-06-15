@@ -13,5 +13,6 @@ public enum Buildings
     Smeltery,
     Workshop,
     Pottery,
-    RailStraight
+    RailStraight,
+    RailBent
 }
