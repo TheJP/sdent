@@ -140,14 +140,22 @@ public class Merchant : RtsUnit, IHasInventory
                 merchant.EntityControl.ShowHintText("Source and target can't be the same...\nSelect route target");
                 return false;
             }
+            foreach (var merchant in this.merchant.EntityControl.SelectedEntities.Get<Merchant>().Where(m => m.hasAuthority))
+            {
+                ApplyForMerchant(merchant, entity);
+            }
+            return true;
+        }
+
+        private void ApplyForMerchant(Merchant merchant, RtsEntity target)
+        {
             merchant.resource = resource;
             merchant.source = source;
-            merchant.target = entity;
+            merchant.target = target;
             merchant.merchantState = States.TravelingToSource;
             var agent = merchant.GetComponent<NavMeshAgent>();
             agent.SetDestination(merchant.source.transform.position);
             agent.Resume();
-            return true;
         }
     }
 }

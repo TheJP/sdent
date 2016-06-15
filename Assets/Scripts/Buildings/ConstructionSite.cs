@@ -60,7 +60,8 @@ public class ConstructionSite : RtsBuilding, IHasInventory
     public override void OnStartClient()
     {
         base.OnStartClient();
-        FindObjectOfType<EntityControl>().AddEntity(this);
+        var entityControl = FindObjectOfType<EntityControl>();
+        if (!entityControl.Entities.Contains(this)) { entityControl.AddEntity(this); }
     }
 
     public override void OnStartAuthority()
