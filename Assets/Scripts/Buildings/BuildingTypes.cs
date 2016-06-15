@@ -12,5 +12,6 @@ public enum Buildings
     FarmHouse,
     Smeltery,
     Workshop,
-    Pottery
+    Pottery,
+    RailStraight
 }
