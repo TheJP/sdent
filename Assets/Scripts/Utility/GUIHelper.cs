@@ -68,6 +68,23 @@ namespace Assets.Scripts.Utility
             }
         }
 
+        private static Texture2D disableTexture;
+
+        public static Texture2D DisableTexture
+        {
+            get
+            {
+                if (disableTexture == null)
+                {
+                    disableTexture = new Texture2D(1, 1);
+                    disableTexture.SetPixel(0,0, new Color(0.5F, 0.5F, 0.5F, 0.5F));
+                    disableTexture.Apply();
+                }
+
+                return disableTexture;
+            }
+        }
+
         public static void DrawScreenRect(Rect rect, Color color)
         {
             var oldColor = GUI.color;
